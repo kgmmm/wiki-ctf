@@ -39,12 +39,12 @@
 
 <article>
   <h1>Wikipedia Capture the Flag!</h1>
-  <img src="/img/flag-globe.svg" alt="Flag Globe Logo">
+  <img src="/img/flag-globe.svg" alt="Flag Globe Logo" class="flag-globe">
 </article>
 <aside>
   <h2>Aside</h2>
   {#if !$authStore.isLoggedIn}
-    <button on:click={logInWithGoogle}>log in</button>
+    <button class="login" on:click={logInWithGoogle}>log in</button>
   {:else}
     <button on:click={signOut}>sign out</button>
   {/if}
@@ -57,9 +57,20 @@
   aside {
     background: var(--blue);
   }
-  img {
+  img.flag-globe {
     width: 15rem;
     height: 15rem;
     opacity: 20%;
+  }
+  button.login {
+    color: transparent;
+    width: 382px;
+    height: 92px;
+    border: none;
+    background: url("/img/btn_google_signin_dark_normal_web@2x.png");
+    cursor: pointer;
+  }
+  button.login:active {
+    background: url("/img/btn_google_signin_dark_pressed_web@2x.png");
   }
 </style>
