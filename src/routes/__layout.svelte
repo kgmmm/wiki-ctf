@@ -27,11 +27,15 @@
         authStore.set({
           isLoggedIn: true,
           userID: uid,
+          displayName: user.displayName,
+          profilePic: user.photoURL
         });
       } else {
         authStore.set({
           isLoggedIn: false,
           userID: undefined,
+          displayName: "",
+          profilePic: undefined,
         });
       }
     });
@@ -49,6 +53,7 @@
     display: grid;
     grid-template-columns: 1fr 400px;
     grid-template-rows: 100%;
+    grid-template-areas: "article aside";
     overflow: hidden;
   }
 </style>
