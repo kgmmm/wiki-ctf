@@ -51,7 +51,7 @@
     <div class="gameMenu">
       <button class="createLobby">Create a lobby</button>
       <span>OR</span>
-      <h3>Paste a lobby code:</h3>
+      <h3>Join a lobby:</h3>
       <form on:submit|preventDefault={lobbyCodeSubmit}>
         <input type="text" placeholder="Paste code and hit ENTER" bind:value={lobbyCode} class="lobbyCode">
       </form>
@@ -171,7 +171,7 @@
 
   div.gameMenu span {
     margin-block: 1em;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 0.9rem;
     opacity: 75%;
   }
