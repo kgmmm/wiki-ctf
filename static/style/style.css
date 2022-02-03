@@ -77,4 +77,6 @@ html {
 body {
 	font-family: 'Lato', sans-serif;
 	color: #fff;
+	display: grid;
+	place-items: center;
 }
