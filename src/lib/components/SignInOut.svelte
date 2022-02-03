@@ -77,8 +77,9 @@
     cursor: pointer;
     place-self: center;
   }
-
-
+  button.signin:focus {
+    outline: dashed 2px #fff;
+  }
   
   div.user {
     grid-area: user;
@@ -107,8 +108,7 @@
   div.loggedInAs {
     width: 100%;
     display: grid;
-    grid-template-rows: 0.95rem 1rem;
-    align-items: center;
+    align-content: center;
   }
   div.loggedInAs h4 {
     font-size: 0.95rem;
@@ -134,6 +134,10 @@
   }
   button.signout:hover {
     background: rgba(255, 255, 255, 15%);
+  }
+  button.signout:focus {
+    background: rgba(255, 255, 255, 15%);
+    outline: dashed 2px #fff;
   }
 
   button.signout svg {

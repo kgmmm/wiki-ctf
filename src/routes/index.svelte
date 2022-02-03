@@ -1,12 +1,20 @@
 <script>
   import SignInOut from "$lib/components/SignInOut.svelte";
+  import { authStore } from "$lib/stores/authStore";
+
+  let lobbyCode;
+
+  function lobbyCodeSubmit() {
+    console.log(`lobby code: ${lobbyCode}`);
+    lobbyCode = "";
+  }
 </script>
 
 <article>
   <div class="wrapper">
     <div class="blurb">
       <h1>Wikipedia Capture the Flag!</h1>
-      <p><span>Sign-in</span>
+      <p><span>Sign in</span>
       and invite a friend to play a head-to-head game of Wikipedia Capture the Flag!
 
       <span>Plant your flag</span>
@@ -32,9 +40,23 @@
       </ul>
     </div>
   </div>
-  <img src="/img/flag-globe.svg" alt="Flag Globe Logo" class="flag-globe">
+  <img src="/img/flag-globe.svg" alt="Flag Globe Logo" class="flag-globe-bg">
 </article>
 <aside>
+  {#if !$authStore.isLoggedIn}
+    <div class="userWarning">
+      <h3>Sign in to play<br />Wikipedia<br />Capture the Flag!</h3>
+    </div>
+  {:else if $authStore.isLoggedIn}
+    <div class="gameMenu">
+      <button class="createLobby">Create a lobby</button>
+      <span>OR</span>
+      <h3>Paste a lobby code:</h3>
+      <form on:submit|preventDefault={lobbyCodeSubmit}>
+        <input type="text" placeholder="Paste code and hit ENTER" bind:value={lobbyCode} class="lobbyCode">
+      </form>
+    </div>
+  {/if}
   <SignInOut />
 </aside>
 
@@ -47,7 +69,7 @@
     z-index: -1;
   }
 
-  img.flag-globe {
+  img.flag-globe-bg {
     position: absolute;
     bottom: -10rem;
     right: -16rem;
@@ -57,6 +79,8 @@
     aspect-ratio: 1 / 1;
     z-index: -1;
     opacity: 25%;
+    pointer-events: none;
+    user-select: none;
   }
 
   div.wrapper {
@@ -78,7 +102,7 @@
   }
   div.blurb p {
     font-size: 1.1rem;
-    line-height: 1.6rem;
+    line-height: 1.9rem;
   }
 
   div.tips {
@@ -109,5 +133,71 @@
       "user";
     background: var(--red);
     box-shadow: 0 0 5px rgba(0, 0, 0, 25%);
+  }
+
+  div.userWarning {
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+
+  div.userWarning h3 {
+    font-size: 2rem;
+  }
+
+  div.gameMenu {
+    display: grid;
+    place-content: center;
+    text-align: center;
+  }
+
+  div.gameMenu button.createLobby {
+    width: 250px;
+    height: 60px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--blue);
+    border: none;
+    cursor: pointer;
+  }
+  div.gameMenu button.createLobby:hover {
+    background: var(--blue-highlight);
+  }
+  div.gameMenu button.createLobby:focus {
+    background: var(--blue-highlight);
+    outline: dashed 2px #fff;
+  }
+
+  div.gameMenu span {
+    margin-block: 1em;
+    font-weight: 300;
+    font-size: 0.9rem;
+    opacity: 75%;
+  }
+
+  div.gameMenu h3 {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  div.gameMenu input[type="text"].lobbyCode {
+    margin-block: 1em;
+    padding: 0.5em;
+    width: 250px;
+    height: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    border: none;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 15%);
+  }
+  div.gameMenu input[type="text"].lobbyCode::placeholder {
+    color: rgba(255, 255, 255, 50%);
+  }
+  div.gameMenu input[type="text"].lobbyCode:focus {
+    outline: dashed 2px #fff;
   }
 </style>

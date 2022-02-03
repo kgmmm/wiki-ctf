@@ -68,6 +68,7 @@ select {
 :root {
 	--red: #cd2020;
 	--blue: #002d91;
+	--blue-highlight: #0d3a9e;
 }
 
 html {
