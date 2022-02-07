@@ -2,11 +2,17 @@
   import SignInOut from "$lib/components/SignInOut.svelte";
   import { authStore } from "$lib/stores/authStore";
 
+  import { goto } from "$app/navigation";
+
   let lobbyCode;
 
-  function lobbyCodeSubmit() {
+  function lobbyCodeSubmit() { // TEMP
     console.log(`lobby code: ${lobbyCode}`);
     lobbyCode = "";
+  }
+
+  function createLobby() { // TEMP
+    goto("/game/" + $authStore.userID);
   }
 </script>
 
@@ -49,7 +55,7 @@
     </div>
   {:else if $authStore.isLoggedIn}
     <div class="gameMenu">
-      <button class="createLobby">Create a lobby</button>
+      <button class="createLobby" on:click={createLobby}>Create a lobby</button>
       <span>OR</span>
       <h3>Join a lobby:</h3>
       <form on:submit|preventDefault={lobbyCodeSubmit}>

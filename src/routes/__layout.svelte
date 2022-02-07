@@ -55,5 +55,6 @@
     grid-template-rows: 100%;
     grid-template-areas: "article aside";
     overflow: hidden;
+    isolation: isolate;
   }
 </style>
