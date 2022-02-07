@@ -19,7 +19,6 @@
   "type": "module",
   "dependencies": {
     "firebase": "^9.6.5",
-    "socket.io": "^4.4.1",
-    "wikipedia": "^1.1.6"
+    "socket.io": "^4.4.1"
   }
 }
