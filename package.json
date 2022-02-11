@@ -19,6 +19,7 @@
   "type": "module",
   "dependencies": {
     "firebase": "^9.6.5",
-    "socket.io": "^4.4.1"
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1"
   }
 }
