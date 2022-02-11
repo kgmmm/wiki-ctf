@@ -4,6 +4,7 @@
   import { onMount, tick } from "svelte";
   import SignInOut from "$lib/components/SignInOut.svelte";
   import Loader from "$lib/components/Loader.svelte";
+  import Opponent from "$lib/components/Opponent.svelte";
 
   onMount(async () => {
     await tick();
@@ -107,6 +108,7 @@
 
 </article>
 <aside>
+  <Opponent />
   <div class="temp">
     <div class="title">
       <h3>{returnedTitle}</h3>
@@ -124,7 +126,7 @@
 <style>
   div.temp {
     display: grid;
-    place-content: center;
+    place-items: center;
   }
 
   div.loaderWrap {
@@ -152,8 +154,9 @@
   aside {
     grid-area: aside;
     display: grid;
-    grid-template-rows: 1fr 100px;
+    grid-template-rows: 100px 1fr 100px;
     grid-template-areas:
+      "opponent"
       "content"
       "user";
     background: var(--red);

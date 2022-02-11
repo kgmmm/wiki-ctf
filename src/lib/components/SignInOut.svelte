@@ -111,7 +111,7 @@
     align-content: center;
   }
   div.loggedInAs h4 {
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     font-weight: normal;
     opacity: 50%;
   }
