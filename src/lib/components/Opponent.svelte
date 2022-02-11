@@ -1,5 +1,6 @@
 <script>
   export let OpponentProps = {
+    userID: undefined,
     displayName: "Opponent",
     profilePic: undefined,
   };
