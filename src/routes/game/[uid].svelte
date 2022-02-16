@@ -1,10 +1,13 @@
 <script>
+  import io from "socket.io-client";
   import { goto } from "$app/navigation";
   import { getAuth, onAuthStateChanged } from "firebase/auth";
   import { onMount, tick } from "svelte";
   import SignInOut from "$lib/components/SignInOut.svelte";
   import Loader from "$lib/components/Loader.svelte";
   import Opponent from "$lib/components/Opponent.svelte";
+
+  let socket;
 
   onMount(async () => {
     await tick();
@@ -13,6 +16,8 @@
       if (user) return;
       goto("/", { replaceState: true, noscroll: false, keepfocus: false, state: {} });
     });
+
+    socket = io("ws://localhost:5000");
   });
 
   let loading;
