@@ -78,7 +78,7 @@
     place-self: center;
   }
   button.signin:focus {
-    outline: dashed 2px #fff;
+    outline: solid 2px yellow;
   }
   
   div.user {
@@ -137,7 +137,7 @@
   }
   button.signout:focus {
     background: rgba(255, 255, 255, 15%);
-    outline: dashed 2px #fff;
+    outline: solid 2px yellow;
   }
 
   button.signout svg {

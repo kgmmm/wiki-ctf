@@ -92,7 +92,7 @@
   }
   button.disconnect:focus {
     background: rgba(255, 255, 255, 15%);
-    outline: dashed 2px #fff;
+    outline: solid 2px yellow;
   }
 
   button.disconnect svg {

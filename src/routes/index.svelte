@@ -172,7 +172,7 @@
   }
   div.gameMenu button.createLobby:focus {
     background: var(--blue-highlight);
-    outline: dashed 2px #fff;
+    outline: solid 2px yellow;
   }
 
   div.gameMenu span {
@@ -204,6 +204,6 @@
     color: rgba(255, 255, 255, 50%);
   }
   div.gameMenu input[type="text"].lobbyCode:focus {
-    outline: dashed 2px #fff;
+    outline: solid 2px yellow;
   }
 </style>
