@@ -12,8 +12,12 @@ io.on("connection", (socket) => {
   console.log(`${socket.id} connected.`);
 
   socket.on("fetchedPage", (userID, data) => {
-    console.log(`${userID} fetched page: '${data.pageid}' with title '${data.title}'`);
+    console.log(`${userID} fetched page: '${data.pageid}' with title '${data.title}' on socket ${socket.id}`);
     socket.emit("returnTitle", data.title);
+  });
+
+  socket.on("disconnect", (reason) => {
+    console.log(`${socket.id} disconnected because: ${reason}`);
   });
 });
 

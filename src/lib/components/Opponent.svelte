@@ -1,12 +1,16 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+
   export let OpponentProps = {
     userID: undefined,
     displayName: "Opponent",
     profilePic: undefined,
   };
 
+  const dispatch = createEventDispatcher();
+
   function disconnect() {
-    console.log("Disconnect");
+    dispatch("disconnect");
   }
 </script>
 

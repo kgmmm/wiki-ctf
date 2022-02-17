@@ -1,12 +1,12 @@
 <script>
   import io from "socket.io-client";
-  import { goto } from "$app/navigation";
+  import { beforeNavigate, goto } from "$app/navigation";
   import { getAuth, onAuthStateChanged } from "firebase/auth";
   import { onMount, tick } from "svelte";
   import SignInOut from "$lib/components/SignInOut.svelte";
   import Loader from "$lib/components/Loader.svelte";
   import Opponent from "$lib/components/Opponent.svelte";
-import { authStore } from "$lib/stores/authStore";
+  import { authStore } from "$lib/stores/authStore";
 
   let socket;
 
@@ -23,6 +23,13 @@ import { authStore } from "$lib/stores/authStore";
     socket.on("returnTitle", (title) => {
       returnedTitle = title;
     });
+
+    return () => socket.disconnect();
+  });
+
+  beforeNavigate(() => {
+    if(!socket.connected) return;
+    socket.disconnect();
   });
 
   let loading;
@@ -105,6 +112,10 @@ import { authStore } from "$lib/stores/authStore";
     loading = false;
     inputDisabled = false;
   }
+
+  function disconnectFromGame() {
+    goto("/", { replaceState: true, noscroll: false, keepfocus: false, state: {} }); // socket disconnection is handled by beforeNavigate
+  }
 </script>
 
 <svelte:head>
@@ -120,7 +131,7 @@ import { authStore } from "$lib/stores/authStore";
 
 </article>
 <aside>
-  <Opponent />
+  <Opponent on:disconnect={disconnectFromGame} />
   <div class="temp">
     <div class="title">
       <h3>{returnedTitle}</h3>
