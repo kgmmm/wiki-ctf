@@ -1,11 +1,9 @@
 <script>
   import { createEventDispatcher } from 'svelte';
 
-  export let OpponentProps = {
-    userID: undefined,
-    displayName: "Opponent",
-    profilePic: undefined,
-  };
+  export let userID;
+  export let displayName;
+  export let profilePic;
 
   const dispatch = createEventDispatcher();
 
@@ -31,10 +29,10 @@
   </button>
   <div class="opponentIs">
     <h4>Opponent:</h4>
-    <span>{OpponentProps.displayName}</span>
+    <span>{displayName}</span>
   </div>
   <div class="profilepic">
-    <img src={OpponentProps.profilePic} alt="Your pretty face" class="profilepic">
+    <img src={profilePic} alt={`${userID}'s profile picture`} class="profilepic" referrerpolicy="no-referrer">
   </div>
 </div>
 

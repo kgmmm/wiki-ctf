@@ -34,7 +34,7 @@
 <div class="user">
   {#if $authStore.isLoggedIn}
     <div class="profilepic">
-      <img src={$authStore.profilePic} alt="Your pretty face" class="profilepic">
+      <img src={$authStore.profilePic} alt="Your pretty face" class="profilepic" referrerpolicy="no-referrer">
     </div>
     <div class="loggedInAs">
       <h4>Logged in as:</h4>

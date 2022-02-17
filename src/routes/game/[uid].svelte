@@ -17,6 +17,20 @@
   export let lobbyCode;
 
   let socket;
+  let gameState = {};
+  let opponentData;
+  let opponentProps;
+
+  $: {
+    if (gameState.players && gameState["players"].length > 1) {
+      opponentData = gameState.players.find(player => player.id !== $authStore.userID);
+      opponentProps = {
+        userID: opponentData.id,
+        displayName: opponentData.displayName,
+        profilePic: opponentData.profilePic,
+      }
+    }
+  }
 
   onMount(async () => {
     await tick();
@@ -34,12 +48,13 @@
       returnedTitle = title;
     });
 
-    socket.on("gameStateUpdate", (gameState) => {
-      console.log(gameState); // LOG
+    socket.on("gameStateUpdate", (newState) => {
+      console.log(newState); // LOG
+      gameState = newState;
     })
 
     socket.on("lobbyFull", () => {
-      console.log("lobby is full"); // LOG
+      disconnectFromGame();
     })
 
     return () => socket.disconnect();
@@ -53,7 +68,7 @@
   async function initGame() {
     if (!$authStore.isLoggedIn) return;
 
-    socket.emit("initGame", lobbyCode, $authStore.userID);
+    socket.emit("initGame", lobbyCode, { userID: $authStore.userID, displayName: $authStore.displayName, profilePic: $authStore.profilePic, });
   }
 
   let loading;
@@ -155,7 +170,9 @@
 
 </article>
 <aside>
-  <Opponent on:disconnect={disconnectFromGame} />
+  {#if opponentProps}
+    <Opponent on:disconnect={disconnectFromGame} {...opponentProps} />
+  {/if}
   <div class="temp">
     <div class="title">
       <h3>{returnedTitle}</h3>

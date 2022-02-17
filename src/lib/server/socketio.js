@@ -22,6 +22,8 @@ let freshGameState = {
       score: 0,
       location: undefined,
       base: undefined,
+      displayName: undefined,
+      profilePic: undefined,
     }
   ]
 }
@@ -31,6 +33,8 @@ let newPlayer = {
   score: 0,
   location: undefined,
   base: undefined,
+  displayName: undefined,
+  profilePic: undefined,
 }
 
 io.on("connection", (socket) => {
@@ -41,14 +45,16 @@ io.on("connection", (socket) => {
     socket.emit("returnTitle", data.title);
   });
 
-  socket.on("initGame", (lobbyCode, userID) => {
+  socket.on("initGame", (lobbyCode, userData) => {
     console.log("init game triggered"); // log
     if (!liveGames[lobbyCode]) {
       console.log("no game"); // log
       socket.join(lobbyCode);
       liveGames[lobbyCode] = freshGameState;
       liveGames[lobbyCode].lobbyCode = lobbyCode;
-      liveGames[lobbyCode].players[0].id = userID;
+      liveGames[lobbyCode].players[0].id = userData.userID;
+      liveGames[lobbyCode].players[0].displayName = userData.displayName;
+      liveGames[lobbyCode].players[0].profilePic = userData.profilePic;
       io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
     } else if (liveGames[lobbyCode]) {
       console.log("is game"); // log
@@ -59,17 +65,19 @@ io.on("connection", (socket) => {
       } else if (playerCount == 1) {
         socket.join(lobbyCode);
         liveGames[lobbyCode].players[1] = newPlayer;
-        liveGames[lobbyCode].players[1].id = userID;
+        liveGames[lobbyCode].players[1].id = userData.userID;
+        liveGames[lobbyCode].players[1].displayName = userData.displayName;
+        liveGames[lobbyCode].players[1].profilePic = userData.profilePic;
         io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
       }
     }
 
-    socket.join(lobbyCode);
-    console.log(`user: ${userID} joined lobby: ${lobbyCode}`);
+    // socket.join(lobbyCode);
+    // console.log(`user: ${userID} joined lobby: ${lobbyCode}`);
   })
 
   socket.on("disconnect", (reason) => {
-    console.log(`${socket.id} disconnected because: ${reason}`);
+    console.log(`${socket.id} disconnected because: ${reason}`); // LOG
   });
 });
 
