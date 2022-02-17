@@ -1,3 +1,9 @@
+<script context="module"> // grab the lobbycode from url path and put it in a variable
+  export async function load({ url: { pathname } }) {
+    const lobbyCode = pathname.substring(6);
+    return { props: { lobbyCode: lobbyCode } };
+  }
+</script>
 <script>
   import io from "socket.io-client";
   import { beforeNavigate, goto } from "$app/navigation";
@@ -8,9 +14,13 @@
   import Opponent from "$lib/components/Opponent.svelte";
   import { authStore } from "$lib/stores/authStore";
 
+  export let lobbyCode;
+
   let socket;
 
   onMount(async () => {
+    console.log(lobbyCode);
+
     await tick();
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
