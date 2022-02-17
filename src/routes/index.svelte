@@ -6,12 +6,11 @@
 
   let lobbyCode;
 
-  function lobbyCodeSubmit() { // TEMP
-    console.log(`lobby code: ${lobbyCode}`);
-    lobbyCode = "";
+  function lobbyCodeSubmit() {
+    goto("/game/" + lobbyCode);
   }
 
-  function createLobby() { // TEMP
+  function createLobby() {
     goto("/game/" + $authStore.userID);
   }
 </script>

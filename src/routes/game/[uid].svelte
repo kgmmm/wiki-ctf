@@ -19,8 +19,6 @@
   let socket;
 
   onMount(async () => {
-    console.log(lobbyCode);
-
     await tick();
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
@@ -29,10 +27,20 @@
     });
 
     socket = io("ws://localhost:5000");
+    
+    await initGame();
 
     socket.on("returnTitle", (title) => {
       returnedTitle = title;
     });
+
+    socket.on("gameStateUpdate", (gameState) => {
+      console.log(gameState); // LOG
+    })
+
+    socket.on("lobbyFull", () => {
+      console.log("lobby is full"); // LOG
+    })
 
     return () => socket.disconnect();
   });
@@ -41,6 +49,12 @@
     if(!socket.connected) return;
     socket.disconnect();
   });
+
+  async function initGame() {
+    if (!$authStore.isLoggedIn) return;
+
+    socket.emit("initGame", lobbyCode, $authStore.userID);
+  }
 
   let loading;
   let searchInput;
