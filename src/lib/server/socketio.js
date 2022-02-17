@@ -10,6 +10,11 @@ const io = new SocketIO(server, {
 
 io.on("connection", (socket) => {
   console.log(`${socket.id} connected.`);
+
+  socket.on("fetchedPage", (userID, data) => {
+    console.log(`${userID} fetched page: '${data.pageid}' with title '${data.title}'`);
+    socket.emit("returnTitle", data.title);
+  });
 });
 
 server.once("error", (err) => {

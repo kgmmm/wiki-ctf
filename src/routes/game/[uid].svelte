@@ -6,6 +6,7 @@
   import SignInOut from "$lib/components/SignInOut.svelte";
   import Loader from "$lib/components/Loader.svelte";
   import Opponent from "$lib/components/Opponent.svelte";
+import { authStore } from "$lib/stores/authStore";
 
   let socket;
 
@@ -18,6 +19,10 @@
     });
 
     socket = io("ws://localhost:5000");
+
+    socket.on("returnTitle", (title) => {
+      returnedTitle = title;
+    });
   });
 
   let loading;
@@ -30,7 +35,7 @@
 
   async function wikiFetch() {
     if(searchInput == lastSuccess) {
-      console.log("same request as before");
+      console.log("same request as before"); // LOG
       return
     }
     console.time("roundtrip"); // LOG
@@ -44,7 +49,7 @@
     });
     let response = await res.json();
 
-    console.log(response);
+    console.log(response); // LOG
 
     if("error" in response) {
       searchError = true;
@@ -55,6 +60,8 @@
     } else {
       searchError = false;
     }
+
+    await socket.emit("fetchedPage", $authStore.userID, { pageid: response.parse.pageid, title: response.parse.title });
 
     populateArticle(response);
   }
@@ -85,7 +92,7 @@
   async function populateArticle(response) {
     wikiContent.scrollTop = 0;
     
-    returnedTitle = response.parse.title;
+    // returnedTitle = response.parse.title; -> title gets set by the server now
     wikiContent.innerHTML = response.parse.text["*"];
 
     console.timeEnd("roundtrip"); // LOG
