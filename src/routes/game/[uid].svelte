@@ -14,7 +14,6 @@
   import Opponent from "$lib/components/Opponent.svelte";
   import { authStore } from "$lib/stores/authStore";
   import { toast } from "$lib/stores/toast";
-  import Toast from "$lib/components/Toast.svelte";
 
   export let lobbyCode;
 
@@ -45,8 +44,13 @@
     });
 
     socket = io("ws://localhost:5000");
-    
-    await initGame();
+
+    async function initGame() {
+      if(!$authStore.isLoggedIn) return;
+      socket.emit("initGame", lobbyCode, { userID: $authStore.userID, displayName: $authStore.displayName, profilePic: $authStore.profilePic, });
+    }
+
+    const initializeGame = setTimeout(initGame, 1000); // TODO: fix magic number here this method is gash
 
     socket.on("returnTitle", (title) => {
       returnedTitle = title;
@@ -69,8 +73,8 @@
       toast.set({
         title: data.title,
         message: data.message,
-      })
-    })
+      });
+    });
 
     return () => socket.disconnect();
   });
@@ -79,12 +83,6 @@
     if(!socket.connected) return;
     socket.disconnect();
   });
-
-  async function initGame() {
-    if (!$authStore.isLoggedIn) return;
-
-    socket.emit("initGame", lobbyCode, { userID: $authStore.userID, displayName: $authStore.displayName, profilePic: $authStore.profilePic, });
-  }
 
   let loading;
   let searchInput;
