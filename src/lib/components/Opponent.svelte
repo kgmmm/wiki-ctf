@@ -1,19 +1,11 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-
   export let userID;
   export let displayName;
   export let profilePic;
-
-  const dispatch = createEventDispatcher();
-
-  function disconnect() {
-    dispatch("disconnect");
-  }
 </script>
 
 <div class="user">
-  <button class="disconnect" title="Disconnect" on:click={disconnect}>
+  <button class="disconnect" title="Disconnect" on:click>
     <svg
       width="24"
       height="24"

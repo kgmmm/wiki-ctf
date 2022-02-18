@@ -177,7 +177,7 @@
 </article>
 <aside>
   {#if opponentProps}
-    <Opponent on:disconnect={disconnectFromGame} {...opponentProps} />
+    <Opponent on:click={disconnectFromGame} {...opponentProps} />
   {/if}
   <div class="temp">
     <div class="title">
