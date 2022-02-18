@@ -20,6 +20,7 @@
   let gameState = {};
   let opponentData;
   let opponentProps;
+  let myData;
 
   $: {
     if (gameState.players && gameState["players"].length > 1) {
@@ -29,6 +30,7 @@
         displayName: opponentData.displayName,
         profilePic: opponentData.profilePic,
       }
+      myData = gameState.players.find(player => player.id === $authStore.userID);
     }
   }
 
@@ -51,11 +53,15 @@
     socket.on("gameStateUpdate", (newState) => {
       console.log(newState); // LOG
       gameState = newState;
-    })
+    });
+
+    socket.on("eject", () => {
+      disconnectFromGame();
+    });
 
     socket.on("lobbyFull", () => {
       disconnectFromGame();
-    })
+    });
 
     return () => socket.disconnect();
   });
