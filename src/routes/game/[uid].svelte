@@ -13,6 +13,8 @@
   import Loader from "$lib/components/Loader.svelte";
   import Opponent from "$lib/components/Opponent.svelte";
   import { authStore } from "$lib/stores/authStore";
+  import { toast } from "$lib/stores/toast";
+  import Toast from "$lib/components/Toast.svelte";
 
   export let lobbyCode;
 
@@ -62,6 +64,13 @@
     socket.on("lobbyFull", () => {
       disconnectFromGame();
     });
+
+    socket.on("pop", (data) => {
+      toast.set({
+        title: data.title,
+        message: data.message,
+      })
+    })
 
     return () => socket.disconnect();
   });

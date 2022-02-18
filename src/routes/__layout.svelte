@@ -3,8 +3,22 @@
   import { getAuth, onAuthStateChanged } from "firebase/auth";
 
   import { authStore } from "$lib/stores/authStore";
+  import { toast } from "$lib/stores/toast";
+
+  import Toast from "$lib/components/Toast.svelte";
 
   import { onMount } from "svelte";
+
+  $: {
+    if ($toast.title) {
+      setTimeout(() => {
+        toast.set({
+          title: undefined,
+          message: undefined,
+        });
+      }, 5000);
+    }
+  }
 
   onMount(() => {
     const firebaseConfig = {
@@ -43,6 +57,9 @@
 </script>
 
 <main>
+  {#if $toast.title}
+    <Toast title={$toast.title} message={$toast.message} />
+  {/if}
   <slot/>
 </main>
 

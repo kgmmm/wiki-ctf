@@ -85,8 +85,8 @@ io.on("connection", (socket) => {
   socket.on("disconnect", (reason) => {
     console.log(`${socket.id} disconnected because: ${reason}`); // LOG
     if(socketMap.has(socket.id)) { // if you are in a game
+      io.sockets.in(socketMap.get(socket.id)).emit("pop", { title: "Game Cancelled!", message: "Your opponent disconnected." }); // pop some toast saying someone DC'd
       io.sockets.in(socketMap.get(socket.id)).emit("eject"); // kick everyone from the game
-      // pop some toast saying someone DC'd
       if(liveGames[socketMap.get(socket.id)]) { // if the gamestate is still in the array
         liveGames = liveGames.filter(game => game !== socketMap.get(socket.id)); // delete the game
       }
