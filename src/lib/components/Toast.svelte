@@ -1,5 +1,6 @@
 <script>
   import { fly } from "svelte/transition";
+  import { toast } from "$lib/stores/toast";
 
   export let title;
   export let message;
@@ -8,7 +9,7 @@
 <div in:fly={{y: 80, duration: 300}} out:fly={{y: -200, duration: 400}}>
   <h4>{title}</h4>
   <p>{message}</p>
-  <button>
+  <button on:click={() => toast.set({ title: undefined, message: undefined, })}>
     <svg
       width="24"
       height="24"
