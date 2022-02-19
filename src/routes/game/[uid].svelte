@@ -188,7 +188,7 @@
 <aside>
   {#if opponentProps}
     <Opponent on:click={disconnectFromGame} {...opponentProps} />
-  {:else}
+  {:else if gameState.stage == "waiting"}
     <WaitingScreen {lobbyCode} on:toaster={(event) => toast.set(event.detail)} on:cancelGame={disconnectFromGame}/>
   {/if}
     <!-- <div class="temp">
