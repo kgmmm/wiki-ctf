@@ -1,9 +1,31 @@
 <script>
   import { fly } from "svelte/transition";
   import { toast } from "$lib/stores/toast";
+  import { onMount } from "svelte";
 
   export let title;
   export let message;
+
+  let toastTimeout;
+
+  onMount(() => {
+    if ($toast.title) {
+      toastTimeout = setTimeout(() => {
+        toast.set({
+          title: undefined,
+          message: undefined,
+        });
+      }, 5000);
+    }
+
+    return () => {
+      clearTimeout(toastTimeout);
+      toast.set({
+        title: undefined,
+        message: undefined,
+      });
+    };
+  });
 </script>
 
 <div in:fly={{y: 80, duration: 300}} out:fly={{y: -200, duration: 400}}>

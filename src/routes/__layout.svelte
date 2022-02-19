@@ -9,17 +9,6 @@
 
   import { onMount } from "svelte";
 
-  $: {
-    if ($toast.title) {
-      setTimeout(() => {
-        toast.set({
-          title: undefined,
-          message: undefined,
-        });
-      }, 5000);
-    }
-  }
-
   onMount(() => {
     const firebaseConfig = {
       apiKey: "AIzaSyAjb-7gahAHo5p78WEMjRKZ76ycBFkUG9k",

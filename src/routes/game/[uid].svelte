@@ -12,6 +12,7 @@
   import SignInOut from "$lib/components/SignInOut.svelte";
   import Loader from "$lib/components/Loader.svelte";
   import Opponent from "$lib/components/Opponent.svelte";
+  import WaitingScreen from "$lib/components/WaitingScreen.svelte";
   import { authStore } from "$lib/stores/authStore";
   import { toast } from "$lib/stores/toast";
 
@@ -187,18 +188,20 @@
 <aside>
   {#if opponentProps}
     <Opponent on:click={disconnectFromGame} {...opponentProps} />
+  {:else}
+    <WaitingScreen {lobbyCode} on:toaster={(event) => toast.set(event.detail)} on:cancelGame={disconnectFromGame}/>
   {/if}
-  <div class="temp">
-    <div class="title">
-      <h3>{returnedTitle}</h3>
-    </div>
-    <form on:submit|preventDefault={wikiFetch}>
-      <input type="text" bind:value={searchInput} disabled={inputDisabled}>
-      {#if searchError}
-        <span class="searchError">Try something else</span>
-      {/if}
-    </form>
-  </div>
+    <!-- <div class="temp">
+      <div class="title">
+        <h3>{returnedTitle}</h3>
+      </div>
+      <form on:submit|preventDefault={wikiFetch}>
+        <input type="text" bind:value={searchInput} disabled={inputDisabled}>
+        {#if searchError}
+          <span class="searchError">Try something else</span>
+        {/if}
+      </form>
+    </div> -->
   <SignInOut />
 </aside>
 
