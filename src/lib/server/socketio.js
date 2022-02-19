@@ -106,14 +106,14 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", (reason) => {
     console.log(`${socket.id} disconnected because: ${reason}`); // LOG
-    if(socketMap.has(socket.id)) { // if you are in a game
-      let targetMap = socketMap.get(socket.id);
-      if(liveGames[socketMap.get(socket.id)]) { // if the gamestate is still in the array
-        liveGames = liveGames.filter(game => game !== socketMap.get(socket.id)); // delete the game
+    if(socketMap.has(socket.id)) { // if you were in a game
+      let whichGame = socketMap.get(socket.id); // save the lobby code of that game
+      socketMap.delete(socket.id); // remove you from the map of live games
+      if(liveGames[whichGame]) { // if the gamestate is still in the array
+        liveGames = liveGames.filter(game => game !== whichGame); // delete the game from liveGames
       }
-      socketMap.delete(socket.id); // remove the entry from the map saying you are in a game
-      io.sockets.in(targetMap).emit("pop", { title: "Game Cancelled!", message: "Your opponent disconnected." }); // pop some toast saying someone DC'd
-      io.sockets.in(targetMap).emit("eject"); // kick everyone from the game
+      io.sockets.in(whichGame).emit("pop", { title: "Game Cancelled!", message: "Your opponent disconnected." }); // pop some toast saying someone DC'd
+      io.sockets.in(whichGame).emit("eject"); // kick everyone from the game
     }
     // console.log(liveGames); // LOG
   });
