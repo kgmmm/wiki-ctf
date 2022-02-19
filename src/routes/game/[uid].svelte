@@ -45,13 +45,12 @@
 
     socket = io("ws://localhost:5000");
 
-    async function initGame() {
-      if(!$authStore.isLoggedIn) return;
-      socket.emit("initGame", lobbyCode, { userID: $authStore.userID, displayName: $authStore.displayName, profilePic: $authStore.profilePic, });
-    }
-
-    const initializeGame = setTimeout(initGame, 1000); // TODO: fix magic number here this method is gash
-
+    const initializeGame = authStore.subscribe(data => {
+      if(data.isLoggedIn) {
+        socket.emit("initGame", lobbyCode, { userID: $authStore.userID, displayName: $authStore.displayName, profilePic: $authStore.profilePic, });
+      }
+    });
+    
     socket.on("returnTitle", (title) => {
       returnedTitle = title;
     });
@@ -76,7 +75,10 @@
       });
     });
 
-    return () => socket.disconnect();
+    return () => {
+      initializeGame;
+      socket.disconnect();
+    }
   });
 
   beforeNavigate(() => {
