@@ -1,8 +1,9 @@
 <script>
   export let size;
+  export let color;
 </script>
 
-<div style="width: {size}px; height: {size}px; --b: {size / 8}px;"></div>
+<div style="width: {size}px; height: {size}px; --b: {size / 8}px; border-top-color: {color};"></div>
 
 <style>
   div {

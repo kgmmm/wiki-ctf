@@ -28,7 +28,7 @@
 
 <div>
   <h1>Waiting for opponent...</h1>
-  <Loader size="70" />
+  <Loader size="70" color="#fff"/>
   <p>Send this code to a friend:</p>
   <form on:submit|preventDefault>
     <button title="Copy to clipboard" class="clipboard" on:click={copyToClipboard}>
