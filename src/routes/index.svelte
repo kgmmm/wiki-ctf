@@ -4,6 +4,10 @@
 
   import { goto } from "$app/navigation";
 
+  import ShortUniqueId from 'short-unique-id';
+
+  const newLobbyCode = new ShortUniqueId({ length: 28 });
+
   let lobbyCode;
 
   function lobbyCodeSubmit() {
@@ -11,7 +15,7 @@
   }
 
   function createLobby() {
-    goto("/game/" + $authStore.userID);
+    goto("/game/" + newLobbyCode());
   }
 </script>
 
