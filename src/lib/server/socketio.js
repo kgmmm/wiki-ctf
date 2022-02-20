@@ -8,7 +8,7 @@ const io = new SocketIO(server, {
   },
 });
 
-let liveGames = [];
+export let liveGames = [];
 
 // const freshGameState = {
 //   lobbyCode: undefined,
@@ -110,7 +110,7 @@ io.on("connection", (socket) => {
       let whichGame = socketMap.get(socket.id); // save the lobby code of that game
       socketMap.delete(socket.id); // remove you from the map of live games
       if(liveGames[whichGame]) { // if the gamestate is still in the array
-        liveGames = liveGames.filter(game => game !== whichGame); // delete the game from liveGames
+        delete liveGames[whichGame]; // delete the game from liveGames
       }
       io.sockets.in(whichGame).emit("pop", { title: "Game Cancelled!", message: "Your opponent disconnected." }); // pop some toast saying someone DC'd
       io.sockets.in(whichGame).emit("eject"); // kick everyone from the game

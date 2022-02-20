@@ -5,13 +5,29 @@
   import { goto } from "$app/navigation";
 
   import ShortUniqueId from 'short-unique-id';
+  import { toast } from "$lib/stores/toast";
 
   const newLobbyCode = new ShortUniqueId({ length: 28 });
 
   let lobbyCode;
 
   function lobbyCodeSubmit() {
-    goto("/game/" + lobbyCode);
+    fetch("/api/lobby/" + lobbyCode, {
+      method: "GET",
+      mode: "no-cors",
+    })
+    .then(response => response.json())
+    .then(data => {
+      if(data === true) {
+        goto("/game/" + lobbyCode);
+      } else if (data === false) {
+        toast.set({
+          title: "Invalid Lobby Code!",
+          message: "That lobby does not exist.",
+        });
+      }
+    })
+    .catch((error) => console.log(error));
   }
 
   function createLobby() {
