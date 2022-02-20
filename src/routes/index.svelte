@@ -62,7 +62,7 @@
       <span>OR</span>
       <h3>Join a lobby:</h3>
       <form on:submit|preventDefault={lobbyCodeSubmit}>
-        <input type="text" placeholder="Paste code and hit ENTER" bind:value={lobbyCode} class="lobbyCode">
+        <input type="text" placeholder="Paste code and hit ENTER" bind:value={lobbyCode} class="lobbyCode" required minlength="28" maxlength="28"  autocomplete="off">
       </form>
     </div>
   {/if}
