@@ -12,7 +12,7 @@ export async function handle({ event, resolve }) {
     }
 	}
 
-  if (event.url.pathname.startsWith("/api/games")) {
+  if (event.url.pathname === "/api/games/" || event.url.pathname === "/api/games") {
     if(Object.keys(liveGames).length > 0) {
       let gamesObj = {...liveGames};
 
