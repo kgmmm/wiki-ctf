@@ -80,6 +80,12 @@
   button.signin:focus {
     outline: solid 2px yellow;
   }
+  button.signin:focus:not(:focus-visible) {
+    outline: none;
+  }
+  button.signin:focus-visible {
+    outline: solid 2px yellow;
+  }
   
   div.user {
     grid-area: user;
@@ -137,6 +143,12 @@
   }
   button.signout:focus {
     background: rgba(255, 255, 255, 15%);
+    outline: solid 2px yellow;
+  }
+  button.signout:focus:not(:focus-visible) {
+    outline: none;
+  }
+  button.signout:focus-visible {
     outline: solid 2px yellow;
   }
 

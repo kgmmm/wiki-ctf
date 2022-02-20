@@ -160,7 +160,7 @@
     text-align: center;
   }
 
-  div.gameMenu button.createLobby {
+  button.createLobby {
     width: 250px;
     height: 60px;
     font-size: 1.1rem;
@@ -170,11 +170,17 @@
     border: none;
     cursor: pointer;
   }
-  div.gameMenu button.createLobby:hover {
+  button.createLobby:hover {
     background: var(--blue-highlight);
   }
-  div.gameMenu button.createLobby:focus {
+  button.createLobby:focus {
     background: var(--blue-highlight);
+    outline: solid 2px yellow;
+  }
+  button.createLobby:focus:not(:focus-visible) {
+    outline: none;
+  }
+  button.createLobby:focus-visible {
     outline: solid 2px yellow;
   }
 
@@ -190,7 +196,7 @@
     font-weight: 500;
   }
 
-  div.gameMenu input[type="text"].lobbyCode {
+  input[type="text"].lobbyCode {
     margin-block: 1em;
     padding: 0.5em;
     width: 250px;
@@ -203,10 +209,10 @@
     border-radius: 3px;
     background: rgba(255, 255, 255, 15%);
   }
-  div.gameMenu input[type="text"].lobbyCode::placeholder {
+  input[type="text"].lobbyCode::placeholder {
     color: rgba(255, 255, 255, 50%);
   }
-  div.gameMenu input[type="text"].lobbyCode:focus {
+  input[type="text"].lobbyCode:focus {
     outline: solid 2px yellow;
   }
 </style>

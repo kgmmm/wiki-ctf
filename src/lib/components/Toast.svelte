@@ -87,8 +87,20 @@
     color: #fff;
     background: transparent;
     border: none;
+    border-radius: 3px;
   }
-
+  button:hover {
+    background: rgba(255, 255, 255, 15%);
+  }
+  button:focus {
+    outline: solid 2px yellow;
+  }
+  button:focus:not(:focus-visible) {
+    outline: none;
+  }
+  button:focus-visible {
+    outline: solid 2px yellow;
+  }
   button svg {
     fill: currentColor;
     width: 1em;

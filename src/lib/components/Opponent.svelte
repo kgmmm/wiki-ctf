@@ -88,6 +88,12 @@
     background: rgba(255, 255, 255, 15%);
     outline: solid 2px yellow;
   }
+  button.disconnect:focus:not(:focus-visible) {
+    outline: none;
+  }
+  button.disconnect:focus-visible {
+    outline: solid 2px yellow;
+  }
 
   button.disconnect svg {
     fill: currentColor;

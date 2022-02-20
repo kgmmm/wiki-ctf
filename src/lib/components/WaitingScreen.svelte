@@ -99,6 +99,16 @@
     border-radius: 3px 0 0 3px;
     cursor: pointer;
   }
+  button.clipboard:focus {
+    outline: solid 2px yellow;
+  }
+  button.clipboard:focus:not(:focus-visible) {
+    outline: none;
+  }
+  button.clipboard:focus-visible {
+    outline: solid 2px yellow;
+  }
+
   button.clipboard svg {
     fill: black;
     width: 1em;
@@ -134,5 +144,14 @@
   }
   button.cancel:hover {
     background: rgba(255, 255, 255, 15%);
+  }
+  button.cancel:focus {
+    outline: solid 2px yellow;
+  }
+  button.cancel:focus:not(:focus-visible) {
+    outline: none;
+  }
+  button.cancel:focus-visible {
+    outline: solid 2px yellow;
   }
 </style>
