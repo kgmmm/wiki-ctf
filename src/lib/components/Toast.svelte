@@ -1,30 +1,30 @@
 <script>
   import { fly } from "svelte/transition";
   import { toast } from "$lib/stores/toast";
-  import { onMount } from "svelte";
+  import { onDestroy } from "svelte";
 
   export let title;
   export let message;
 
   let toastTimeout;
 
-  onMount(() => {
-    if ($toast.title) {
-      toastTimeout = setTimeout(() => {
-        toast.set({
-          title: undefined,
-          message: undefined,
-        });
-      }, 5000);
-    }
-
-    return () => {
-      clearTimeout(toastTimeout);
+  const clearToast = toast.subscribe(data => {
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
       toast.set({
         title: undefined,
         message: undefined,
       });
-    };
+    }, 5000);
+  });
+
+  onDestroy(() => {
+    clearToast;
+    clearTimeout(toastTimeout);
+    toast.set({
+      title: undefined,
+      message: undefined,
+    });
   });
 </script>
 
