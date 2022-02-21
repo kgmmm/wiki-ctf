@@ -61,7 +61,11 @@
       gameState = newState;
     });
 
-    socket.on("eject", () => {
+    socket.on("eject", (pop) => {
+      toast.set({
+        title: pop.title,
+        message: pop.message,
+      });
       disconnectFromGame();
     });
 

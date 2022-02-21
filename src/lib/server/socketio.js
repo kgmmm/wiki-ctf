@@ -112,8 +112,7 @@ io.on("connection", (socket) => {
       if(liveGames[whichGame]) { // if the gamestate is still in the array
         delete liveGames[whichGame]; // delete the game from liveGames
       }
-      io.sockets.in(whichGame).emit("pop", { title: "Game Cancelled!", message: "Your opponent disconnected." }); // pop some toast saying someone DC'd
-      io.sockets.in(whichGame).emit("eject"); // kick everyone from the game
+      io.sockets.in(whichGame).emit("eject", { title: "Game Cancelled!", message: "Your opponent disconnected." }); // kick everyone from the game (carry toast message)
     }
     // console.log(liveGames); // LOG
   });
