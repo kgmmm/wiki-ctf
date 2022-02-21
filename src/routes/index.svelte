@@ -18,9 +18,14 @@
     })
     .then(response => response.json())
     .then(data => {
-      if(data === true) {
+      if(data.isGame === true && data.numPlayers === 1) {
         goto("/game/" + lobbyCode);
-      } else if (data === false) {
+      } else if (data.isGame === true) {
+        toast.set({
+          title: "Lobby is Full!",
+          message: "That lobby is already full.",
+        });
+      } else if (data.isGame === false) {
         toast.set({
           title: "Invalid Lobby Code!",
           message: "That lobby does not exist.",

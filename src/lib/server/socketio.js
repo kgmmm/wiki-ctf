@@ -86,7 +86,7 @@ io.on("connection", (socket) => {
       let playerCount = liveGames[lobbyCode]["players"].length;
 
       if (playerCount == 2) {
-        socket.emit("lobbyFull");
+        socket.emit("eject", { title: "Lobby is Full!", message: "That lobby is already full." });
       } else if (playerCount == 1) {
         socket.join(lobbyCode);
         socketMap.set(socket.id, lobbyCode);
