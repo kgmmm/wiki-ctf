@@ -189,16 +189,6 @@
   button.createLobby:hover {
     background: var(--blue-highlight);
   }
-  button.createLobby:focus {
-    background: var(--blue-highlight);
-    outline: solid 2px yellow;
-  }
-  button.createLobby:focus:not(:focus-visible) {
-    outline: none;
-  }
-  button.createLobby:focus-visible {
-    outline: solid 2px yellow;
-  }
 
   div.gameMenu span {
     margin-block: 1em;

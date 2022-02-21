@@ -74,3 +74,13 @@ body {
 	display: grid;
 	place-items: center;
 }
+
+button:focus {
+	outline: solid 2px yellow;
+}
+button:focus:not(:focus-visible) {
+	outline: none;
+}
+button:focus-visible {
+	outline: solid 2px yellow;
+}
