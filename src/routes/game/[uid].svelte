@@ -10,12 +10,13 @@
   import { getAuth, onAuthStateChanged } from "firebase/auth";
   import { onMount, tick } from "svelte";
   import SignInOut from "$lib/components/SignInOut.svelte";
-  import Loader from "$lib/components/Loader.svelte";
   import Opponent from "$lib/components/Opponent.svelte";
   import WaitingView from "$lib/components/WaitingView.svelte";
   import PlantingView from "$lib/components/PlantingView.svelte";
   import { authStore } from "$lib/stores/authStore";
   import { toast } from "$lib/stores/toast";
+  import { splash } from "$lib/stores/splash";
+  import Splash from "$lib/components/Splash.svelte";
 
   export let lobbyCode;
 
@@ -182,10 +183,8 @@
   <link rel="stylesheet" href="/style/wiki.css">
 </svelte:head>
 
-{#if loading}
-  <div class="loaderWrap">
-    <Loader size="60" />
-  </div>
+{#if $splash.text != undefined || $splash === "loader"}
+  <Splash />
 {/if}
 <article id="wikiContent" bind:this={wikiContent}>
 
@@ -199,36 +198,10 @@
   {#if gameState.stage == "planting"}
     <PlantingView {gameState} />
   {/if}
-    <!-- <div class="temp">
-      <div class="title">
-        <h3>{returnedTitle}</h3>
-      </div>
-      <form on:submit|preventDefault={wikiFetch}>
-        <input type="text" bind:value={searchInput} disabled={inputDisabled}>
-        {#if searchError}
-          <span class="searchError">Try something else</span>
-        {/if}
-      </form>
-    </div> -->
   <SignInOut />
 </aside>
 
 <style>
-  div.temp {
-    display: grid;
-    place-items: center;
-  }
-
-  div.loaderWrap {
-    background: rgba(0, 0, 0, 25%);
-    position: fixed;
-    inset: 0;
-    right: 400px;
-    z-index: 999;
-    display: grid;
-    place-items: center;
-  }
-
   #wikiContent {
     position: relative;
     z-index: -1;

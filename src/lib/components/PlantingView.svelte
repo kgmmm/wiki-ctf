@@ -1,7 +1,7 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-
-  const dispatch = createEventDispatcher();
+  import { splash } from '$lib/stores/splash';
+  import { sleep } from "$lib/utils";
+  import { onMount } from 'svelte';
 
   export let gameState;
 
@@ -11,8 +11,22 @@
   let searchQuery;
   let lastFetched;
 
-  function searchButton() {
-    console.log("Search Button");
+  onMount(async () => {
+    for (let i = 3; i >= 0; i--) {
+      if(i === 0) i = "GO";
+      splash.set({
+        text: i,
+      });
+      await sleep(1000);
+    }
+    splash.set({
+      text: undefined,
+    });
+    freeze = false;
+  });
+
+  function wikiSearch() {
+    console.log("wiki search");
   }
 
   function plantFlag() {
@@ -23,9 +37,9 @@
 <div>
   <h1>30</h1>
   <p>Search for a page and plant your flag!</p>
-  <form on:submit|preventDefault>
+  <form on:submit|preventDefault={wikiSearch}>
     <input type="text" disabled={freeze} bind:value={searchQuery} required>
-    <button title="Search" class="search" disabled={!searchQuery || freeze} on:click={searchButton}>
+    <button title="Search" type="submit" class="search" disabled={freeze}>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-search" viewBox="0 0 16 16">
         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
       </svg>
@@ -138,7 +152,6 @@
 
   button.plant[disabled] {
     cursor: not-allowed;
-    opacity: 50%;
   }
   button.plant[disabled]:hover {
     background: rgba(255, 255, 255, 10%)
