@@ -94,6 +94,7 @@ io.on("connection", (socket) => {
         liveGames[lobbyCode].players[1].id = userData.userID;
         liveGames[lobbyCode].players[1].displayName = userData.displayName;
         liveGames[lobbyCode].players[1].profilePic = userData.profilePic;
+        liveGames[lobbyCode].stage = "planting";
         io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
         // console.log(socketMap); // LOG
         // console.log(liveGames); // LOG

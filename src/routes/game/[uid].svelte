@@ -12,7 +12,8 @@
   import SignInOut from "$lib/components/SignInOut.svelte";
   import Loader from "$lib/components/Loader.svelte";
   import Opponent from "$lib/components/Opponent.svelte";
-  import WaitingScreen from "$lib/components/WaitingScreen.svelte";
+  import WaitingView from "$lib/components/WaitingView.svelte";
+  import PlantingView from "$lib/components/PlantingView.svelte";
   import { authStore } from "$lib/stores/authStore";
   import { toast } from "$lib/stores/toast";
 
@@ -29,7 +30,7 @@
   $: {
     if (gameState.players && gameState["players"].length > 1) {
       backgroundGradient = gameState["players"].length == 2;
-      
+
       opponentData = gameState.players.find(player => player.id !== $authStore.userID);
       opponentProps = {
         userID: opponentData.id,
@@ -193,7 +194,10 @@
   {#if opponentProps}
     <Opponent on:click={disconnectFromGame} {...opponentProps} />
   {:else if gameState.stage == "waiting"}
-    <WaitingScreen {lobbyCode} on:toaster={(event) => toast.set(event.detail)} on:cancelGame={disconnectFromGame}/>
+    <WaitingView {lobbyCode} on:toaster={(event) => toast.set(event.detail)} on:cancelGame={disconnectFromGame}/>
+  {/if}
+  {#if gameState.stage == "planting"}
+    <PlantingView {gameState} />
   {/if}
     <!-- <div class="temp">
       <div class="title">

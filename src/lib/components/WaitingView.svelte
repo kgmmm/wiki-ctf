@@ -1,5 +1,4 @@
 <script>
-  import { goto } from "$app/navigation";
   import Loader from "$lib/components/Loader.svelte";
 
   import { createEventDispatcher } from 'svelte';
