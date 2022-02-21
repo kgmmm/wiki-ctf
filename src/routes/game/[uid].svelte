@@ -69,10 +69,6 @@
       disconnectFromGame();
     });
 
-    socket.on("lobbyFull", () => {
-      disconnectFromGame();
-    });
-
     socket.on("pop", (data) => {
       toast.set({
         title: data.title,
