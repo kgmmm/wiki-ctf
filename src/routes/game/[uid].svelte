@@ -24,8 +24,12 @@
   let opponentProps;
   let myData;
 
+  let backgroundGradient;
+
   $: {
     if (gameState.players && gameState["players"].length > 1) {
+      backgroundGradient = gameState["players"].length == 2;
+      
       opponentData = gameState.players.find(player => player.id !== $authStore.userID);
       opponentProps = {
         userID: opponentData.id,
@@ -185,7 +189,7 @@
 <article id="wikiContent" bind:this={wikiContent}>
 
 </article>
-<aside>
+<aside class:backgroundGradient>
   {#if opponentProps}
     <Opponent on:click={disconnectFromGame} {...opponentProps} />
   {:else if gameState.stage == "waiting"}
@@ -243,5 +247,8 @@
       "user";
     background: var(--red);
     box-shadow: 0 0 5px rgba(0, 0, 0, 25%);
+  }
+  aside.backgroundGradient {
+    background: linear-gradient(to bottom, var(--blue) 50%, var(--red) 0%);
   }
 </style>
