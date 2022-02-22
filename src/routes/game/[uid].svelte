@@ -47,6 +47,10 @@
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) return;
+      toast.set({
+        title: "Not Signed In!",
+        message: "You need to sign in to play.",
+      });
       goto("/", { replaceState: true, noscroll: false, keepfocus: false, state: {} });
     });
 
