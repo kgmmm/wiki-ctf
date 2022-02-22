@@ -1,7 +1,29 @@
-<script context="module"> // grab the lobbycode from url path and put it in a variable
-  export async function load({ url: { pathname } }) {
-    const lobbyCode = pathname.substring(6);
-    return { props: { lobbyCode: lobbyCode } };
+<script context="module">
+  import { authStore as userAuth } from '$lib/stores/authStore'; // grab the auth store
+  
+  let auth = {};
+  userAuth.subscribe(data => auth = data); // make the data itself accessible
+
+  export async function load({ url, params, props, fetch, session, stuff }) {
+    const lobbyCode = url.pathname.substring(6); // grab the lobby code from the url pathname
+
+    if (!auth.isLoggedIn) { // if you're not logged in, redirect to homepage
+      return {
+        status: 302,
+        redirect: '/',
+      };
+    } else if (auth.isLoggedIn) { // if you are logged in, let you pass carrying the lobbyCode prop
+      return {
+        props: {
+          lobbyCode: lobbyCode,
+        }
+      };
+    } else { // fallback redirect if auth data is not available
+      return {
+        status: 302,
+        redirect: '/',
+      }
+    }
   }
 </script>
 <script>
@@ -51,6 +73,7 @@
         title: "Not Signed In!",
         message: "You need to sign in to play.",
       });
+      socket.disconnect();
       goto("/", { replaceState: true, noscroll: false, keepfocus: false, state: {} });
     });
 
