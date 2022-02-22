@@ -1,5 +1,6 @@
 <script>
   import { splash } from '$lib/stores/splash';
+  import Loader from "$lib/components/Loader.svelte";
   import { sleep } from "$lib/utils";
   import { onMount } from 'svelte';
 
@@ -7,6 +8,11 @@
 
   let freeze = true;
   let searchError = false;
+
+  let loader = false;
+
+  let time = 30;
+  let countdown = false;
 
   let searchQuery;
   let lastFetched;
@@ -23,19 +29,36 @@
       text: undefined,
     });
     freeze = false;
+    countdown = true;
+    startTimer();
   });
 
-  function wikiSearch() {
-    console.log("wiki search");
+  async function startTimer() {
+    while (time > 0 && countdown == true) {
+      await sleep(1000);
+      time--;
+    }
+    console.log("ZEROOOOO"); // whatever point countdown is terminated at, this will run.
+    loader = true;
+    freeze = true;
   }
 
-  function plantFlag() {
+  function wikiSearch() { // TEMP
+    console.log("wiki search");
+    countdown = false;
+  }
+
+  function plantFlag() { // TEMP
     console.log("Plant Flag");
   }
 </script>
 
 <div>
-  <h1>30</h1>
+  {#if !loader}
+    <h1>{time}</h1>
+  {:else if loader}
+    <Loader size="70" color="#fff" />
+  {/if}
   <p>Search for a page and plant your flag!</p>
   <form on:submit|preventDefault={wikiSearch}>
     <input type="text" disabled={freeze} bind:value={searchQuery} required>
@@ -65,7 +88,7 @@
   }
 
   h1 {
-    font-size: 4rem;
+    font-size: 4.5rem;
   }
 
   p {
@@ -102,7 +125,6 @@
   }
   button.search[disabled] {
     cursor: not-allowed;
-    opacity: 50%;
   }
 
   button.search svg {
@@ -132,7 +154,6 @@
   }
   input[type="text"][disabled] {
     cursor: not-allowed;
-    opacity: 50%;
   }
 
   button.plant {

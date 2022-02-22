@@ -25,8 +25,10 @@ export let liveGames = [];
 //       carrying: false, // is a flag being carried by this player
 //       displayName: undefined, // display name from firebase auth
 //       profilePic: undefined, // profile picture from firebase auth
+//       ready: Boolean,  // is the playing ready to play (helps with sync)
 //     }
-//   ]
+//   ],
+//  public: Boolean, // is the game open for people searching to play (not implemented yet)
 // }
 // const newPlayer = {
 //   id: undefined,
@@ -56,6 +58,7 @@ function Game() {
   this.scoreLimit = 3;
   this.players = [];
   this.players[0] = new Player();
+  this.public = false;
 }
 let socketMap = new Map();
 

@@ -4,15 +4,11 @@
   import { scale, fade } from "svelte/transition";
 </script>
 
-<div>
+<div class="overlay" in:fade={{duration: 100}}>
   {#if $splash === "loader"}
-    <div class="overlay" in:fade={{duration: 100}}>
       <Loader size="80" />
-    </div>
   {:else if $splash.text}
-    <div class="overlay" in:fade={{duration: 100}}>
       <h1 class="splashText" in:scale={{start: 1.5, duration: 200}} out:scale={{duration: 200}}>{$splash.text}</h1>
-    </div>
   {/if}
 </div>
 
