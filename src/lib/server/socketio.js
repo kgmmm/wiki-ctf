@@ -94,6 +94,9 @@ io.on("connection", (socket) => {
       if (playerCount == 2) {
         socket.emit("eject", { title: "Lobby is Full!", message: "That lobby is already full." });
       } else if (playerCount == 1) {
+        if (liveGames[lobbyCode].players[0].id === userData.userID) {
+          socket.emit("eject", { title: "Cannot Join Game!", message: "You cannot join your own game." });
+        }
         socket.join(lobbyCode);
         socketMap.set(socket.id, lobbyCode);
         liveGames[lobbyCode].players[1] = new Player();
