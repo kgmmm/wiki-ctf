@@ -36,7 +36,7 @@
         startCountdown();
       } else {
         splash.set({
-          text: i,
+          text: i.toString(),
         });
         i--;
       }
