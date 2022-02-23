@@ -1,6 +1,6 @@
 <script>
   export let size;
-  export let color;
+  export let color = "var(--red)";
 </script>
 
 <div style="width: {size}px; height: {size}px; --b: {size / 8}px; border-top-color: {color};"></div>

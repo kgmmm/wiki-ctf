@@ -22,7 +22,7 @@ export async function handle({ event, resolve }) {
     return new Response(JSON.stringify(result));
 	}
 
-  if (event.url.pathname === "/api/games/" || event.url.pathname === "/api/games") {
+  if (event.url.pathname === "/api/games/" || event.url.pathname === "/api/games") { // TODO: CHANGE THIS TO ONLY INCLUDE 'PUBLIC: TRUE' GAMES AND USE THIS FOR MATCHMAKING
     if(Object.keys(liveGames).length > 0) {
       let gamesObj = {...liveGames};
 
