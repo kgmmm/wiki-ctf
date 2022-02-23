@@ -120,7 +120,7 @@
   });
 
   let searchQuery;
-  let freeze = false; // TRUE BY DEFAULT
+  let freeze = true;
   let searchError = false;
   let wikiContent;
   let lastSuccess = "";
@@ -214,7 +214,7 @@
 {#if $splash.text != undefined || $splash === "loader"}
   <Splash />
 {/if}
-<article id="wikiContent" bind:this={wikiContent}>
+<article id="wikiContent" bind:this={wikiContent} tabindex="-1">
 
 </article>
 <aside class:backgroundGradient>

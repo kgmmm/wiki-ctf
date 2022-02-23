@@ -1,8 +1,7 @@
 <script>
-  // import { splash } from '$lib/stores/splash';
+  import { splash } from '$lib/stores/splash';
   import Loader from "$lib/components/Loader.svelte";
-  // import { onMount } from 'svelte';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -17,6 +16,58 @@
   let searchQuery;
   export let lastSuccess;
 
+  let threeSeconds;
+
+  onMount(() => {
+    let i = 3;
+    threeSeconds = setInterval(() => {
+      if(i === "GO") {
+        splash.set({
+          text: undefined,
+        });
+        return clearInterval(threeSeconds);
+      } else if(i == 0) {
+        i = "GO";
+        splash.set({
+          text: i,
+        });
+        countdown = true;
+        freeze = false;
+        startCountdown();
+      } else {
+        splash.set({
+          text: i,
+        });
+        i--;
+      }
+    }, 1000);
+  });
+
+  onDestroy(() => {
+    clearInterval(threeSeconds);
+    clearInterval(thirtySeconds);
+    splash.set({
+      text: undefined,
+    });
+  });
+
+  let thirtySeconds;
+  
+  function startCountdown() {
+    thirtySeconds = setInterval(() => {
+      if(time == 0 || countdown == false) {
+        clearInterval(thirtySeconds);
+        console.log("ZEROOOOO");
+        splash.set({
+          text: "Waiting...",
+        });
+        loader = true;
+        freeze = true;
+      }
+      time--;
+    }, 1000);
+  }
+  
   // let sleeper;
 
   // onMount(async () => {

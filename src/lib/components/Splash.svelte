@@ -8,7 +8,11 @@
   {#if $splash === "loader"}
       <Loader size="80" />
   {:else if $splash.text}
+    {#if $splash.text == "GO"}
       <h1 class="splashText" in:scale={{start: 1.5, duration: 200}} out:scale={{duration: 200}}>{$splash.text}</h1>
+    {:else}
+      <h1 class="splashText" in:scale={{start: 1.5, duration: 200}}>{$splash.text}</h1>
+    {/if}
   {/if}
 </div>
 
@@ -22,11 +26,12 @@
     display: grid;
     place-items: center;
     isolation: isolate;
+    overflow: hidden;
   }
 
   h1.splashText {
     color: var(--red);
-    font-size: 12rem;
+    font-size: 12rem; /* TODO: use clamp for fontsize that changes depending on how many characters (might be useful elsewhere) min 6.5 max 12 */
     user-select: none;
   }
 </style>
