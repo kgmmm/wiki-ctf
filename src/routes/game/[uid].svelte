@@ -73,7 +73,6 @@
         title: "Not Signed In!",
         message: "You need to sign in to play.",
       });
-      socket.disconnect();
       goto("/", { replaceState: true, noscroll: false, keepfocus: false, state: {} });
     });
 
@@ -120,24 +119,23 @@
     socket.disconnect();
   });
 
-  let loading;
-  let searchInput;
-  let inputDisabled = false;
+  let searchQuery;
+  let freeze = false; // TRUE BY DEFAULT
   let searchError = false;
   let wikiContent;
-  let returnedTitle = "";
   let lastSuccess = "";
 
-  async function wikiFetch() {
-    if(searchInput == lastSuccess) {
+  async function wikiFetch(event) {
+    if(event) searchQuery = event.detail.query;
+    if(searchQuery == lastSuccess) {
       console.log("same request as before"); // LOG
       return
     }
     console.time("roundtrip"); // LOG
-    loading = true;
-    inputDisabled = true;
+    freeze = true;
+    splash.set("loader");
 
-    let apiURL = `https://en.wikipedia.org/w/api.php?action=parse&prop=text&format=json&origin=*&page=${searchInput}&redirects`;
+    let apiURL = `https://en.wikipedia.org/w/api.php?action=parse&prop=text&format=json&origin=*&page=${searchQuery}&redirects`;
 
     const res = await fetch(apiURL, {
       mode: "cors",
@@ -148,15 +146,17 @@
 
     if("error" in response) {
       searchError = true;
-      loading = false;
-      inputDisabled = false;
+      splash.set({
+        text: undefined,
+      });
+      freeze = false;
       console.timeEnd("roundtrip"); // LOG
       return;
     } else {
       searchError = false;
     }
 
-    await socket.emit("fetchedPage", $authStore.userID, { pageid: response.parse.pageid, title: response.parse.title });
+    socket.emit("fetchedPage", $authStore.userID, { pageid: response.parse.pageid, title: response.parse.title });
 
     populateArticle(response);
   }
@@ -177,7 +177,7 @@
           document.getElementById(targetHref.substring(1)).scrollIntoView();
         }
         if (targetHref.substring(0, 6) === "/wiki/") {
-          searchInput = decodeURI(targetHref).substring(6);
+          searchQuery = decodeURI(targetHref).substring(6);
           wikiFetch();
         }
       });
@@ -187,18 +187,19 @@
   async function populateArticle(response) {
     wikiContent.scrollTop = 0;
     
-    // returnedTitle = response.parse.title; -> title gets set by the server now
     wikiContent.innerHTML = response.parse.text["*"];
 
     console.timeEnd("roundtrip"); // LOG
 
-    lastSuccess = searchInput;
-    searchInput = "";
+    lastSuccess = searchQuery;
+    searchQuery = "";
 
     const addListeners = await ListenLinks(); // set links before removing the cover
 
-    loading = false;
-    inputDisabled = false;
+    splash.set({
+      text: undefined,
+    });
+    freeze = false;
   }
 
   function disconnectFromGame() {
@@ -223,7 +224,7 @@
     <WaitingView {lobbyCode} on:toaster={(event) => toast.set(event.detail)} on:cancelGame={disconnectFromGame}/>
   {/if}
   {#if gameState.stage == "planting"}
-    <PlantingView {gameState} />
+    <PlantingView {freeze} {lastSuccess} {searchError} on:search={wikiFetch} />
   {/if}
   <SignInOut />
 </aside>

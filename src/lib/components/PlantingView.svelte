@@ -1,13 +1,13 @@
 <script>
-  import { splash } from '$lib/stores/splash';
+  // import { splash } from '$lib/stores/splash';
   import Loader from "$lib/components/Loader.svelte";
-  import { sleep } from "$lib/utils";
-  import { onMount } from 'svelte';
+  // import { onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
-  export let gameState;
+	const dispatch = createEventDispatcher();
 
-  let freeze = true;
-  let searchError = false;
+  export let freeze = true;
+  export let searchError = false;
 
   let loader = false;
 
@@ -15,37 +15,57 @@
   let countdown = false;
 
   let searchQuery;
-  let lastFetched;
+  export let lastSuccess;
 
-  onMount(async () => {
-    for (let i = 3; i >= 0; i--) {
-      if(i === 0) i = "GO";
-      splash.set({
-        text: i,
-      });
-      await sleep(1000);
-    }
-    splash.set({
-      text: undefined,
+  // let sleeper;
+
+  // onMount(async () => {
+  //   const sleep = (ms = 5000) => new Promise((r) => sleeper = setTimeout(r, ms));
+  //   for (let i = 3; i >= 0; i--) {
+  //     if(i === 0) i = "GO";
+  //     splash.set({
+  //       text: i,
+  //     });
+  //     await sleep(1000);
+  //   }
+  //   splash.set({
+  //     text: undefined,
+  //   });
+  //   freeze = false;
+  //   countdown = true;
+  //   startTimer();
+  // });
+
+  // let countdownTimer;
+
+  // function Timer() {
+	// 	clearInterval(countdownTimer);
+	// 	return new Promise(function(resolve, reject) {
+	// 		countdownTimer = setInterval(function() {
+	// 			time--;
+	// 		if (time == 0 || countdown == false) {
+	// 			clearInterval(countdownTimer);
+	// 			resolve();
+	// 		}
+	// 		}, 1000);
+	// 	});
+	// }
+
+  // async function startTimer() {
+  //   await Timer();
+  //   console.log("ZEROOOOO"); // whatever point countdown is terminated at, this will run.
+  //   splash.set({
+  //     text: "Waiting...",
+  //   });
+  //   loader = true;
+  //   freeze = true;
+  // }
+
+  function search() {
+    dispatch("search", {
+      query: searchQuery,
     });
-    freeze = false;
-    countdown = true;
-    startTimer();
-  });
-
-  async function startTimer() {
-    while (time > 0 && countdown == true) {
-      await sleep(1000);
-      time--;
-    }
-    console.log("ZEROOOOO"); // whatever point countdown is terminated at, this will run.
-    loader = true;
-    freeze = true;
-  }
-
-  function wikiSearch() { // TEMP
-    console.log("wiki search");
-    countdown = false;
+    searchQuery = "";
   }
 
   function plantFlag() { // TEMP
@@ -59,8 +79,8 @@
   {:else if loader}
     <Loader size="70" color="#fff" />
   {/if}
-  <p>Search for a page and plant your flag!</p>
-  <form on:submit|preventDefault={wikiSearch}>
+  <p>Search for an article and plant your flag!</p>
+  <form on:submit|preventDefault={search}>
     <input type="text" disabled={freeze} bind:value={searchQuery} required>
     <button title="Search" type="submit" class="search" disabled={freeze}>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-search" viewBox="0 0 16 16">
@@ -71,7 +91,7 @@
       <strong>Try something else</strong>
     {/if}
   </form>
-  <button class="plant" disabled={!lastFetched || freeze} on:click={plantFlag}>Plant Flag</button>
+  <button class="plant" disabled={!lastSuccess || freeze} on:click={plantFlag}>Plant Flag</button>
 </div>
 
 <style>

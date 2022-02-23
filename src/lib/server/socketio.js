@@ -66,8 +66,11 @@ io.on("connection", (socket) => {
   console.log(`${socket.id} connected.`);
 
   socket.on("fetchedPage", (userID, data) => {
-    console.log(`${userID} fetched page: '${data.pageid}' with title '${data.title}' on socket ${socket.id}`);
-    socket.emit("returnTitle", data.title);
+    console.log(`${userID} fetched page: '${data.pageid}' with title '${data.title}' on socket ${socket.id}`); // LOG
+    let lobbyCode = socketMap.get(socket.id);
+    let targetPlayer = liveGames[lobbyCode]["players"].find(player => player.id === userID);
+    targetPlayer.location = data.title;
+    io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
   });
 
   socket.on("initGame", (lobbyCode, userData) => {
