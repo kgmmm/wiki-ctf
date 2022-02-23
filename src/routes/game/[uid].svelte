@@ -1,29 +1,7 @@
 <script context="module">
-  import { authStore as userAuth } from '$lib/stores/authStore'; // grab the auth store
-  
-  let auth = {};
-  userAuth.subscribe(data => auth = data); // make the data itself accessible
-
-  export async function load({ url, params, props, fetch, session, stuff }) {
-    const lobbyCode = url.pathname.substring(6); // grab the lobby code from the url pathname
-
-    if (!auth.isLoggedIn) { // if you're not logged in, redirect to homepage
-      return {
-        status: 302,
-        redirect: '/',
-      };
-    } else if (auth.isLoggedIn) { // if you are logged in, let you pass carrying the lobbyCode prop
-      return {
-        props: {
-          lobbyCode: lobbyCode,
-        }
-      };
-    } else { // fallback redirect if auth data is not available
-      return {
-        status: 302,
-        redirect: '/',
-      }
-    }
+  export async function load({ url: { pathname } }) {
+    const lobbyCode = pathname.substring(6); // grab the lobby code from the url pathname
+    return { props: { lobbyCode: lobbyCode, } }; // return it as a page prop
   }
 </script>
 <script>
