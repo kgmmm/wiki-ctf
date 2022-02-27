@@ -7,7 +7,11 @@
 
   export let myData;
 
-  $: fontSize = 380 / myData["location"].length / 16 + "rem";
+  let fontSize;
+
+  $: if(myData.location) {
+    fontSize = 380 / myData["location"].length / 16 + "rem";
+  }
 
   export let freeze = true;
   export let searchError = false;
@@ -113,7 +117,7 @@
       {myData.location}
     </output>
   {/if}
-  <button class="plant" disabled={!lastSuccess || freeze} on:click={plantFlag}>Plant Flag</button>
+  <button class="plant" disabled={!lastSuccess || freeze} on:click={plantFlag} style="margin-bottom: {lastSuccess ? 'unset' : '5.5rem'};">Plant Flag</button>
 </div>
 
 <style>
