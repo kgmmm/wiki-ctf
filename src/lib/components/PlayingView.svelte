@@ -16,7 +16,7 @@
       splash.set({
         text: undefined,
       });
-    }, 500);
+    }, 1500);
 
     return () => {
       clearInterval(removeSplash);

@@ -108,7 +108,7 @@
 
   async function wikiFetch(event) {
     if(event) searchQuery = event.detail.query;
-    if(searchQuery == lastSuccess) {
+    if(searchQuery.toLowerCase() == lastSuccess.toLowerCase()) {
       console.log("same request as before"); // LOG
       return
     }
@@ -184,7 +184,7 @@
   }
 
   function plantFlag(event) {
-    socket.emit("plantFlag", $authStore.userID, lastSuccess, event.detail.timer);
+    socket.emit("plantFlag", $authStore.userID, event.detail.timer);
   }
 
   function disconnectFromGame() {

@@ -73,7 +73,7 @@ io.on("connection", (socket) => {
     io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
   });
 
-  socket.on("plantFlag", (userID, lastFetch, fromTimeout) => {
+  socket.on("plantFlag", (userID, fromTimeout) => {
     let lobbyCode = socketMap.get(socket.id);
     let targetPlayer = liveGames[lobbyCode]["players"].find(player => player.id === userID);
     let opponent = liveGames[lobbyCode]["players"].find(player => player.id !== userID);
@@ -83,8 +83,8 @@ io.on("connection", (socket) => {
         socket.emit("eject", { title: "Kicked!", message: "You have been kicked for being AFK." }); // kick you
       }
     } else if(fromTimeout == false) { // event came from the user planting
-      if(targetPlayer.planted == false && lastFetch !== opponent.base) { // if you havent planted yet, and you are trying a valid plant
-        targetPlayer.base = lastFetch; // set your base
+      if(targetPlayer.planted == false && targetPlayer.location !== opponent.base) { // if you havent planted yet, and you are trying a valid plant
+        targetPlayer.base = targetPlayer.location; // set your base
         targetPlayer.planted = true; // you have planted
         socket.emit("planted"); // send back the plant was success
         if(opponent.planted == true) { // if your opponent has already planted when you plant
@@ -93,7 +93,7 @@ io.on("connection", (socket) => {
           liveGames[lobbyCode].players[1].location = liveGames[lobbyCode].players[1].base;
           io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
         }
-      } else if (targetPlayer.planted == true || lastFetch === opponent.base) { // if you've already planted OR your plant attempt isnt valid
+      } else if (targetPlayer.planted == true || targetPlayer.location === opponent.base) { // if you've already planted OR your plant attempt isnt valid
         socket.emit("pop", { title: "Cannot Plant There!", message: "You can't plant your flag there." }); // pop toast
       }
     }
