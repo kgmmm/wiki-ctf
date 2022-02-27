@@ -88,7 +88,10 @@ io.on("connection", (socket) => {
         targetPlayer.planted = true; // you have planted
         socket.emit("planted"); // send back the plant was success
         if(opponent.planted == true) { // if your opponent has already planted when you plant
-          // prepare playing state
+          liveGames[lobbyCode].stage = "playing";
+          liveGames[lobbyCode].players[0].location = liveGames[lobbyCode].players[0].base;
+          liveGames[lobbyCode].players[1].location = liveGames[lobbyCode].players[1].base;
+          io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
         }
       } else if (targetPlayer.planted == true || lastFetch === opponent.base) { // if you've already planted OR your plant attempt isnt valid
         socket.emit("pop", { title: "Cannot Plant There!", message: "You can't plant your flag there." }); // pop toast

@@ -13,6 +13,7 @@
   import Opponent from "$lib/components/Opponent.svelte";
   import WaitingView from "$lib/components/WaitingView.svelte";
   import PlantingView from "$lib/components/PlantingView.svelte";
+  import PlayingView from "$lib/components/PlayingView.svelte";
   import { authStore } from "$lib/stores/authStore";
   import { toast } from "$lib/stores/toast";
   import { splash } from "$lib/stores/splash";
@@ -209,6 +210,8 @@
   {/if}
   {#if gameState.stage == "planting"}
     <PlantingView {freeze} {lastSuccess} {searchError} {planted} on:search={wikiFetch} on:plant={plantFlag} />
+  {:else if gameState.stage == "playing"}
+    <PlayingView {gameState} {opponentData} {myData} />
   {/if}
   <SignInOut />
 </aside>
