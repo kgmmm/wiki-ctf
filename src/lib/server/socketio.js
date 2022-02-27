@@ -81,12 +81,8 @@ io.on("connection", (socket) => {
     if(fromTimeout == true) { // event came from the time running out
       if(targetPlayer.planted == false) { // if you didnt plant
         socket.emit("eject", { title: "Kicked!", message: "You have been kicked for being AFK." }); // kick you
-      } else if(targetPlayer.planted == true) { // if you did plant
-        if(opponent.planted == true) { // and your opponent planted
-          // prepare playing state
-        }
       }
-    } else if(fromTimeout == false) { // evnet came from the user planting
+    } else if(fromTimeout == false) { // event came from the user planting
       if(targetPlayer.planted == false && lastFetch !== opponent.base) { // if you havent planted yet, and you are trying a valid plant
         targetPlayer.base = lastFetch; // set your base
         targetPlayer.planted = true; // you have planted

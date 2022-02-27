@@ -5,7 +5,6 @@
 
 	const dispatch = createEventDispatcher();
 
-  
   export let freeze = true;
   export let searchError = false;
   
