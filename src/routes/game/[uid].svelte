@@ -209,7 +209,7 @@
     <WaitingView {lobbyCode} on:toaster={(event) => toast.set(event.detail)} on:cancelGame={disconnectFromGame}/>
   {/if}
   {#if gameState.stage == "planting"}
-    <PlantingView {freeze} {lastSuccess} {searchError} {planted} on:search={wikiFetch} on:plant={plantFlag} />
+    <PlantingView {freeze} {lastSuccess} {searchError} {planted} {myData} on:search={wikiFetch} on:plant={plantFlag} />
   {:else if gameState.stage == "playing"}
     <PlayingView {gameState} {opponentData} {myData} />
   {/if}

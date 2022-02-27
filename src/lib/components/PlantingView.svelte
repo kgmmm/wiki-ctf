@@ -5,6 +5,10 @@
 
 	const dispatch = createEventDispatcher();
 
+  export let myData;
+
+  $: fontSize = 380 / myData["location"].length / 16 + "rem";
+
   export let freeze = true;
   export let searchError = false;
   
@@ -39,7 +43,7 @@
         });
         countdown = true;
         freeze = false;
-        startCountdown();
+        // startCountdown();
       } else {
         splash.set({
           text: i.toString(),
@@ -104,6 +108,11 @@
       <strong>Try something else</strong>
     {/if}
   </form>
+  {#if myData.location && lastSuccess}
+    <output style="font-size: Clamp(0.9rem, {fontSize}, 1.375rem);">
+      {myData.location}
+    </output>
+  {/if}
   <button class="plant" disabled={!lastSuccess || freeze} on:click={plantFlag}>Plant Flag</button>
 </div>
 
@@ -189,9 +198,25 @@
     cursor: not-allowed;
   }
 
+  output {
+    padding: 0.5rem;
+    height: 5.5rem;
+    width: 100%;
+    max-width: 375px;
+    border: none;
+    border-radius: 3px;
+    font-weight: 400;
+    color: #000;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    overflow: hidden;
+  }
+
   button.plant {
     padding: 0 1.5rem;
-    margin-bottom: 5.5rem;
+    /* margin-bottom: 5.5rem; */
     height: 2.4rem;
     font-size: 1rem;
     color: #fff;
