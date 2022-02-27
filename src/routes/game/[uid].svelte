@@ -42,6 +42,8 @@
     }
   }
 
+  let planted = false;
+
   onMount(async () => {
     await tick();
     const auth = getAuth();
@@ -61,14 +63,14 @@
         socket.emit("initGame", lobbyCode, { userID: $authStore.userID, displayName: $authStore.displayName, profilePic: $authStore.profilePic, });
       }
     });
-    
-    socket.on("returnTitle", (title) => {
-      returnedTitle = title;
-    });
 
     socket.on("gameStateUpdate", (newState) => {
       console.log(newState); // LOG
       gameState = newState;
+    });
+
+    socket.on("planted", () => {
+      planted = true;
     });
 
     socket.on("eject", (pop) => {
@@ -180,6 +182,10 @@
     freeze = false;
   }
 
+  function plantFlag(event) {
+    socket.emit("plantFlag", $authStore.userID, lastSuccess, event.detail.timer);
+  }
+
   function disconnectFromGame() {
     goto("/", { replaceState: true, noscroll: false, keepfocus: false, state: {} }); // socket disconnection is handled by beforeNavigate
   }
@@ -202,7 +208,7 @@
     <WaitingView {lobbyCode} on:toaster={(event) => toast.set(event.detail)} on:cancelGame={disconnectFromGame}/>
   {/if}
   {#if gameState.stage == "planting"}
-    <PlantingView {freeze} {lastSuccess} {searchError} on:search={wikiFetch} />
+    <PlantingView {freeze} {lastSuccess} {searchError} {planted} on:search={wikiFetch} on:plant={plantFlag} />
   {/if}
   <SignInOut />
 </aside>

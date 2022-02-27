@@ -5,16 +5,23 @@
 
 	const dispatch = createEventDispatcher();
 
+  
   export let freeze = true;
   export let searchError = false;
-
+  
   let loader = false;
-
+  
   let time = 30;
   let countdown = false;
-
+  
   let searchQuery;
   export let lastSuccess;
+
+  export let planted;
+
+  $: if(planted == true) {
+    countdown = false;
+  }
 
   let threeSeconds;
 
@@ -57,60 +64,16 @@
     thirtySeconds = setInterval(() => {
       if(time == 0 || countdown == false) {
         clearInterval(thirtySeconds);
-        console.log("ZEROOOOO");
         splash.set({
           text: "Waiting...",
         });
         loader = true;
         freeze = true;
+        if(planted == false) dispatch("plant", { timer: true });
       }
       time--;
     }, 1000);
   }
-  
-  // let sleeper;
-
-  // onMount(async () => {
-  //   const sleep = (ms = 5000) => new Promise((r) => sleeper = setTimeout(r, ms));
-  //   for (let i = 3; i >= 0; i--) {
-  //     if(i === 0) i = "GO";
-  //     splash.set({
-  //       text: i,
-  //     });
-  //     await sleep(1000);
-  //   }
-  //   splash.set({
-  //     text: undefined,
-  //   });
-  //   freeze = false;
-  //   countdown = true;
-  //   startTimer();
-  // });
-
-  // let countdownTimer;
-
-  // function Timer() {
-	// 	clearInterval(countdownTimer);
-	// 	return new Promise(function(resolve, reject) {
-	// 		countdownTimer = setInterval(function() {
-	// 			time--;
-	// 		if (time == 0 || countdown == false) {
-	// 			clearInterval(countdownTimer);
-	// 			resolve();
-	// 		}
-	// 		}, 1000);
-	// 	});
-	// }
-
-  // async function startTimer() {
-  //   await Timer();
-  //   console.log("ZEROOOOO"); // whatever point countdown is terminated at, this will run.
-  //   splash.set({
-  //     text: "Waiting...",
-  //   });
-  //   loader = true;
-  //   freeze = true;
-  // }
 
   function search() {
     dispatch("search", {
@@ -119,8 +82,8 @@
     searchQuery = "";
   }
 
-  function plantFlag() { // TEMP
-    console.log("Plant Flag");
+  function plantFlag() {
+    dispatch("plant", { timer: false });
   }
 </script>
 
