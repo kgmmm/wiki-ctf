@@ -1,7 +1,8 @@
-#wikiContent a[href*=':'],
+#wikiContent a[href*=':']:not([href*=':_']),
 #wikiContent a[href^='/w/'],
 #wikiContent a.external,
-#wikiContent a[title='Play media'] {
+#wikiContent a[title='Play media'],
+#wikiContent a.image {
 	cursor: not-allowed !important;
 }
 

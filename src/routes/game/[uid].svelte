@@ -149,11 +149,16 @@
 
         let targetHref = event.currentTarget.getAttribute("href");
 
-        if (event.currentTarget.classList.contains("external")) return;
         if (!targetHref) return;
-        if (targetHref.includes(":")) return;
+        if (event.currentTarget.classList.contains("external")) return;
+        if (targetHref.includes(":")) {
+          if (targetHref.match(/^.+?(:_).+?$/)) {
+            searchQuery = decodeURI(targetHref).substring(6);
+            wikiFetch();
+          }
+          return;
+        }
         if (targetHref.substring(0, 3) === "/w/") return;
-
         if (targetHref.substring(0, 1) === "#") {
           document.getElementById(targetHref.substring(1)).scrollIntoView();
         }
