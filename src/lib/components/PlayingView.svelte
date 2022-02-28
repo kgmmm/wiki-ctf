@@ -24,16 +24,32 @@
   });
 </script>
 
-<div>
-  <h1>{opponentData.base}</h1>
-  <h1>{opponentData.location}</h1>
+<div class="container">
+  <div class="opponent">
+    <h1>{opponentData.base}</h1>
+    <h1>{opponentData.location}</h1>
+  </div>
 
-  <h2>{gameState.roundTime}</h2>
+  <div class="scoreboard">
+    <h2>{gameState.roundTime}</h2>
+  </div>
 
-  <h1>{myData.location}</h1>
-  <h1>{myData.base}</h1>
+  <div class="me">
+    <h1>{myData.location}</h1>
+    <h1>{myData.base}</h1>
+  </div>
 </div>
 
 <style>
-  /* your styles go here */
+  div.container {
+    grid-area: content;
+    display: grid;
+    grid-template-rows: 1fr 100px 1fr;
+  }
+
+  div.opponent, div.me, div.scoreboard {
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
 </style>

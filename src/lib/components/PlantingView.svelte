@@ -47,7 +47,7 @@
         });
         countdown = true;
         freeze = false;
-        // startCountdown();
+        startCountdown();
       } else {
         splash.set({
           text: i.toString(),
@@ -113,7 +113,7 @@
     {/if}
   </form>
   {#if myData.location && lastSuccess}
-    <output style="font-size: Clamp(0.9rem, {fontSize}, 1.375rem);">
+    <output style="font-size: Clamp(0.9rem, {fontSize}, 1.375rem);"> <!-- TODO: stop this from looking pish -->
       {myData.location}
     </output>
   {/if}
