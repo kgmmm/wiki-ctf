@@ -7,7 +7,6 @@
   export let opponentData;
   export let myData;
 
-  
   function calcTime(time) {
     var minutes = Math.floor(time / 60000);
     var seconds = ((time % 60000) / 1000).toFixed(0);
@@ -39,8 +38,28 @@
 
 <div class="container">
   <div class="opponent">
-    <h1>{opponentData.base}</h1>
-    <h1>{opponentData.location}</h1>
+    <div class="oBase">
+      <div class="title">
+        opponent's base
+      </div>
+      <div class="display">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-flag-fill" viewBox="0 0 16 16">
+          <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
+        </svg>
+        <h1 style="font-size: Clamp(0.75rem, {320 / opponentData['base'].length / 8 + 'rem'}, 1.2rem);">{opponentData.base}</h1>
+      </div>
+    </div>
+    <div class="oLoc">
+      <div class="title">
+        opponent's location
+      </div>
+      <div class="display">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+          <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+        </svg>
+        <h1 style="font-size: Clamp(0.75rem, {320 / opponentData['location'].length / 8 + 'rem'}, 1.2rem);">{opponentData.location}</h1>
+      </div>
+    </div>
   </div>
 
   <div class="scoreboard">
@@ -76,8 +95,28 @@
   </div>
 
   <div class="me">
-    <h1>{myData.location}</h1>
-    <h1>{myData.base}</h1>
+    <div class="mLoc">
+      <div class="title">
+        your location
+      </div>
+      <div class="display">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+          <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+        </svg>
+        <h1 style="font-size: Clamp(0.75rem, {320 / myData['location'].length / 8 + 'rem'}, 1.2rem);">{myData.location}</h1>
+      </div>
+    </div>
+    <div class="mBase">
+      <div class="title">
+        your base
+      </div>
+      <div class="display">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-flag-fill" viewBox="0 0 16 16">
+          <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
+        </svg>
+        <h1 style="font-size: Clamp(0.75rem, {320 / myData['base'].length / 8 + 'rem'}, 1.2rem);">{myData.base}</h1>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -110,11 +149,82 @@
     text-align: center;
   }
 
+  div.opponent, div.me {
+    padding: 7px;
+    grid-template-rows: 1fr 1fr;
+    gap: 7px;
+  }
+
+  div.oBase, div.oLoc, div.mBase, div.mLoc {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1.5rem 1fr;
+  }
+
+  div.opponent div.title {
+    text-align: left;
+  }
+  div.opponent div.display {
+    padding-left: 1rem;
+    grid-template-areas: "text icon";
+    grid-template-columns: 1fr 3.5rem;
+  }
+  div.opponent div.display h1 {
+    justify-self: right;
+  }
+
+  div.me div.title {
+    text-align: right;
+  }
+  div.me div.display {
+    padding-right: 1rem;
+    grid-template-areas: "icon text";
+    grid-template-columns: 3.5rem 1fr;
+  }
+  div.me div.display h1 {
+    justify-self: left;
+  }
+
+  div.title {
+    padding: 0 0.5rem;
+    display: grid;
+    align-items: center;
+    background: rgba(0, 0, 0, 20%);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-family: 'Courier New', Courier, monospace;
+    color: rgba(255, 255, 255, 70%);
+    border-radius: 5px 5px 0 0;
+    user-select: none;
+  }
+
+  div.display {
+    /* height: 3.5rem; */
+    height: 100%;
+    min-height: 3.5rem;
+    display: grid;
+    place-items: center;
+    gap: 7px;
+    background: rgba(255, 255, 255, 15%);
+    border-radius: 0 0 5px 5px;
+  }
+  div.display > svg {
+    grid-area: icon;
+    width: 1em;
+    height: 1em;
+    font-size: 1.5rem;
+  }
+  div.display > h1 {
+    margin-block: 0.4rem;
+    grid-area: text;
+    font-size: 1.2rem;
+  }
+
   div.scoreboard {
     color: #fff;
     font-family: 'Courier New', Courier, monospace;
     background: linear-gradient(240deg, var(--blue) 50%, var(--red) 0%);
-    padding-block: 7px;
+    padding: 7px;
     grid-template-columns: 75px 33px 1fr 33px 75px;
     grid-template-rows: 1fr 1fr;
     gap: 7px;
