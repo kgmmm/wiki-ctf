@@ -215,7 +215,7 @@
     display: grid;
     place-items: center;
     gap: 7px;
-    background: rgba(255, 255, 255, 15%);
+    background: rgba(255, 255, 255, 10%);
     border-radius: 0 0 5px 5px;
   }
   div.display div.icon {
@@ -225,12 +225,15 @@
     display: grid;
     place-items: center;
     border-radius: 5px;
-    background: rgba(0, 0, 0, 15%);
+    background: var(--red-dark);
+  }
+  div.opponent div.icon {
+    background: var(--blue-dark);
   }
   div.icon svg {
     width: 1em;
     height: 1em;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     fill: #fff;
   }
 
@@ -289,17 +292,14 @@
     border-radius: 5px;
   }
 
-  div.myScore {
+  div.myScore, div.opponentScore {
     grid-area: mScore;
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px;
     font-size: 1.5rem;
     position: relative;
   }
   div.opponentScore {
     grid-area: oScore;
-    border-radius: 5px 0 0 5px;
-    font-size: 1.5rem;
-    position: relative;
   }
   div.opponentScore::after, div.myScore::after {
     content: "points";
