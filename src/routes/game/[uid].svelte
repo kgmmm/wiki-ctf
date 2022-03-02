@@ -18,6 +18,7 @@
   import { toast } from "$lib/stores/toast";
   import { splash } from "$lib/stores/splash";
   import Splash from "$lib/components/Splash.svelte";
+  import Modal from "$lib/components/Modal.svelte";
 
   export let lobbyCode;
 
@@ -203,6 +204,9 @@
 
 {#if $splash.text != undefined || $splash === "loader"}
   <Splash />
+{/if}
+{#if gameState.stage == "roundend" || gameState.stage == "gameend"}
+  <Modal {gameState} />
 {/if}
 <article id="wikiContent" bind:this={wikiContent} tabindex="-1">
 

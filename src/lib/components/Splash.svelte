@@ -28,7 +28,7 @@
     position: fixed;
     inset: 0;
     right: 400px;
-    z-index: 799;
+    z-index: 699;
     display: grid;
     place-items: center;
     isolation: isolate;
