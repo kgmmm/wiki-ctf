@@ -207,9 +207,12 @@ function gameLoop(gameState) {
   newState.roundTime = gameState.roundTime - _GAMEINTERVAL; // decrement the round timer
 
   if(gameState.players[0].location === gameState.players[1].location) { // if players bump
-    if(gameState.players[0].carrying || gameState.players[1].carrying) { // if either player is carrying
-      newState.players[0].carrying = false; // send flag back to base
-      newState.players[1].carrying = false; // send flag back to base
+    // if neither player is at a base
+    if(gameState.players[0].location !== gameState.players[0].base && gameState.players[1].location !== gameState.players[0].base && gameState.players[0].location !== gameState.players[1].base && gameState.players[1].location !== gameState.players[1].base) {
+      if(gameState.players[0].carrying || gameState.players[1].carrying) { // if either player is carrying
+        newState.players[0].carrying = false; // send flag back to base
+        newState.players[1].carrying = false; // send flag back to base
+      }
     }
   }
 
