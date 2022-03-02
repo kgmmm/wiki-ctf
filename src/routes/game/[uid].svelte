@@ -215,7 +215,7 @@
   {/if}
   {#if gameState.stage == "planting"}
     <PlantingView {freeze} {lastSuccess} {searchError} {planted} {myData} on:search={wikiFetch} on:plant={plantFlag} />
-  {:else if gameState.stage == "playing"}
+  {:else if gameState.stage == "playing" || gameState.stage == "roundend" || gameState.stage == "gameend"}
     <PlayingView {gameState} {opponentData} {myData} />
   {/if}
   <SignInOut />

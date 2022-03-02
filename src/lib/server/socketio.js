@@ -224,6 +224,8 @@ function gameLoop(gameState) {
   if(gameState.players[0].location === gameState.players[0].base) { // if 0 back at base
     if(gameState.players[0].carrying) { // and 0 is carrying
       newState.players[0].score = gameState.players[0].score + 1; // 0 score increases
+      newState.players[0].carrying = false;
+      newState.players[1].carrying = false;
     }
   }
 
@@ -235,6 +237,8 @@ function gameLoop(gameState) {
   if(gameState.players[1].location === gameState.players[1].base) { // if 1 back at base
     if(gameState.players[1].carrying) { // and 1 is carrying
       newState.players[1].score = gameState.players[1].score + 1; // 1 score increases
+      newState.players[0].carrying = false;
+      newState.players[1].carrying = false;
     }
   }
 
