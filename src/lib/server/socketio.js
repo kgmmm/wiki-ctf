@@ -8,6 +8,8 @@ const io = new SocketIO(server, {
   },
 });
 
+let _GAMEINTERVAL = 1000;
+
 export let liveGames = [];
 
 // const freshGameState = {
@@ -92,6 +94,7 @@ io.on("connection", (socket) => {
           liveGames[lobbyCode].players[0].location = liveGames[lobbyCode].players[0].base;
           liveGames[lobbyCode].players[1].location = liveGames[lobbyCode].players[1].base;
           io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
+          startGameLoop(lobbyCode, liveGames[lobbyCode]);
         }
       } else if (targetPlayer.planted == true || targetPlayer.location === opponent.base) { // if you've already planted OR your plant attempt isnt valid
         socket.emit("pop", { title: "Cannot Plant There!", message: "You can't plant your flag there." }); // pop toast
@@ -163,3 +166,74 @@ server.listen(5000, () => {
 });
 
 export default io;
+
+function startGameLoop(lobbyCode, gameState) {
+  const loopInterval = setInterval(() => {
+    let oldScores = [gameState.players[0].score, gameState.players[1].score];
+    
+    const newGameState = gameLoop(gameState);
+
+    if(!liveGames[lobbyCode]) { // if the game is no longer live
+      clearInterval(loopInterval); // clear the gameloop
+      return; // and return early
+    }
+
+    if(!newGameState.roundTime > 0) { // if round timer hit 0
+      newGameState.stage = "roundend"; // set the stage to roundend
+      clearInterval(loopInterval); // clear the gameloop
+    }
+
+    if(newGameState.players[0].score >= 3 || newGameState.players[1].score >= 3) { // if either players score hits 3
+      newGameState.stage = "gameend"; // set the stage to gameend
+      clearInterval(loopInterval); // clear the gameloop
+    }
+
+    // if either players score changed from the last loop
+    if(newGameState.players[0].score !== oldScores[0] || newGameState.players[1].score !== oldScores[1]) {
+      newGameState.stage = "roundend"; // set the stage to roundend
+      clearInterval(loopInterval); // clear the gameloop
+    }
+
+    liveGames[lobbyCode] = newGameState;
+    io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
+  }, _GAMEINTERVAL);
+}
+
+function gameLoop(gameState) {
+  let newState = gameState;
+
+  if(!gameState.roundTime > 0) return newState; // if theres no time on the clock just return
+
+  newState.roundTime = gameState.roundTime - _GAMEINTERVAL; // decrement the round timer
+
+  if(gameState.players[0].location === gameState.players[1].location) { // if players bump
+    if(gameState.players[0].carrying || gameState.players[1].carrying) { // if either player is carrying
+      newState.players[0].carrying = false; // send flag back to base
+      newState.players[1].carrying = false; // send flag back to base
+    }
+  }
+
+  if(gameState.players[0].location === gameState.players[1].base) { // if 0 goes to 1 base
+    if(!gameState.players[0].carrying) { // and 0 is not already carrying
+      newState.players[0].carrying = true; // 0 is now carrying
+    }
+  }
+  if(gameState.players[0].location === gameState.players[0].base) { // if 0 back at base
+    if(gameState.players[0].carrying) { // and 0 is carrying
+      newState.players[0].score = gameState.players[0].score + 1; // 0 score increases
+    }
+  }
+
+  if(gameState.players[1].location === gameState.players[0].base) { // if 1 goes to 0 base
+    if(!gameState.players[1].carrying) { // and 1 is not already carrying
+      newState.players[1].carrying = true; // 1 is now carrying
+    }
+  }
+  if(gameState.players[1].location === gameState.players[1].base) { // if 1 back at base
+    if(gameState.players[1].carrying) { // and 1 is carrying
+      newState.players[1].score = gameState.players[1].score + 1; // 1 score increases
+    }
+  }
+
+  return newState;
+}
