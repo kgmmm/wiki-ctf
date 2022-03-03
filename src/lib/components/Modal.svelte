@@ -14,7 +14,7 @@
     gameWinner = gameState["players"].find(player => player.score >= gameState.scoreLimit);
   }
 
-  $: if(gameState.stage == "roundend") {
+  $: if(gameState.stage == "roundend" && gameState.lastRoundResult !== "time") {
     roundWinner = gameState["players"].find(player => player.id === gameState.lastRoundResult);
   }
 
@@ -34,6 +34,7 @@
   {#if gameState.stage == "roundend"}
     {#if gameState.lastRoundResult == "time"}
       <h2>Time ran out!</h2>
+      <span>...round is a draw.</span>
     {:else}
       <div class="profilepic">
         <img src={roundWinner.profilePic} alt={`${roundWinner.userID}'s profile picture`} class="profilepic" referrerpolicy="no-referrer">
@@ -129,6 +130,11 @@
   span {
     font-size: 1.2rem;
     font-weight: 500;
+    color: #000;
+  }
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
     color: #000;
   }
   h3 {
