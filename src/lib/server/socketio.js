@@ -1,4 +1,5 @@
 import http from "http";
+import { loadavg } from "os";
 import { Server as SocketIO } from "socket.io";
 
 const server = http.createServer();
@@ -9,6 +10,8 @@ const io = new SocketIO(server, {
 });
 
 let _GAMEINTERVAL = 1000;
+let _ROUNDTIME = 180000;
+let _SCORELIMIT = 3;
 
 export let liveGames = [];
 
@@ -57,8 +60,8 @@ function Player() {
 function Game() {
   this.lobbyCode = undefined;
   this.stage = "waiting";
-  this.roundTime = 180000;
-  this.scoreLimit = 3;
+  this.roundTime = _ROUNDTIME;
+  this.scoreLimit = _SCORELIMIT;
   this.players = [];
   this.players[0] = new Player();
   this.lastRoundResult = undefined;
@@ -118,6 +121,7 @@ io.on("connection", (socket) => {
       liveGames[lobbyCode].players[1].planted = false;
       liveGames[lobbyCode].players[0].roundReady = false; // no one ready
       liveGames[lobbyCode].players[1].roundReady = false;
+      liveGames[lobbyCode].roundTime = _ROUNDTIME; // reset the round time
       io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
     }
   });
@@ -170,7 +174,7 @@ io.on("connection", (socket) => {
       let gameEndSwitch = false; // assume you didnt DC from the gameend screen
 
       socketMap.delete(socket.id); // remove you from the map of live games
-      
+
       if(liveGames[whichGame]) { // if the gamestate is still in the array
         gameEndSwitch = liveGames[whichGame].stage === "gameend"; // check if you dc'd on the gameend screen
         delete liveGames[whichGame]; // delete the game from liveGames
