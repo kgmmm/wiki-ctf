@@ -1,5 +1,4 @@
 import http from "http";
-import { loadavg } from "os";
 import { Server as SocketIO } from "socket.io";
 
 const server = http.createServer();
