@@ -14,57 +14,26 @@ let _SCORELIMIT = 3;
 
 export let liveGames = [];
 
-// const freshGameState = {
-//   lobbyCode: undefined,
-//   stage: "waiting", // first stage of the game is waiting for player 2 to join
-//   roundTime: 180000, // 3 minutes in MS
-//   scoreLimit: 3, // first to 3 points is the winner
-//   players: [
-//     {
-//       id: undefined, // uid from firebase auth
-//       planted: false, // has flag been planted
-//       score: 0, // current score
-//       location: undefined, // page player is current on
-//       base: undefined,// location of planted flag, title
-//       carrying: false, // is a flag being carried by this player
-//       displayName: undefined, // display name from firebase auth
-//       profilePic: undefined, // profile picture from firebase auth
-//       ready: Boolean,  // is the playing ready to play (helps with sync)
-//     }
-//   ],
-//  public: Boolean, // is the game open for people searching to play (not implemented yet)
-// }
-// const newPlayer = {
-//   id: undefined,
-//   planted: false,
-//   score: 0,
-//   location: undefined,
-//   base: undefined,
-//   carrying: false,
-//   displayName: undefined,
-//   profilePic: undefined,
-// }
-
 function Player() {
-  this.id = undefined;
-  this.planted = false;
-  this.score = 0;
-  this.location = undefined;
-  this.base = undefined;
-  this.carrying = false;
-  this.displayName = undefined;
-  this.profilePic = undefined;
-  this.roundReady = false;
+  this.id = undefined;              // UID from Firebase auth
+  this.planted = false;             // has player planted their flag
+  this.score = 0;                   // players current score
+  this.location = undefined;        // page the player is currently on
+  this.base = undefined;            // page the players flag is planted on
+  this.carrying = false;            // is the player carrying a flag
+  this.displayName = undefined;     // displayName from Firebase auth
+  this.profilePic = undefined;      // profilePic from Firebase auth
+  this.roundReady = false;          // is player ready for next round
 }
 function Game() {
-  this.lobbyCode = undefined;
-  this.stage = "waiting";
-  this.roundTime = _ROUNDTIME;
-  this.scoreLimit = _SCORELIMIT;
-  this.players = [];
+  this.lobbyCode = undefined;       // lobbyCode used for the game
+  this.stage = "waiting";           // current stage the game is at, 'waiting' : 'planting' : 'playing' : 'roundend' : 'gameend'
+  this.roundTime = _ROUNDTIME;      // time (ms) per round
+  this.scoreLimit = _SCORELIMIT;    // score limit of the game
+  this.players = [];                // array of player objects
   this.players[0] = new Player();
-  this.lastRoundResult = undefined;
-  this.public = false;
+  this.lastRoundResult = undefined; // result of the last round, 'time' : id of player who won the round
+  this.public = false;              // is this a public game, can this game be found via the api (searchable)
 }
 let socketMap = new Map();
 
