@@ -27,6 +27,7 @@
   let opponentData;
   let opponentProps;
   let myData;
+  let planted;
 
   let backgroundGradient;
 
@@ -41,10 +42,9 @@
         profilePic: opponentData.profilePic,
       }
       myData = gameState.players.find(player => player.id === $authStore.userID);
+      planted = myData.planted;
     }
   }
-
-  let planted = false;
 
   onMount(async () => {
     await tick();
@@ -193,6 +193,10 @@
     socket.emit("plantFlag", $authStore.userID, event.detail.timer);
   }
 
+  function roundReady() {
+    socket.emit("roundReady", $authStore.userID);
+  }
+
   function disconnectFromGame() {
     goto("/", { replaceState: true, noscroll: false, keepfocus: false, state: {} }); // socket disconnection is handled by beforeNavigate
   }
@@ -206,7 +210,7 @@
   <Splash />
 {/if}
 {#if gameState.stage == "roundend" || gameState.stage == "gameend"}
-  <Modal {gameState} />
+  <Modal {gameState} on:disconnect={disconnectFromGame} on:roundReady={roundReady} />
 {/if}
 <article id="wikiContent" bind:this={wikiContent} tabindex="-1">
 

@@ -33,6 +33,8 @@
   let threeSeconds;
 
   onMount(() => {
+    freeze = true;
+
     let i = 3;
     threeSeconds = setInterval(() => {
       if(i === "GO") {

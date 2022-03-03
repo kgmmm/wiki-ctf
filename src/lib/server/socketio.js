@@ -52,6 +52,7 @@ function Player() {
   this.carrying = false;
   this.displayName = undefined;
   this.profilePic = undefined;
+  this.roundReady = false;
 }
 function Game() {
   this.lobbyCode = undefined;
@@ -60,6 +61,7 @@ function Game() {
   this.scoreLimit = 3;
   this.players = [];
   this.players[0] = new Player();
+  this.lastRoundResult = undefined;
   this.public = false;
 }
 let socketMap = new Map();
@@ -99,6 +101,24 @@ io.on("connection", (socket) => {
       } else if (targetPlayer.planted == true || targetPlayer.location === opponent.base) { // if you've already planted OR your plant attempt isnt valid
         socket.emit("pop", { title: "Cannot Plant There!", message: "You can't plant your flag there." }); // pop toast
       }
+    }
+  });
+
+  socket.on("roundReady", (userID) => {
+    let lobbyCode = socketMap.get(socket.id);
+    let targetPlayer = liveGames[lobbyCode]["players"].find(player => player.id === userID);
+
+    targetPlayer.roundReady = true;
+
+    if(liveGames[lobbyCode].players[0].roundReady && liveGames[lobbyCode].players[1].roundReady) { // if both players are ready for next round
+      liveGames[lobbyCode].stage = "planting"; // set stage to planting
+      liveGames[lobbyCode].players[0].carrying = false; // no one carrying
+      liveGames[lobbyCode].players[1].carrying = false;
+      liveGames[lobbyCode].players[0].planted = false; // no one planted
+      liveGames[lobbyCode].players[1].planted = false;
+      liveGames[lobbyCode].players[0].roundReady = false; // no one ready
+      liveGames[lobbyCode].players[1].roundReady = false;
+      io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
     }
   });
 
@@ -177,21 +197,20 @@ function startGameLoop(lobbyCode, gameState) {
       clearInterval(loopInterval); // clear the gameloop
       return; // and return early
     }
-
+    
     if(!newGameState.roundTime > 0) { // if round timer hit 0
       newGameState.stage = "roundend"; // set the stage to roundend
+      newGameState.lastRoundResult = "time"; // time was the winner here
       clearInterval(loopInterval); // clear the gameloop
-    }
-
-    if(newGameState.players[0].score >= 3 || newGameState.players[1].score >= 3) { // if either players score hits 3
-      newGameState.stage = "gameend"; // set the stage to gameend
-      clearInterval(loopInterval); // clear the gameloop
-    }
-
-    // if either players score changed from the last loop
-    if(newGameState.players[0].score !== oldScores[0] || newGameState.players[1].score !== oldScores[1]) {
-      newGameState.stage = "roundend"; // set the stage to roundend
-      clearInterval(loopInterval); // clear the gameloop
+    } else if(newGameState.players[0].score !== oldScores[0] || newGameState.players[1].score !== oldScores[1]) { // if either players score changed from the last loop
+      if(newGameState.players[0].score === newGameState.scoreLimit || newGameState.players[1].score === newGameState.scoreLimit) { // if either players score hits scorelimit
+        newGameState.stage = "gameend"; // set the stage to gameend
+        clearInterval(loopInterval); // clear the gameloop
+      } else { // if no one hit the scorelimit
+        newGameState.stage = "roundend"; // set the stage to roundend
+        newGameState.lastRoundResult = newGameState.players[0].score === oldScores[0] ? newGameState.players[1].id : newGameState.players[0].id; // if one players score didnt change from the last round then we know the other player won
+        clearInterval(loopInterval); // clear the gameloop
+      }
     }
 
     liveGames[lobbyCode] = newGameState;
