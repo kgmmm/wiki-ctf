@@ -231,10 +231,10 @@
 
 <style>
   #wikiContent {
+    grid-area: article;
     position: relative;
     z-index: -1;
     color: #000;
-    background: var(--wiki-chrome-bg-color);
     overflow-y: scroll;
     scroll-behavior: smooth;
     font-size: 0.95rem;

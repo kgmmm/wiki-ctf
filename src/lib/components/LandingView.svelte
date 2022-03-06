@@ -25,6 +25,7 @@
 
 <style>
   article {
+    grid-area: article;
     display: grid;
     grid-template-columns: 1fr 760px;
     z-index: -1;
