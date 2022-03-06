@@ -3,11 +3,11 @@
 </script>
 
 <article>
-  <div class="col-1" in:fly={{ x: 100, duration: 200}}>
-    <h1 in:fly={{ x: 50, duration: 150, delay: 50}}>capture the flag<img src="/img/Wikipedia_wordmark.svg" alt="Wikipedia wordmark"></h1>
+  <div class="col-1" in:fly={{ x: -100, duration: 400 }} out:fly={{ x: -500, duration: 200 }}>
+    <h1 in:fly={{ x: -50, duration: 300, delay: 200}}>capture the flag<img src="/img/Wikipedia_wordmark.svg" alt="Wikipedia wordmark"></h1>
   </div>
   <div class="col-2">
-    <div class="content" in:fly={{ y: 20, duration: 200}}>
+    <div class="content" in:fly={{ y: 20, duration: 400 }} out:fade={{ duration: 150 }}>
       <h2>Wikipedia Capture the Flag</h2>
       <span class="link">For more about this project, see the <a href="https://github.com/kgmmm/wiki-ctf" target="_blank">Github repo</a></span>
       <p>Sign in and invite a friend to play a head-to-head game of Wikipedia Capture the Flag! Plant a flag on a Wikipedia page of your choosing. Race through Wikipedia links to capture your opponents flag.<sup><a href="#tip-1" rel=external>[1]</a></sup> Hurry back to base with their flag to score a point, and let the next round begin.<sup><a href="#tip-2" rel=external>[2]</a></sup> Watch out for interceptions! If a flag carrier is intercepted, any flags will sent back to base.</p>
