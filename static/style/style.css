@@ -91,3 +91,12 @@ button:focus:not(:focus-visible) {
 button:focus-visible {
 	outline: solid 2px yellow;
 }
+
+div.mw-parser-output {
+	margin: 1.5rem;
+	padding: 1.5rem 2rem;
+	color: #222222;
+	background: white;
+	border-radius: 3px;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.05);
+}
