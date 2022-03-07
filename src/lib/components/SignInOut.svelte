@@ -38,7 +38,7 @@
     </div>
     <div class="loggedInAs">
       <h4>Logged in as:</h4>
-      <span>{$authStore.displayName}</span>
+      <span class="char-limit">{$authStore.displayName}</span>
     </div>
     <button class="signout" title="Sign out" on:click={signOut}>
       <svg
@@ -116,6 +116,7 @@
   div.loggedInAs span {
     font-size: 1rem;
     line-height: 1;
+    max-width: 200px;
   }
 
   button.signout {

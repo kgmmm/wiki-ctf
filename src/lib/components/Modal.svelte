@@ -39,7 +39,7 @@
       <div class="profilepic">
         <img src={roundWinner.profilePic} alt={`${roundWinner.userID}'s profile picture`} class="profilepic" referrerpolicy="no-referrer">
       </div>
-      <h1>{roundWinner.displayName}</h1><span>...won&nbsp;this&nbsp;round!</span>
+      <h1 class="char-limit">{roundWinner.displayName}</h1><span>...won&nbsp;this&nbsp;round!</span>
     {/if}
     <h3>{gameState.players[0].score} - {gameState.players[1].score}</h3>
     <h4>Ready for the next round?</h4>
@@ -61,7 +61,7 @@
     <div class="profilepic">
       <img src={gameWinner.profilePic} alt={`${gameWinner.userID}'s profile picture`} class="profilepic" referrerpolicy="no-referrer">
     </div>
-    <h1>{gameWinner.displayName}</h1><span>...won&nbsp;the&nbsp;game!</span>
+    <h1 class="char-limit">{gameWinner.displayName}</h1><span>...won&nbsp;the&nbsp;game!</span>
     <h3>{gameState.players[0].score} - {gameState.players[1].score}</h3>
     <h4>Be a little quicker next game.</h4>
     <div class="buttons">
@@ -122,10 +122,7 @@
     font-size: 1.5rem;
     font-weight: 600;
     color: #000;
-    max-width: 350px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    max-width: 300px;
   }
   span {
     font-size: 1.2rem;

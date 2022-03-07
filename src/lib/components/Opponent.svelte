@@ -21,7 +21,7 @@
   </button>
   <div class="opponentIs">
     <h4>Opponent:</h4>
-    <span>{displayName}</span>
+    <span class="char-limit">{displayName}</span>
   </div>
   <div class="profilepic">
     <img src={profilePic} alt={`${userID}'s profile picture`} class="profilepic" referrerpolicy="no-referrer">
@@ -68,6 +68,7 @@
   div.opponentIs span {
     font-size: 1rem;
     line-height: 1;
+    max-width: 200px;
   }
 
   button.disconnect {

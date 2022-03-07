@@ -100,3 +100,10 @@ div.mw-parser-output {
 	border-radius: 3px;
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.05);
 }
+
+/* set a max width on the element itself */
+.char-limit {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
