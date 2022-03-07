@@ -80,8 +80,8 @@
   
   div.user {
     grid-area: user;
-    background: rgba(255, 255, 255, 5%);
-    border-top: solid 1px rgba(0, 0, 0, 15%);
+    background: var(--red-light-5);
+    border-top: solid 1px var(--red-dark-5);
     display: grid;
     grid-template-columns: 100px 1fr 100px;
     grid-template-areas: "profilepic text signout";
@@ -97,7 +97,7 @@
     overflow: hidden;
     display: grid;
     place-items: center;
-    border: solid 2px #fff;
+    border: solid 2px var(--red-dark-5);
   }
   div.profilepic img.profilepic {
     width: 100%;
@@ -128,13 +128,14 @@
     border: none;
     border-radius: 10px;
     color: #fff;
-    background: rgba(255, 255, 255, 10%);
+    background: var(--red-light-5);
+    border: solid 1px var(--red-dark-5);
     cursor: pointer;
     display: grid;
     place-items: center;
   }
   button.signout:hover {
-    background: rgba(255, 255, 255, 15%);
+    background: var(--red-light-10);
   }
 
   button.signout svg {

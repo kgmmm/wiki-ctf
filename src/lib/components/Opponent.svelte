@@ -31,8 +31,8 @@
 <style>
   div.user {
     grid-area: opponent;
-    background: rgba(255, 255, 255, 5%);
-    border-bottom: solid 1px rgba(0, 0, 0, 15%);
+    background: var(--blue-light-5);
+    border-bottom: solid 1px var(--blue-dark-5);
     display: grid;
     grid-template-columns: 100px 1fr 100px;
     grid-template-areas: "disconnect text profilepic";
@@ -48,7 +48,7 @@
     overflow: hidden;
     display: grid;
     place-items: center;
-    border: solid 2px #fff;
+    border: solid 2px var(--blue-dark-5);
   }
   div.profilepic img.profilepic {
     width: 100%;
@@ -80,13 +80,14 @@
     border: none;
     border-radius: 10px;
     color: #fff;
-    background: rgba(255, 255, 255, 10%);
+    background: var(--blue-light-5);
+    border: solid 1px var(--blue-dark-5);
     cursor: pointer;
     display: grid;
     place-items: center;
   }
   button.disconnect:hover {
-    background: rgba(255, 255, 255, 15%);
+    background: var(--blue-light-10);
   }
 
   button.disconnect svg {
