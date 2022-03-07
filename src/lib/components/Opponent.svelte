@@ -31,7 +31,8 @@
 <style>
   div.user {
     grid-area: opponent;
-    background: rgba(0, 0, 0, 20%);
+    background: rgba(255, 255, 255, 5%);
+    border-bottom: solid 1px rgba(0, 0, 0, 15%);
     display: grid;
     grid-template-columns: 100px 1fr 100px;
     grid-template-areas: "disconnect text profilepic";

@@ -80,7 +80,8 @@
   
   div.user {
     grid-area: user;
-    background: rgba(0, 0, 0, 20%);
+    background: rgba(255, 255, 255, 5%);
+    border-top: solid 1px rgba(0, 0, 0, 15%);
     display: grid;
     grid-template-columns: 100px 1fr 100px;
     grid-template-areas: "profilepic text signout";
