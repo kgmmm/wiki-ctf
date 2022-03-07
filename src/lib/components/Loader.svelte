@@ -1,6 +1,6 @@
 <script>
   export let size;
-  export let color = "var(--red)";
+  export let color = "var(--red-hsl)";
 </script>
 
 <div style="width: {size}px; height: {size}px; --b: {size / 8}px; border-top-color: {color};"></div>
@@ -9,7 +9,7 @@
   div {
     place-self: center;
     border: solid var(--b) rgba(0, 0, 0, 40%);
-    border-top-color: var(--red);
+    border-top-color: var(--red-hsl);
     border-radius: 50%;
     animation: rotate 1s linear infinite;
   }

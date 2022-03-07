@@ -68,7 +68,7 @@
     grid-template-areas:
       "content"
       "user";
-    background: var(--red);
+    background: var(--red-hsl);
     box-shadow: 0 0 5px rgba(0, 0, 0, 25%);
   }
 
@@ -94,7 +94,7 @@
     font-size: 1.1rem;
     font-weight: 600;
     color: #fff;
-    background: var(--blue);
+    background: var(--blue-hsl);
     border: none;
     cursor: pointer;
   }

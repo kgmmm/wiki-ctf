@@ -58,7 +58,7 @@
     grid-template-areas: "h b"
       "t .";
     color: #fff;
-    background: var(--blue);
+    background: var(--blue-hsl);
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
     position: fixed;
     bottom: 15px;

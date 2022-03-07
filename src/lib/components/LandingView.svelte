@@ -32,7 +32,7 @@
   }
 
   div.col-1 {
-    background: var(--red);
+    background: var(--red-hsl);
     display: grid;
     align-items: center;
     justify-content: right;

@@ -246,7 +246,7 @@
   div.scoreboard {
     color: #fff;
     font-family: 'Courier New', Courier, monospace;
-    background: linear-gradient(240deg, var(--blue) 50%, var(--red) 0%);
+    background: linear-gradient(240deg, var(--blue-hsl) 50%, var(--red-hsl) 0%);
     padding: 7px;
     grid-template-columns: 75px 33px 1fr 33px 75px;
     grid-template-rows: 1fr 1fr;

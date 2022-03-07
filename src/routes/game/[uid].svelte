@@ -249,10 +249,10 @@
       "opponent"
       "content"
       "user";
-    background: var(--red);
+    background: var(--red-hsl);
     box-shadow: 0 0 5px rgba(0, 0, 0, 25%);
   }
   aside.backgroundGradient {
-    background: linear-gradient(to bottom, var(--blue) 50%, var(--red) 0%);
+    background: linear-gradient(to bottom, var(--blue-hsl) 50%, var(--red-hsl) 0%);
   }
 </style>

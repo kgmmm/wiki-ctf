@@ -177,7 +177,7 @@
 
   button.ready {
     color: #fff;
-    background: var(--blue);
+    background: var(--blue-hsl);
     font-size: 1.1rem;
     font-weight: 500;
   }
@@ -190,6 +190,6 @@
     cursor: not-allowed;
   }
   button.ready[disabled]:hover {
-    background: var(--blue);
+    background: var(--blue-hsl);
   }
 </style>

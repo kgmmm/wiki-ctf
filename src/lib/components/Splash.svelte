@@ -36,7 +36,7 @@
   }
 
   h1.splashText {
-    color: var(--red);
+    color: var(--red-hsl);
     user-select: none;
   }
 </style>
