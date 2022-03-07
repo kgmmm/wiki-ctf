@@ -40,8 +40,8 @@
 
   div.profilepic {
     grid-area: profilepic;
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     overflow: hidden;
@@ -63,9 +63,11 @@
     font-size: 0.875rem;
     font-weight: normal;
     opacity: 50%;
+    line-height: 1;
   }
   div.opponentIs span {
     font-size: 1rem;
+    line-height: 1;
   }
 
   button.disconnect {
