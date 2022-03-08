@@ -24,11 +24,13 @@
           title: "Invalid Lobby Code!",
           message: "That lobby does not exist.",
         });
+        lobbyCode = "";
       } else if(data["players"].length === 2) {
         toast.set({
           title: "Lobby is Full!",
           message: "That lobby is already full.",
         });
+        lobbyCode = "";
       } else if(data["players"].length === 1) {
         goto("/game/" + lobbyCode);
       }
