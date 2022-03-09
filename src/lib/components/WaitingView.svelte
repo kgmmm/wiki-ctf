@@ -27,7 +27,7 @@
 
 <div>
   <h1>Waiting for opponent...</h1>
-  <Loader size="70" color="#fff"/>
+  <Loader size="85" color="#fff"/>
   <p>Send this code to a friend:</p>
   <form on:submit|preventDefault>
     <button title="Copy to clipboard" class="clipboard" on:click={copyToClipboard}>
@@ -56,12 +56,12 @@
     </button>
     <input type="text" disabled value={lobbyCode} bind:this={lobbyCodeInput}>
   </form>
-  <button class="cancel" on:click={cancelGame}>Cancel Game</button>
+  <button class="cancel" on:click={cancelGame}>Cancel</button>
 </div>
 
 <style>
   div {
-    grid-row: 1 / span 2;
+    grid-area: content;
     width: 100%;
     height: min-content;
     place-self: center;
@@ -84,7 +84,6 @@
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: max-content max-content;
-    align-items: center;
     place-items: center;
   }
 
@@ -94,7 +93,8 @@
     display: grid;
     place-items: center;
     background: white;
-    border: none;
+    border: solid 1px var(--red-dark-15);
+    border-right: none;
     border-radius: 3px 0 0 3px;
     cursor: pointer;
   }
@@ -115,24 +115,26 @@
     font-size: 0.8rem;
     font-family: 'Courier New', Courier, monospace;
     color: #000;
-    border: solid 1px rgba(255, 255, 255, 35%);
+    border: solid 1px var(--red-dark-15);
+    border-left: none;
     border-radius: 0 3px 3px 0;
-    background: rgba(255, 255, 255, 15%);
+    background: var(--red-dark-5);
     cursor: text;
     display: inline;
   }
 
   button.cancel {
-    padding: 0 1.5rem;
-    height: 2.4rem;
+    height: 40px;
+    width: 125px;
     font-size: 1rem;
+    line-height: 80%;
     color: #fff;
-    background: rgba(255, 255, 255, 10%);
-    border: none;
-    border-radius: 3px;
+    background: var(--red-light-5);
+    border: solid 1px var(--red-dark-15);
+    border-radius: 5px;
     cursor: pointer;
   }
   button.cancel:hover {
-    background: rgba(255, 255, 255, 15%);
+    text-decoration: underline;
   }
 </style>
