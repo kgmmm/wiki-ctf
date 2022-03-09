@@ -7,10 +7,13 @@
 
   import ShortUniqueId from 'short-unique-id';
   import { toast } from "$lib/stores/toast";
+  import Loader from "$lib/components/Loader.svelte";
 
   const newLobbyCode = new ShortUniqueId({ length: 28 });
 
   let lobbyCode;
+
+  let quickPlayLoader = false;
 
   function lobbyCodeSubmit() {
     fetch("/api/lobby/" + lobbyCode, {
@@ -41,6 +44,10 @@
   function createLobby() {
     goto("/game/" + newLobbyCode());
   }
+
+  function quickPlay() {
+    quickPlayLoader = !quickPlayLoader;
+  }
 </script>
 
 <LandingView />
@@ -51,11 +58,18 @@
     </div>
   {:else if $authStore.isLoggedIn}
     <div class="gameMenu">
-      <button class="createLobby" on:click={createLobby}>Create a lobby</button>
+      <button class="playButton" on:click={quickPlay}>
+        {#if quickPlayLoader == true}
+          <Loader size="40" color="#fff" />
+        {:else}
+          Quick play
+        {/if}
+      </button>
+      <button class="playButton" on:click={createLobby}>Play a friend</button>
       <span>OR</span>
       <h3>Join a lobby:</h3>
       <form on:submit|preventDefault={lobbyCodeSubmit}>
-        <input type="text" placeholder="Paste code and hit ENTER" bind:value={lobbyCode} class="lobbyCode" required minlength="28" maxlength="28"  autocomplete="off">
+        <input type="text" placeholder="Paste code and hit ENTER" bind:value={lobbyCode} class="lobbyCode" required minlength="28" maxlength="28"  autocomplete="off" spellcheck="false">
       </form>
     </div>
   {/if}
@@ -66,8 +80,9 @@
   aside {
     grid-area: aside;
     display: grid;
-    grid-template-rows: 1fr 100px;
+    grid-template-rows: 100px 1fr 100px;
     grid-template-areas:
+      "."
       "content"
       "user";
     background: var(--red-hsl);
@@ -75,6 +90,7 @@
   }
 
   div.userWarning {
+    grid-area: content;
     display: grid;
     place-items: center;
     text-align: center;
@@ -85,35 +101,60 @@
   }
 
   div.gameMenu {
+    grid-area: content;
     display: grid;
     place-content: center;
     text-align: center;
   }
 
-  button.createLobby {
+  button.playButton {
+    margin-bottom: 15px;
     width: 250px;
     height: 60px;
     font-size: 1.1rem;
     font-weight: 600;
     color: #fff;
     background: var(--blue-hsl);
-    border: none;
+    border: solid 1px var(--blue-dark-15);
+    border-radius: 5px;
     cursor: pointer;
+    display: grid;
+    place-items: center;
   }
-  button.createLobby:hover {
-    background: var(--blue-highlight);
+  button.playButton:hover {
+    background: var(--blue-light-5);
+  }
+
+  button.playButton:nth-of-type(2) {
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    width: 200px;
+    height: 50px;
+    place-self: center;
+    background: var(--red-light-5);
+    border: solid 1px var(--red-dark-15);
+  }
+  button.playButton:nth-of-type(2):hover {
+    text-decoration: underline;
   }
 
   div.gameMenu span {
     margin-block: 1em;
     font-weight: 400;
     font-size: 0.9rem;
-    opacity: 75%;
+    color: var(--red-dark-25);
+    background: radial-gradient(var(--red-hsl), var(--red-hsl)), linear-gradient(transparent 50%, var(--red-dark-20) 50%, transparent 51% 100%);
+    background-size: 50px 50px, 100% 100%;
+    background-position: center, top;
+    background-repeat: no-repeat, no-repeat;
   }
 
   div.gameMenu h3 {
     font-size: 1rem;
     font-weight: 500;
+    line-height: 80%;
+    color: white;
   }
 
   input[type="text"].lobbyCode {
@@ -125,9 +166,9 @@
     font-size: 0.8rem;
     font-family: 'Courier New', Courier, monospace;
     color: black;
-    border: none;
+    border: solid 1px var(--red-dark-15);
     border-radius: 3px;
-    background: rgba(255, 255, 255, 15%);
+    background: var(--red-dark-5);
   }
   input[type="text"].lobbyCode::placeholder {
     color: rgba(255, 255, 255, 50%);
