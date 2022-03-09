@@ -128,14 +128,14 @@
     border: none;
     border-radius: 10px;
     color: #fff;
-    background: var(--red-light-5);
+    background: transparent;
     border: solid 1px var(--red-dark-5);
     cursor: pointer;
     display: grid;
     place-items: center;
   }
   button.signout:hover {
-    background: var(--red-light-10);
+    background: rgba(255, 255, 255, 10%);
   }
 
   button.signout svg {

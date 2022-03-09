@@ -80,14 +80,14 @@
     border: none;
     border-radius: 10px;
     color: #fff;
-    background: var(--blue-light-5);
+    background: transparent;
     border: solid 1px var(--blue-dark-5);
     cursor: pointer;
     display: grid;
     place-items: center;
   }
   button.disconnect:hover {
-    background: var(--blue-light-10);
+    background: rgba(255, 255, 255, 10%);
   }
 
   button.disconnect svg {
