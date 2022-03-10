@@ -250,7 +250,7 @@
       "content"
       "user";
     background: var(--red-hsl);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 25%);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 50%);
   }
   aside.backgroundGradient {
     background: linear-gradient(to bottom, var(--blue-hsl) 50%, var(--red-hsl) 0%);

@@ -37,7 +37,7 @@
     align-items: center;
     justify-content: right;
     text-align: right;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 50%);
   }
 
   div.col-1 h1 {

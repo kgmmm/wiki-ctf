@@ -8,6 +8,7 @@
   import ShortUniqueId from 'short-unique-id';
   import { toast } from "$lib/stores/toast";
   import Loader from "$lib/components/Loader.svelte";
+  import { fade } from "svelte/transition";
 
   const newLobbyCode = new ShortUniqueId({ length: 28 });
 
@@ -51,7 +52,7 @@
 </script>
 
 <LandingView />
-<aside>
+<aside out:fade={{ duration: 0 }}>
   {#if !$authStore.isLoggedIn}
     <div class="userWarning">
       <h3>Sign in to play<br />Wikipedia<br />Capture the Flag!</h3>
@@ -86,7 +87,7 @@
       "content"
       "user";
     background: var(--red-hsl);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 25%);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 50%);
   }
 
   div.userWarning {
