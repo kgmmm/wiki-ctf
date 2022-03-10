@@ -7,12 +7,6 @@
 
   export let myData;
 
-  let fontSize;
-
-  $: if(myData.location) {
-    fontSize = 380 / myData["location"].length / 16 + "rem";
-  }
-
   export let freeze = true;
   export let searchError = false;
   
@@ -49,7 +43,7 @@
         });
         countdown = true;
         freeze = false;
-        startCountdown();
+        // startCountdown();
       } else {
         splash.set({
           text: i.toString(),
@@ -114,12 +108,12 @@
       <strong>Try something else</strong>
     {/if}
   </form>
+  <button class="plant" disabled={!lastSuccess || freeze} class:lastSuccess on:click={plantFlag}>Plant flag</button>
   {#if myData.location && lastSuccess}
-    <output style="font-size: Clamp(0.9rem, {fontSize}, 1.375rem);"> <!-- TODO: stop this from looking pish -->
+    <output style="font-size: Clamp(0.75rem, {310 / myData['location'].length / 8 + 'rem'}, 1.2rem);">
       {myData.location}
     </output>
   {/if}
-  <button class="plant" disabled={!lastSuccess || freeze} on:click={plantFlag} style="margin-bottom: {lastSuccess ? 'unset' : '5.5rem'};">Plant Flag</button>
 </div>
 
 <style>
@@ -132,7 +126,8 @@
     place-items: center;
     grid-template-rows: 10rem min-content 8rem min-content;
     text-align: center;
-    overflow: hidden;
+    position: relative;
+    isolation: isolate;
   }
 
   h1 {
@@ -167,7 +162,8 @@
     display: grid;
     place-items: center;
     background: white;
-    border: none;
+    border: solid 1px var(--red-dark-15);
+    border-left: none;
     border-radius: 0 3px 3px 0;
     cursor: pointer;
   }
@@ -191,9 +187,10 @@
     font-size: 0.8rem;
     font-family: 'Courier New', Courier, monospace;
     color: #000;
-    border: solid 1px rgba(255, 255, 255, 35%);
+    border: solid 1px var(--red-dark-15);
+    border-right: none;
     border-radius: 3px 0 0 3px;
-    background: rgba(255, 255, 255, 15%);
+    background: var(--red-dark-5);
     cursor: text;
     display: inline;
   }
@@ -206,39 +203,49 @@
 
   output {
     padding: 0.5rem;
-    height: 5.5rem;
+    min-height: 3.5rem;
     width: 100%;
     max-width: 375px;
-    border: none;
-    border-radius: 3px;
+    border: solid 1px var(--red-dark-15);
+    border-radius: 5px;
     font-weight: 400;
-    color: #000;
-    background: #fff;
+    color: #fff;
+    background: var(--red-light-5);
     display: grid;
     place-items: center;
     text-align: center;
-    overflow: hidden;
+    user-select: none;
+    position: absolute;
+    top: calc(100% - 5.5rem - 1px);
+    z-index: -1;
   }
 
   button.plant {
-    padding: 0 1.5rem;
-    /* margin-bottom: 5.5rem; */
-    height: 2.4rem;
+    margin-bottom: 5.5rem;
+    height: 40px;
+    width: 125px;
     font-size: 1rem;
+    line-height: 80%;
     color: #fff;
-    background: rgba(255, 255, 255, 10%);
-    border: none;
-    border-radius: 3px;
+    background: var(--red-light-5);
+    border: solid 1px var(--red-dark-15);
+    border-radius: 5px;
     cursor: pointer;
   }
   button.plant:hover {
-    background: rgba(255, 255, 255, 15%);
+    text-decoration: underline;
   }
 
   button.plant[disabled] {
+    text-decoration: line-through;
     cursor: not-allowed;
   }
   button.plant[disabled]:hover {
-    background: rgba(255, 255, 255, 10%)
+    text-decoration: line-through;
+  }
+
+  button.plant.lastSuccess {
+    border-bottom-color: var(--red-light-5);
+    border-radius: 5px 5px 0 0;
   }
 </style>
