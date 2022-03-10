@@ -86,7 +86,7 @@ select {
 	--red-light-25: hsl(var(--red-h), var(--red-s), calc(var(--red-l) + 25%));
 
 	--blue-h: 221;
-	--blue-s: 100%;
+	--blue-s: 73%;
 	--blue-l: 28%;
 
 	--blue-hsl: hsl(var(--blue-h), var(--blue-s), var(--blue-l));
