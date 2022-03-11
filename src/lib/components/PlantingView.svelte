@@ -43,7 +43,7 @@
         });
         countdown = true;
         freeze = false;
-        // startCountdown();
+        startCountdown();
       } else {
         splash.set({
           text: i.toString(),
@@ -105,10 +105,11 @@
       </svg>
     </button>
     {#if searchError}
+      <!-- TODO: put a transition on this so that it animates every time it shows up -->
       <strong>Try something else</strong>
     {/if}
   </form>
-  <button class="plant" disabled={!lastSuccess || freeze} class:lastSuccess on:click={plantFlag}>Plant flag</button>
+  <button class="plant" disabled={!lastSuccess || freeze} on:click={plantFlag}>Plant flag</button>
   {#if myData.location && lastSuccess}
     <output style="font-size: Clamp(0.75rem, {310 / myData['location'].length / 8 + 'rem'}, 1.2rem);">
       {myData.location}
@@ -149,6 +150,7 @@
   }
 
   strong {
+    color: var(--red-dark-25);
     position: absolute;
     top: 100%;
     left: 50%;
@@ -206,46 +208,43 @@
     min-height: 3.5rem;
     width: 100%;
     max-width: 375px;
-    border: solid 1px var(--red-dark-15);
+    border: none;
     border-radius: 5px;
-    font-weight: 400;
+    font-weight: bolder;
     color: #fff;
-    background: var(--red-light-5);
+    background: var(--red-dark-5);
     display: grid;
     place-items: center;
     text-align: center;
     user-select: none;
     position: absolute;
-    top: calc(100% - 5.5rem - 1px);
+    top: calc(100% - 4.5rem);
     z-index: -1;
   }
 
   button.plant {
     margin-bottom: 5.5rem;
-    height: 40px;
-    width: 125px;
-    font-size: 1rem;
+    height: 50px;
+    width: 160px;
+    font-size: 1.1rem;
+    font-weight: 600;
     line-height: 80%;
     color: #fff;
-    background: var(--red-light-5);
-    border: solid 1px var(--red-dark-15);
+    background: var(--blue-hsl);
+    border: solid 1px var(--blue-dark-15);
     border-radius: 5px;
     cursor: pointer;
   }
   button.plant:hover {
-    text-decoration: underline;
+    background: var(--blue-light-5);
   }
 
   button.plant[disabled] {
-    text-decoration: line-through;
+    color: rgba(255, 255, 255, 50%);
+    background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 30%);
     cursor: not-allowed;
   }
   button.plant[disabled]:hover {
-    text-decoration: line-through;
-  }
-
-  button.plant.lastSuccess {
-    border-bottom-color: var(--red-light-5);
-    border-radius: 5px 5px 0 0;
+    background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 30%);
   }
 </style>
