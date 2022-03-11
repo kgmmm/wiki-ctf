@@ -145,7 +145,7 @@
     font-weight: 400;
     font-size: 0.9rem;
     color: var(--red-dark-25);
-    background: radial-gradient(var(--red-hsl), var(--red-hsl)), linear-gradient(transparent 50%, var(--red-dark-20) 50%, transparent 51% 100%);
+    background: radial-gradient(var(--red-hsl), var(--red-hsl)), linear-gradient(0deg, transparent 50%, var(--red-dark-20) 50%, transparent 51% 100%);
     background-size: 50px 50px, 100% 100%;
     background-position: center, top;
     background-repeat: no-repeat, no-repeat;
