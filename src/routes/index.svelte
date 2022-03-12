@@ -172,7 +172,8 @@
     background: var(--red-dark-5);
   }
   input[type="text"].lobbyCode::placeholder {
-    color: rgba(255, 255, 255, 50%);
+    color: #fff;
+    opacity: 60%;
   }
   input[type="text"].lobbyCode:focus {
     outline: solid 2px yellow;
