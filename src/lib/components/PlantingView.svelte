@@ -43,7 +43,7 @@
         });
         countdown = true;
         freeze = false;
-        startCountdown();
+        // startCountdown();
       } else {
         splash.set({
           text: i.toString(),
@@ -125,14 +125,14 @@
     place-self: center;
     display: grid;
     place-items: center;
-    grid-template-rows: 10rem min-content 8rem min-content;
+    grid-template-rows: 10rem min-content 6rem min-content;
     text-align: center;
     position: relative;
     isolation: isolate;
   }
 
   h1 {
-    font-size: 4.5rem;
+    font-size: 5.5rem;
   }
 
   p {
@@ -212,7 +212,7 @@
     border-radius: 5px;
     font-weight: bolder;
     color: #fff;
-    background: var(--red-dark-5);
+    background: var(--red-light-5);
     display: grid;
     place-items: center;
     text-align: center;
@@ -240,11 +240,9 @@
   }
 
   button.plant[disabled] {
-    color: rgba(255, 255, 255, 50%);
-    background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 30%);
     cursor: not-allowed;
   }
   button.plant[disabled]:hover {
-    background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 30%);
+    background: var(--blue-hsl);
   }
 </style>
