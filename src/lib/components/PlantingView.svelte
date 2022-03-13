@@ -222,7 +222,7 @@
     min-height: 3.5rem;
     width: 100%;
     max-width: 375px;
-    border: none;
+    border: solid 1px var(--red-dark-15);
     border-radius: 5px;
     font-weight: bolder;
     color: #fff;
