@@ -43,7 +43,7 @@
         });
         countdown = true;
         freeze = false;
-        // startCountdown();
+        startCountdown();
       } else {
         splash.set({
           text: i.toString(),
@@ -98,7 +98,7 @@
   {/if}
   <p>Search for an article and plant your flag!</p>
   <form on:submit|preventDefault={search}>
-    <input type="text" disabled={freeze} bind:value={searchQuery} required>
+    <input type="text" disabled={freeze} bind:value={searchQuery} required placeholder="Search">
     <button title="Search" type="submit" class="search" disabled={freeze}>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-search" viewBox="0 0 16 16">
         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -144,7 +144,6 @@
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: max-content max-content;
-    align-items: center;
     place-items: center;
     position: relative;
   }
@@ -152,10 +151,11 @@
   strong {
     color: var(--red-dark-25);
     position: absolute;
-    top: 100%;
+    top: 86%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 0.9rem;
+    user-select: none;
   }
 
   button.search {
@@ -163,6 +163,7 @@
     height: 2rem;
     display: grid;
     place-items: center;
+    color: #000;
     background: white;
     border: solid 1px var(--red-dark-15);
     border-left: none;
@@ -171,10 +172,13 @@
   }
   button.search[disabled] {
     cursor: not-allowed;
+    background: var(--red-hsl);
+    border-color: var(--red-dark-10);
+    color: var(--red-dark-10);
   }
 
   button.search svg {
-    fill: black;
+    fill: currentColor;
     width: 1em;
     height: 1em;
     font-size: 0.9rem;
@@ -201,6 +205,15 @@
   }
   input[type="text"][disabled] {
     cursor: not-allowed;
+    background: var(--red-hsl);
+    border-color: var(--red-dark-10);
+  }
+  input[type="text"]::placeholder {
+    color: #fff;
+    opacity: 65%;
+  }
+  input[type="text"][disabled]::placeholder {
+    opacity: 0;
   }
 
   output {
@@ -241,8 +254,11 @@
 
   button.plant[disabled] {
     cursor: not-allowed;
+    color: var(--red-dark-10);
+    background: transparent;
+    border: solid 1px var(--red-dark-10);
   }
   button.plant[disabled]:hover {
-    background: var(--blue-hsl);
+    background: transparent;
   }
 </style>
