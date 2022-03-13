@@ -2,6 +2,7 @@
   import { splash } from '$lib/stores/splash';
   import Loader from "$lib/components/Loader.svelte";
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { scale } from "svelte/transition";
 
 	const dispatch = createEventDispatcher();
 
@@ -106,7 +107,7 @@
     </button>
     {#if searchError}
       <!-- TODO: put a transition on this so that it animates every time it shows up -->
-      <strong>Try something else</strong>
+      <strong in:scale={{ duration: 150 }}>Try something else</strong>
     {/if}
   </form>
   <button class="plant" disabled={!lastSuccess || freeze} on:click={plantFlag}>Plant flag</button>
@@ -151,7 +152,7 @@
   strong {
     color: var(--red-dark-25);
     position: absolute;
-    top: 86%;
+    top: calc(100% - 0.45rem);
     left: 50%;
     transform: translateX(-50%);
     font-size: 0.9rem;

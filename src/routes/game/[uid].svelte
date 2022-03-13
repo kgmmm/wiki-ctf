@@ -115,6 +115,7 @@
     }
     console.time("roundtrip"); // LOG
     freeze = true;
+    searchError = false;
     splash.set("loader");
 
     let apiURL = `https://en.wikipedia.org/w/api.php?action=parse&prop=text&format=json&origin=*&page=${searchQuery}&redirects`;
@@ -134,8 +135,6 @@
       freeze = false;
       console.timeEnd("roundtrip"); // LOG
       return;
-    } else {
-      searchError = false;
     }
 
     socket.emit("fetchedPage", $authStore.userID, { pageid: response.parse.pageid, title: response.parse.title });
