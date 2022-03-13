@@ -201,13 +201,20 @@
     padding: 0 0.5rem;
     display: grid;
     align-items: center;
-    background: rgba(0, 0, 0, 20%);
+    background: var(--blue-dark-5);
     text-transform: uppercase;
     font-size: 0.7rem;
     font-family: 'Courier New', Courier, monospace;
-    color: rgba(255, 255, 255, 70%);
+    color: rgba(255, 255, 255, 75%);
+    border: solid 1px var(--blue-dark-10);
+    border-bottom: none;
     border-radius: 5px 5px 0 0;
     user-select: none;
+  }
+  div.me div.title {
+    background: var(--red-dark-5);
+    border: solid 1px var(--red-dark-10);
+    border-bottom: none;
   }
 
   div.display {
@@ -215,8 +222,15 @@
     display: grid;
     place-items: center;
     gap: 7px;
-    background: rgba(255, 255, 255, 10%);
+    background: var(--blue-light-5);
+    border: solid 1px var(--blue-dark-10);
+    border-top: none;
     border-radius: 0 0 5px 5px;
+  }
+  div.me div.display {
+    background: var(--red-light-5);
+    border: solid 1px var(--red-dark-10);
+    border-top: none;
   }
   div.display div.icon {
     width: 75%;
@@ -225,10 +239,10 @@
     display: grid;
     place-items: center;
     border-radius: 5px;
-    background: var(--red-dark);
+    background: var(--blue-hsl);
   }
-  div.opponent div.icon {
-    background: var(--blue-dark);
+  div.me div.icon {
+    background: var(--red-hsl);
   }
   div.icon svg {
     width: 1em;
@@ -241,6 +255,7 @@
     margin-block: 0.4rem;
     grid-area: text;
     font-size: 1.2rem;
+    line-height: 90%;
   }
 
   div.scoreboard {
@@ -260,8 +275,8 @@
     width: 100%;
     height: 100%;
     color: #fff;
-    background: rgba(0, 0, 0, 20%);
-    border: none;
+    background: rgba(0, 0, 0, 10%);
+    border: solid 1px rgba(0, 0, 0, 15%);
     border-radius: 5px;
     display: grid;
     place-items: center;
@@ -288,7 +303,8 @@
   div.timer, div.opponentScore, div.myScore {
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 20%);
+    background: rgba(0, 0, 0, 10%);
+    border: solid 1px rgba(0, 0, 0, 15%);
     border-radius: 5px;
   }
 
@@ -310,7 +326,7 @@
     font-size: 0.7rem;
     text-transform: uppercase;
     color: #fff;
-    opacity: 70%;
+    opacity: 75%;
   }
 
   div.timer {
