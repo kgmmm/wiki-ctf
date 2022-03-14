@@ -4,14 +4,17 @@
   import Loader from "./Loader.svelte";
 
   export let gameState;
+  export let myData;
 
   let readyLoader = false;
 
   let gameWinner;
   let roundWinner;
+  let didIWin;
 
   $: if(gameState.stage == "gameend") {
     gameWinner = gameState["players"].find(player => player.score >= gameState.scoreLimit);
+    didIWin = gameWinner.id === myData.id;
   }
 
   $: if(gameState.stage == "roundend" && gameState.lastRoundResult !== "time") {
@@ -63,7 +66,11 @@
     </div>
     <h1 class="char-limit">{gameWinner.displayName}</h1><span>...won&nbsp;the&nbsp;game!</span>
     <h3>{gameState.players[0].score} - {gameState.players[1].score}</h3>
-    <h4>Be a little quicker next game.</h4>
+    {#if didIWin}
+      <h4>Congratulations!</h4>
+    {:else}
+      <h4>Be a little quicker next game.</h4>
+    {/if}
     <div class="buttons">
       <button class="disconnect" title="Disconnect" on:click={handleDisconect}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
@@ -92,7 +99,7 @@
     height: 380px;
     color: #000;
     background: #fff;
-    background: linear-gradient(-120deg, rgb(0, 0, 0, 5%) 0% 10%, transparent 10% 90%, rgb(0, 0, 0, 5%) 90% 100%), #fff;
+    background: linear-gradient(-120deg, rgba(0, 0, 0, 5%) 0% 10%, transparent 10% 90%, rgba(0, 0, 0, 5%) 90% 100%), #fff;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 20%);
     position: absolute;
@@ -144,52 +151,59 @@
     font-size: 1rem;
     font-weight: 400;
     color: #000;
+    margin-bottom: 0.5rem;
   }
 
   div.buttons {
     width: 100%;
-    max-width: 320px;
-    min-height: 2.7rem;
     display: grid;
     grid-auto-flow: column;
     align-items: center;
     grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
   }
   div.buttons button {
-    width: 100%;
-    height: 100%;
+    height: 50px;
+    width: 160px;
     display: grid;
     place-items: center;
-    border: none;
     cursor: pointer;
   }
 
   button.disconnect {
-    background: rgba(0, 0, 0, 20%);
-    color: rgba(0, 0, 0, 50%);
+    color: #000;
+    background: rgba(0, 0, 0, 10%);
+    border: solid 1px rgba(0, 0, 0, 25%);
+    border-radius: 5px;
+    justify-self: right;
   }
   button.disconnect svg {
     width: 1em;
     height: 1em;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     fill: currentColor;
   }
 
   button.ready {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 80%;
     color: #fff;
     background: var(--blue-hsl);
-    font-size: 1.1rem;
-    font-weight: 500;
+    border: solid 1px var(--blue-dark-15);
+    border-radius: 5px;
   }
   button.ready:hover {
-    background: var(--blue-highlight);
+    background: var(--blue-light-5);
   }
 
   button.ready[disabled] {
-    opacity: 50%;
     cursor: not-allowed;
+    background: transparent;
+    border-color: rgba(0, 0, 0, 20%);
+    color: rgba(0, 0, 0, 20%);
   }
   button.ready[disabled]:hover {
-    background: var(--blue-hsl);
+    background: transparent;
   }
 </style>

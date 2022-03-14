@@ -209,7 +209,7 @@
   <Splash />
 {/if}
 {#if gameState.stage == "roundend" || gameState.stage == "gameend"}
-  <Modal {gameState} on:disconnect={disconnectFromGame} on:roundReady={roundReady} />
+  <Modal {gameState} {myData} on:disconnect={disconnectFromGame} on:roundReady={roundReady} />
 {/if}
 <article id="wikiContent" bind:this={wikiContent} tabindex="-1">
 
