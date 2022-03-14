@@ -14,7 +14,7 @@
   {#if $splash === "loader"}
       <Loader size="80" />
   {:else if $splash.text}
-    {#if $splash.text == "GO"}
+    {#if $splash.text == "GO" || $splash.text == "Plant!"}
       <h1 class="splashText" style="font-size: clamp(6rem, {size}, 12rem);" in:scale={{start: 1.5, duration: 200}} out:scale={{duration: 200}}>{$splash.text}</h1>
     {:else}
       <h1 class="splashText" style="font-size: clamp(6rem, {size}, 12rem);" in:scale={{start: 1.5, duration: 200}}>{$splash.text}</h1>

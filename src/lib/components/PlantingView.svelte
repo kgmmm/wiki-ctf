@@ -32,13 +32,13 @@
 
     let i = 3;
     threeSeconds = setInterval(() => {
-      if(i === "GO") {
+      if(i === "Plant!") {
         splash.set({
           text: undefined,
         });
         return clearInterval(threeSeconds);
       } else if(i == 0) {
-        i = "GO";
+        i = "Plant!";
         splash.set({
           text: i,
         });
