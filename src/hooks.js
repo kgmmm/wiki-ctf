@@ -20,7 +20,7 @@ export async function handle({ event, resolve }) {
         const game = liveGames[keys[i]]; // get the game data from liveGames at the entry from the keys array
 
         // if the game has only 1 player who is waiting in a public lobby
-        if(game["players"].length == 1 && game.stage == "waiting" && game.public == true) PublicGames.push(game); // push the game to the queue array
+        if(game["players"].length == 1 && game.stage == "waiting" && game.gameType == "public") PublicGames.push(game); // push the game to the queue array
       }
 
       return new Response(JSON.stringify(PublicGames));
