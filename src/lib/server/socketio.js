@@ -25,7 +25,7 @@ function Player() {
   this.profilePic = undefined;      // profilePic from Firebase auth
   this.roundReady = false;          // is player ready for next round
 }
-function Game(isPublic = false) {
+function Game(gameType = "private") {
   this.lobbyCode = undefined;       // lobbyCode used for the game
   this.stage = "waiting";           // current stage the game is at, 'waiting' : 'planting' : 'playing' : 'roundend' : 'gameend'
   this.roundTime = _ROUNDTIME;      // time (ms) per round
@@ -33,7 +33,7 @@ function Game(isPublic = false) {
   this.players = [];                // array of player objects
   this.players[0] = new Player();
   this.lastRoundResult = undefined; // result of the last round, 'time' : id of player who won the round
-  this.public = isPublic;           // is this a public game, can this game be found via the api (searchable)
+  this.gameType = gameType;         // is this a public game, can this game be found via the api (searchable)
 }
 let socketMap = new Map();
 
@@ -94,13 +94,13 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("initGame", (lobbyCode, userData) => {
+  socket.on("initGame", (lobbyCode, userData, gameType) => {
     console.log("init game triggered"); // log
     if (!liveGames[lobbyCode]) {
       console.log("no game"); // log
       socket.join(lobbyCode);
       socketMap.set(socket.id, lobbyCode);
-      liveGames[lobbyCode] = new Game();
+      liveGames[lobbyCode] = new Game(gameType);
       liveGames[lobbyCode].lobbyCode = lobbyCode;
       liveGames[lobbyCode].players[0].id = userData.userID;
       liveGames[lobbyCode].players[0].displayName = userData.displayName;
