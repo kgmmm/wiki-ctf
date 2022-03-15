@@ -25,7 +25,7 @@ function Player() {
   this.profilePic = undefined;      // profilePic from Firebase auth
   this.roundReady = false;          // is player ready for next round
 }
-function Game() {
+function Game(isPublic = false) {
   this.lobbyCode = undefined;       // lobbyCode used for the game
   this.stage = "waiting";           // current stage the game is at, 'waiting' : 'planting' : 'playing' : 'roundend' : 'gameend'
   this.roundTime = _ROUNDTIME;      // time (ms) per round
@@ -33,7 +33,7 @@ function Game() {
   this.players = [];                // array of player objects
   this.players[0] = new Player();
   this.lastRoundResult = undefined; // result of the last round, 'time' : id of player who won the round
-  this.public = false;              // is this a public game, can this game be found via the api (searchable)
+  this.public = isPublic;           // is this a public game, can this game be found via the api (searchable)
 }
 let socketMap = new Map();
 
