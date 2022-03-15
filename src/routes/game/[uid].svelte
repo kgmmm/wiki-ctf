@@ -1,7 +1,10 @@
 <script context="module">
-  export async function load({ url: { pathname } }) {
-    const lobbyCode = pathname.substring(6); // grab the lobby code from the url pathname
-    return { props: { lobbyCode: lobbyCode, } }; // return it as a page prop
+  export async function load({ url }) {
+    const lobbyCode = url.pathname.substring(6); // grab the lobby code from the url pathname
+
+    let gameType = url.searchParams.get("type") || "private"; // get the gametype from the params
+
+    return { props: { lobbyCode: lobbyCode, gameType: gameType, } }; // return props to page
   }
 </script>
 <script>
@@ -21,6 +24,7 @@
   import Modal from "$lib/components/Modal.svelte";
 
   export let lobbyCode;
+  export let gameType;
 
   let socket;
   let gameState = {};
@@ -62,7 +66,7 @@
 
     const initializeGame = authStore.subscribe(data => {
       if(data.isLoggedIn) {
-        socket.emit("initGame", lobbyCode, { userID: $authStore.userID, displayName: $authStore.displayName, profilePic: $authStore.profilePic, });
+        socket.emit("initGame", lobbyCode, { userID: $authStore.userID, displayName: $authStore.displayName, profilePic: $authStore.profilePic, }, gameType);
       }
     });
 
@@ -218,7 +222,7 @@
   {#if opponentProps}
     <Opponent on:click={disconnectFromGame} {...opponentProps} />
   {:else if gameState.stage == "waiting"}
-    <WaitingView {lobbyCode} on:toaster={(event) => toast.set(event.detail)} on:cancelGame={disconnectFromGame}/>
+    <WaitingView {lobbyCode} {gameType} on:toaster={(event) => toast.set(event.detail)} on:cancelGame={disconnectFromGame} />
   {/if}
   {#if gameState.stage == "planting"}
     <PlantingView {freeze} {lastSuccess} {searchError} {planted} {myData} on:search={wikiFetch} on:plant={plantFlag} />
