@@ -47,7 +47,28 @@
   }
 
   function quickPlay() {
-    quickPlayLoader = !quickPlayLoader;
+    quickPlayLoader = true;
+    fetch("/api/games/", {
+      method: "GET",
+      mode: "no-cors",
+    })
+    .then(response => response.json())
+    .then(data => {
+      if(data.length > 0 && data[0].lobbyCode) { // there are games
+        goto("/game/" + data[Math.floor(Math.random() * data.length)].lobbyCode); // pick one at random and join it
+      } else {
+        // no games
+        // create a new public game and sit waiting
+        goto("/game/" + newLobbyCode() + "?type=public");
+      }
+    })
+    .catch((error) => {
+      toast.set({
+        title: "Quick Play Failed!",
+        message: "Failed to join quick play.",
+      });
+      quickPlayLoader = false;
+    });
   }
 </script>
 
@@ -59,7 +80,7 @@
     </div>
   {:else if $authStore.isLoggedIn}
     <div class="gameMenu">
-      <button class="playButton" on:click={quickPlay}>
+      <button class="playButton" disabled={quickPlayLoader} on:click={quickPlay}>
         {#if quickPlayLoader == true}
           <Loader size="40" color="#fff" />
         {:else}
