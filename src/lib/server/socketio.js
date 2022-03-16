@@ -94,13 +94,13 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("initGame", (lobbyCode, userData, gameType) => {
+  socket.on("initGame", (lobbyCode, userData, gameType, roundTime, scoreLimit) => {
     console.log("init game triggered"); // log
     if (!liveGames[lobbyCode]) {
       console.log("no game"); // log
       socket.join(lobbyCode);
       socketMap.set(socket.id, lobbyCode);
-      liveGames[lobbyCode] = new Game(gameType);
+      liveGames[lobbyCode] = new Game(gameType, roundTime, scoreLimit);
       liveGames[lobbyCode].lobbyCode = lobbyCode;
       liveGames[lobbyCode].players[0].id = userData.userID;
       liveGames[lobbyCode].players[0].displayName = userData.displayName;
