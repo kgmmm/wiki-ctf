@@ -25,15 +25,15 @@ function Player() {
   this.profilePic = undefined;      // profilePic from Firebase auth
   this.roundReady = false;          // is player ready for next round
 }
-function Game(gameType = "private") {
+function Game(gameType = "private", roundTime = _ROUNDTIME, scoreLimit = _SCORELIMIT) {
   this.lobbyCode = undefined;       // lobbyCode used for the game
   this.stage = "waiting";           // current stage the game is at, 'waiting' : 'planting' : 'playing' : 'roundend' : 'gameend'
-  this.roundTime = _ROUNDTIME;      // time (ms) per round
-  this.scoreLimit = _SCORELIMIT;    // score limit of the game
+  this.roundTime = roundTime;       // time (ms) per round
+  this.scoreLimit = scoreLimit;     // score limit of the game
   this.players = [];                // array of player objects
   this.players[0] = new Player();
   this.lastRoundResult = undefined; // result of the last round, 'time' : id of player who won the round
-  this.gameType = gameType;         // is this a public game, can this game be found via the api (searchable)
+  this.gameType = gameType;         // public (join via quickplay), private/null (join via code), custom (private game with custom gameVARS)
 }
 let socketMap = new Map();
 
