@@ -22,6 +22,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>{statusCode} - Wiki CTF</title>
+</svelte:head>
+
 <article>
   <div class="col-1" in:fly={{ x: -100, duration: 400 }} out:fly={{ x: -500, duration: 200 }}>
     <h1 in:fly={{ x: -50, duration: 300, delay: 200}}>{statusCode}</h1>

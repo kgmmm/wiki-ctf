@@ -72,6 +72,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Wiki CTF</title>
+</svelte:head>
+
 <LandingView />
 <aside out:fade={{ duration: 0 }}>
   {#if !$authStore.isLoggedIn}

@@ -207,6 +207,16 @@
 
 <svelte:head>
   <link rel="stylesheet" href="/style/wiki.css">
+
+  {#if !opponentProps}
+    {#if gameType === "public"}
+      <title>Finding matchup - Wiki CTF</title>
+    {:else}
+      <title>Waiting for opponent - Wiki CTF</title>
+    {/if}
+  {:else}
+    <title>VS {opponentProps.displayName} - Wiki CTF</title>
+  {/if}
 </svelte:head>
 
 {#if $splash.text != undefined || $splash === "loader"}
