@@ -59,7 +59,7 @@
         title: "Not Signed In!",
         message: "You need to sign in to play.",
       });
-      goto("/", { replaceState: true, noscroll: false, keepfocus: false, state: {} });
+      goto("/");
     });
 
     socket = io("ws://localhost:5000");
@@ -201,7 +201,7 @@
   }
 
   function disconnectFromGame() {
-    goto("/", { replaceState: true, noscroll: false, keepfocus: false, state: {} }); // socket disconnection is handled by beforeNavigate
+    goto("/"); // socket disconnection is handled by beforeNavigate
   }
 </script>
 
