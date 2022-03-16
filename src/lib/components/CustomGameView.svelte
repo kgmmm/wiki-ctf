@@ -26,7 +26,7 @@
       <input type="radio" bind:group={roundTime} id="six" value={6} name="roundTime"> 6 minutes
     </label>
       <br>
-    <label for="ten">
+    <label for="nine">
       <input type="radio" bind:group={roundTime} id="nine" value={9} name="roundTime"> 9 minutes
     </label>
     <p>Score limit: </p>
