@@ -28,7 +28,8 @@ function Player() {
 function Game(gameType = "private", roundTime = _ROUNDTIME, scoreLimit = _SCORELIMIT) {
   this.lobbyCode = undefined;       // lobbyCode used for the game
   this.stage = "waiting";           // current stage the game is at, 'waiting' : 'planting' : 'playing' : 'roundend' : 'gameend'
-  this.roundTime = roundTime;       // time (ms) per round
+  this.roundTime = roundTime;       // current time in the game
+  this.resetTime = roundTime;       // time to reset to on new round
   this.scoreLimit = scoreLimit;     // score limit of the game
   this.players = [];                // array of player objects
   this.players[0] = new Player();
@@ -89,7 +90,7 @@ io.on("connection", (socket) => {
       liveGames[lobbyCode].players[1].planted = false;
       liveGames[lobbyCode].players[0].roundReady = false; // no one ready
       liveGames[lobbyCode].players[1].roundReady = false;
-      liveGames[lobbyCode].roundTime = _ROUNDTIME; // reset the round time
+      liveGames[lobbyCode].roundTime = liveGames[lobbyCode].resetTime; // reset the round time
       io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
     }
   });
