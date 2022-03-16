@@ -17,6 +17,7 @@
   import WaitingView from "$lib/components/WaitingView.svelte";
   import PlantingView from "$lib/components/PlantingView.svelte";
   import PlayingView from "$lib/components/PlayingView.svelte";
+  import CustomGameView from "$lib/components/CustomGameView.svelte";
   import { authStore } from "$lib/stores/authStore";
   import { toast } from "$lib/stores/toast";
   import { splash } from "$lib/stores/splash";
@@ -64,11 +65,13 @@
 
     socket = io("ws://localhost:5000");
 
-    const initializeGame = authStore.subscribe(data => {
-      if(data.isLoggedIn) {
-        socket.emit("initGame", lobbyCode, { userID: $authStore.userID, displayName: $authStore.displayName, profilePic: $authStore.profilePic, }, gameType);
-      }
-    });
+    if(gameType !== "custom") {
+      const initializeGame = authStore.subscribe(data => {
+        if(data.isLoggedIn) {
+          socket.emit("initGame", lobbyCode, { userID: $authStore.userID, displayName: $authStore.displayName, profilePic: $authStore.profilePic, }, gameType);
+        }
+      });
+    }
 
     socket.on("gameStateUpdate", (newState) => {
       console.log(newState); // LOG
@@ -104,6 +107,16 @@
     if(!socket.connected) return;
     socket.disconnect();
   });
+
+  function initCustomGame(event) {
+    if($authStore.isLoggedIn) {
+      socket.emit("initGame", lobbyCode, {
+        userID: $authStore.userID,
+        displayName: $authStore.displayName,
+        profilePic: $authStore.profilePic,
+      }, gameType, event.detail.roundTime, event.detail.scoreLimit);
+    }
+  }
 
   let searchQuery;
   let freeze = true;
@@ -229,6 +242,9 @@
 
 </article>
 <aside class:backgroundGradient>
+  {#if gameType === "custom" && !gameState.stage}
+    <CustomGameView on:initCustomGame={initCustomGame} />
+  {/if}
   {#if opponentProps}
     <Opponent on:click={disconnectFromGame} {...opponentProps} />
   {:else if gameState.stage == "waiting"}
