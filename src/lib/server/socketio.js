@@ -26,15 +26,14 @@ function Player() {
   this.roundReady = false;          // is player ready for next round
 }
 function Game(gameType = "private", roundTime = _ROUNDTIME, scoreLimit = _SCORELIMIT) {
-  this.lobbyCode = undefined;       // lobbyCode used for the game
-  this.stage = "waiting";           // current stage the game is at, 'waiting' : 'planting' : 'playing' : 'roundend' : 'gameend'
-  this.roundTime = roundTime;       // current time in the game
-  this.resetTime = roundTime;       // time to reset to on new round
-  this.scoreLimit = scoreLimit;     // score limit of the game
-  this.players = [];                // array of player objects
+  this.lobbyCode = undefined;              // lobbyCode used for the game
+  this.stage = "waiting";                  // current stage the game is at, 'waiting' : 'planting' : 'playing' : 'roundend' : 'gameend'
+  this.currentTime = roundTime;            // current time in the game
+  this.gameVARS = [roundTime, scoreLimit]; // gameVARS for this game, round time and score limit
+  this.players = [];                       // array of player objects
   this.players[0] = new Player();
-  this.lastRoundResult = undefined; // result of the last round, 'time' : id of player who won the round
-  this.gameType = gameType;         // public (join via quickplay), private/null (join via code), custom (private game with custom gameVARS)
+  this.lastRoundResult = undefined;        // result of the last round, 'time' : id of player who won the round
+  this.gameType = gameType;                // public (join via quickplay), private/null (join via code), custom (private game with custom gameVARS)
 }
 let socketMap = new Map();
 
@@ -90,7 +89,7 @@ io.on("connection", (socket) => {
       liveGames[lobbyCode].players[1].planted = false;
       liveGames[lobbyCode].players[0].roundReady = false; // no one ready
       liveGames[lobbyCode].players[1].roundReady = false;
-      liveGames[lobbyCode].roundTime = liveGames[lobbyCode].resetTime; // reset the round time
+      liveGames[lobbyCode].currentTime = liveGames[lobbyCode].gameVARS[0]; // reset the round time
       io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
     }
   });
@@ -180,12 +179,12 @@ function startGameLoop(lobbyCode, gameState) {
       return; // and return early
     }
     
-    if(!newGameState.roundTime > 0) { // if round timer hit 0
+    if(!newGameState.currentTime > 0) { // if round timer hit 0
       newGameState.stage = "roundend"; // set the stage to roundend
       newGameState.lastRoundResult = "time"; // time was the winner here
       clearInterval(loopInterval); // clear the gameloop
     } else if(newGameState.players[0].score !== oldScores[0] || newGameState.players[1].score !== oldScores[1]) { // if either players score changed from the last loop
-      if(newGameState.players[0].score === newGameState.scoreLimit || newGameState.players[1].score === newGameState.scoreLimit) { // if either players score hits scorelimit
+      if(newGameState.players[0].score === newGameState.gameVARS[1] || newGameState.players[1].score === newGameState.gameVARS[1]) { // if either players score hits scorelimit
         newGameState.stage = "gameend"; // set the stage to gameend
         clearInterval(loopInterval); // clear the gameloop
       } else { // if no one hit the scorelimit
@@ -203,9 +202,9 @@ function startGameLoop(lobbyCode, gameState) {
 function gameLoop(gameState) {
   let newState = gameState;
 
-  if(!gameState.roundTime > 0) return newState; // if theres no time on the clock just return
+  if(!gameState.currentTime > 0) return newState; // if theres no time on the clock just return
 
-  newState.roundTime = gameState.roundTime - _GAMEINTERVAL; // decrement the round timer
+  newState.currentTime = gameState.currentTime - _GAMEINTERVAL; // decrement the round timer
 
   if(gameState.players[0].location === gameState.players[1].location) { // if players bump
     // if neither player is at a base
