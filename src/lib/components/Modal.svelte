@@ -13,7 +13,7 @@
   let didIWin;
 
   $: if(gameState.stage == "gameend") {
-    gameWinner = gameState["players"].find(player => player.score >= gameState.scoreLimit);
+    gameWinner = gameState["players"].find(player => player.score >= gameState.gameVARS[1]);
     didIWin = gameWinner.id === myData.id;
   }
 

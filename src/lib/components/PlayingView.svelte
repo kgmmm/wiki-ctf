@@ -17,7 +17,7 @@
     );
   }
 
-  $: roundTime = calcTime(gameState.roundTime);
+  $: roundTime = calcTime(gameState.currentTime);
 
   onMount(() => {
     splash.set({
