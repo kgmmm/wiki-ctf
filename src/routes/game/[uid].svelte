@@ -128,7 +128,6 @@
     if(searchQuery.toLowerCase() == lastSuccess.toLowerCase()) {
       return
     }
-    console.time("roundtrip"); // LOG
     freeze = true;
     searchError = false;
     splash.set("loader");
@@ -146,7 +145,6 @@
         text: undefined,
       });
       freeze = false;
-      console.timeEnd("roundtrip"); // LOG
       return;
     }
 
@@ -187,8 +185,6 @@
     wikiContent.scrollTop = 0;
     
     wikiContent.innerHTML = response.parse.text["*"];
-
-    console.timeEnd("roundtrip"); // LOG
 
     lastSuccess = searchQuery;
     searchQuery = "";
