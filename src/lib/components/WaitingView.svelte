@@ -72,7 +72,7 @@
     place-self: center;
     display: grid;
     place-items: center;
-    grid-template-rows: min-content 12rem min-content min-content 5rem;
+    grid-template-rows: min-content 10rem min-content min-content 5rem;
     text-align: center;
     overflow: hidden;
   }
