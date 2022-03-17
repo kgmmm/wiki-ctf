@@ -39,7 +39,12 @@
         goto("/game/" + lobbyCode);
       }
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      toast.set({
+        title: "Fetch Error!",
+        message: "Error fetching data from server.",
+      });
+    });
   }
 
   function createLobby() {

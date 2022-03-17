@@ -12,7 +12,6 @@
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        console.log(user); // LOG
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
@@ -21,13 +20,11 @@
         const email = error.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(errorMessage); // LOG
       });
     }
     async function signOut() {
       const auth = getAuth();
       await auth.signOut();
-      console.log("signed out");
     }
 </script>
 

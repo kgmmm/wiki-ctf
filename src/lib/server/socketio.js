@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
   console.log(`${socket.id} connected.`);
 
   socket.on("fetchedPage", (userID, data) => {
-    console.log(`${userID} fetched page: '${data.pageid}' with title '${data.title}' on socket ${socket.id}`); // LOG
+    console.log(`${userID} fetched page: '${data.pageid}' on socket ${socket.id}`); // LOG
     let lobbyCode = socketMap.get(socket.id);
     let targetPlayer = liveGames[lobbyCode]["players"].find(player => player.id === userID);
     targetPlayer.location = data.title;
@@ -106,8 +106,6 @@ io.on("connection", (socket) => {
       liveGames[lobbyCode].players[0].displayName = userData.displayName;
       liveGames[lobbyCode].players[0].profilePic = userData.profilePic;
       io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
-      // console.log(socketMap); // LOG
-      // console.log(liveGames); // LOG
     } else if (liveGames[lobbyCode]) {
       console.log("is game"); // log
       let playerCount = liveGames[lobbyCode]["players"].length;
@@ -126,13 +124,8 @@ io.on("connection", (socket) => {
         liveGames[lobbyCode].players[1].profilePic = userData.profilePic;
         liveGames[lobbyCode].stage = "planting";
         io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
-        // console.log(socketMap); // LOG
-        // console.log(liveGames); // LOG
       }
     }
-
-    // socket.join(lobbyCode);
-    // console.log(`user: ${userID} joined lobby: ${lobbyCode}`);
   })
 
   socket.on("disconnect", (reason) => {
@@ -154,7 +147,6 @@ io.on("connection", (socket) => {
         io.sockets.in(whichGame).emit("eject", { title: "Game Cancelled!", message: "Your opponent disconnected." }); // kick everyone from the game (carry toast message)
       }
     }
-    // console.log(liveGames); // LOG
   });
 });
 

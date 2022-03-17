@@ -74,7 +74,6 @@
     }
 
     socket.on("gameStateUpdate", (newState) => {
-      console.log(newState); // LOG
       gameState = newState;
     });
 
@@ -127,7 +126,6 @@
   async function wikiFetch(event) {
     if(event) searchQuery = event.detail.query;
     if(searchQuery.toLowerCase() == lastSuccess.toLowerCase()) {
-      console.log("same request as before"); // LOG
       return
     }
     console.time("roundtrip"); // LOG
@@ -141,8 +139,6 @@
       mode: "cors",
     });
     let response = await res.json();
-
-    console.log(response); // LOG
 
     if("error" in response) {
       searchError = true;
