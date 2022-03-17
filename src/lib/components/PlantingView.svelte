@@ -106,7 +106,6 @@
       </svg>
     </button>
     {#if searchError}
-      <!-- TODO: put a transition on this so that it animates every time it shows up -->
       <strong in:scale={{ duration: 150 }}>Try something else</strong>
     {/if}
   </form>
