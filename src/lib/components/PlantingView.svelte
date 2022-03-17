@@ -176,6 +176,9 @@
     border-color: var(--red-dark-10);
     color: var(--red-dark-10);
   }
+  button.search:focus {
+    z-index: 999;
+  }
 
   button.search svg {
     fill: currentColor;
@@ -202,6 +205,7 @@
   }
   input[type="text"]:focus {
     outline: solid 2px yellow;
+    z-index: 999;
   }
   input[type="text"][disabled] {
     cursor: not-allowed;
