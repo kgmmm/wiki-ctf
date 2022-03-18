@@ -12,13 +12,17 @@
   let roundWinner;
   let didIWin;
 
-  $: if(gameState.stage == "gameend") {
-    gameWinner = gameState["players"].find(player => player.score >= gameState.gameVARS[1]);
+  $: if(gameState.stage == "gameend") findGameWinner(gameState);
+
+  function findGameWinner(state) {
+    gameWinner = state["players"].find(player => player.score >= state.gameVARS[1]);
     didIWin = gameWinner.id === myData.id;
   }
+  
+  $: if(gameState.stage == "roundend" && gameState.lastRoundResult !== "time") findRoundWinner(gameState);
 
-  $: if(gameState.stage == "roundend" && gameState.lastRoundResult !== "time") {
-    roundWinner = gameState["players"].find(player => player.id === gameState.lastRoundResult);
+  function findRoundWinner(state) {
+    roundWinner = state["players"].find(player => player.id === gameState.lastRoundResult);
   }
 
   const dispatch = createEventDispatcher();
