@@ -111,7 +111,7 @@
   </form>
   <button class="plant" disabled={!lastSuccess || freeze} on:click={plantFlag}>Plant flag</button>
   {#if myData.location && lastSuccess}
-    <output style="font-size: Clamp(0.75rem, {310 / myData['location'].length / 8 + 'rem'}, 1.2rem);">
+    <output style="font-size: Clamp(0.75rem, {310 / myData['location'].length / 8 + 'rem'}, 1.2rem);" class:freeze>
       {myData.location}
     </output>
   {/if}
@@ -237,6 +237,34 @@
     position: absolute;
     top: calc(100% - 4.5rem);
     z-index: -1;
+  }
+  output::before, output::after {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 0;
+    width: 0;
+    border: solid 20px transparent;
+    border-bottom: solid 10px var(--red-dark-15);
+  }
+  output::after {
+    top: -29px;
+    border: solid 20px transparent;
+    border-bottom: solid 10px var(--red-light-5);
+  }
+
+  output.freeze {
+    background: transparent;
+    border-color: var(--red-dark-10);
+    color: var(--red-dark-10);
+  }
+  output.freeze::before {
+    border-bottom-color: var(--red-dark-10);
+  }
+  output.freeze::after {
+    border-bottom-color: var(--red);
   }
 
   button.plant {
