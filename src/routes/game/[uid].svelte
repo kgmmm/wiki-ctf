@@ -63,7 +63,7 @@
       goto("/");
     });
 
-    socket = io("ws://localhost:5000");
+    socket = io();
 
     if(gameType !== "custom") {
       const initializeGame = authStore.subscribe(data => {
