@@ -1,7 +1,7 @@
-import { handler } from './build/handler.js';
+import { handler } from '../build/handler.js';
 
 import express from 'express';
-import http from "http";
+import http, { get } from "http";
 import { Server as SocketIO } from "socket.io";
 
 const app = express();
@@ -231,6 +231,33 @@ function gameLoop(gameState) {
 
   return newState;
 }
+
+app.get("/api/lobby/:lobbyCode", (req, res) => {
+  let lobbyCode = req.params.lobbyCode; // grab the lobbyCode from the url
+
+  if(liveGames[lobbyCode]) { // if the game exists in liveGames
+    res.send(JSON.stringify(liveGames[lobbyCode])); // send the game data
+  } else {
+    res.send({});
+  }
+});
+
+app.get("/api/games/", (req, res) => {
+  if(Object.keys(liveGames).length > 0) { // if there are any live games
+    let PublicGames = []; // instantiate the queue array
+    let keys = Object.keys(liveGames); // save an array of all the keys
+
+    for (let i = 0; i < keys.length; i++) { // loop through all the games
+      const game = liveGames[keys[i]]; // get the game data from liveGames at the entry from the keys array
+
+      // if the game has only 1 player who is waiting in a public lobby
+      if(game["players"].length == 1 && game.stage == "waiting" && game.gameType == "public") PublicGames.push(game); // push the game to the queue array
+    }
+    res.send(JSON.stringify(PublicGames)); // send the array of games its possible to join
+  } else {
+    res.send({});
+  }
+});
 
 app.use(handler); // let SvelteKit handle everything else, including serving prerendered pages and static assets
 
