@@ -34,7 +34,7 @@
     background: var(--blue-light-5);
     border-bottom: solid 1px var(--blue-dark-5);
     display: grid;
-    grid-template-columns: 100px 1fr 100px;
+    grid-template-columns: 95px 1fr 95px;
     grid-template-areas: "disconnect text profilepic";
     place-items: center;
   }

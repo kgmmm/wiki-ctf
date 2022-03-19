@@ -80,7 +80,7 @@
     background: var(--red-light-5);
     border-top: solid 1px var(--red-dark-5);
     display: grid;
-    grid-template-columns: 100px 1fr 100px;
+    grid-template-columns: 95px 1fr 95px;
     grid-template-areas: "profilepic text signout";
     place-items: center;
   }

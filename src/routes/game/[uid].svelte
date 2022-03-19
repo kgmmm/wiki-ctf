@@ -265,7 +265,7 @@
   aside {
     grid-area: aside;
     display: grid;
-    grid-template-rows: 100px 1fr 100px;
+    grid-template-rows: 95px 1fr 95px;
     grid-template-areas:
       "opponent"
       "content"
