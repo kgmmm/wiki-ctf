@@ -2,7 +2,7 @@ import http from "http";
 import { Server as SocketIO } from "socket.io";
 
 const server = http.createServer();
-const io = new SocketIO(server, {
+export const io = new SocketIO(server, {
   cors: {
     origin: "*",
   },
@@ -157,8 +157,6 @@ server.once("error", (err) => {
 server.listen(5000, () => {
   console.log("WS: Listening on port 5000");
 });
-
-export default io;
 
 function startGameLoop(lobbyCode, gameState) {
   const loopInterval = setInterval(() => {
