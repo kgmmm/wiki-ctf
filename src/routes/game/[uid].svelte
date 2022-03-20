@@ -211,7 +211,7 @@
 </script>
 
 <svelte:head>
-  <link rel="stylesheet" href="/style/wiki.css">
+  <link rel="stylesheet" href="/style/wiki.min.css">
 
   {#if !opponentProps}
     {#if gameType === "public"}

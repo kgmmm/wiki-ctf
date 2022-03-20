@@ -264,7 +264,7 @@
     border-bottom-color: var(--red-dark-10);
   }
   output.freeze::after {
-    border-bottom-color: var(--red);
+    border-bottom-color: var(--red-hsl);
   }
 
   button.plant {

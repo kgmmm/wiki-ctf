@@ -59,14 +59,6 @@ select {
 /* GLOBALS */
 
 :root {
-	--red-dark: #a41a1a;
-	--red: #cd2020;
-	--red-light: #d23737;
-	--blue-dark: #002474;
-	--blue: #002d91;
-	--blue-light: #1a429c;
-	--blue-highlight: #0d3a9e;
-
 	--red-h: 0;
 	--red-s: 73%;
 	--red-l: 46%;
