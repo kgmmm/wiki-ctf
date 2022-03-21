@@ -1,8 +1,15 @@
 <script>
   import { mapData } from "$lib/stores/mapData";
+  import { onMount } from "svelte";
+
+  let mapNode;
+  
+  onMount(() => {
+    mapNode.scrollTop = 0;
+  });
 </script>
 
-<ul class="map">
+<ul class="map" bind:this={mapNode} tabindex="-1">
   {#if $mapData?.length > 0}
     {#each $mapData as stop, i}
       {@const lastData = $mapData[i - 1]}
@@ -143,24 +150,23 @@
 
 <style>
   ul.map {
-    padding: 1rem;
+    padding: 2rem 1rem;
+    width: 100%;
+    height: 100%;
     color: #000;
     background: var(--wiki-chrome-bg-color);
+    border-radius: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     list-style-type: none;
     text-align: center;
     overflow-y: scroll;
-
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 300px;
-    height: auto;
+    scroll-behavior: smooth;
+    isolation: isolate;
   }
 
   li {
-    min-height: 1rem;
+    height: 2rem;
     display: grid;
     place-items: center;
     position: relative;
@@ -186,6 +192,10 @@
   li:last-child::before, li:nth-last-child(2)::before {
     height: 50%;
     top: 0;
+  }
+
+  li.blank {
+    min-height: 0.33rem;
   }
 
   li.me {
