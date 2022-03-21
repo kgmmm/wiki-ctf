@@ -21,8 +21,10 @@
   import { authStore } from "$lib/stores/authStore";
   import { toast } from "$lib/stores/toast";
   import { splash } from "$lib/stores/splash";
+  import { mapData } from "$lib/stores/mapData";
   import Splash from "$lib/components/Splash.svelte";
   import Modal from "$lib/components/Modal.svelte";
+  import { makeMapData } from "$lib/map";
 
   export let lobbyCode;
   export let gameType;
@@ -33,6 +35,8 @@
   let opponentProps;
   let myData;
   let planted;
+
+  $: $mapData = makeMapData(gameState, $authStore.userID);
 
   let backgroundGradient;
 
