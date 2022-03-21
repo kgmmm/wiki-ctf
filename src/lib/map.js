@@ -6,7 +6,7 @@ export function makeMapData(gameState, myID) {
 
     return mapData;
   }
-  if(gameState.stage !== "playing") return;
+  if(gameState.stage !== "playing") return mapData;
 
   let me = gameState["players"].find(player => player.id === myID);
   let opponent = gameState["players"].find(player => player.id !== myID);
