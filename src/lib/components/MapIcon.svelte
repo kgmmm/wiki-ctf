@@ -1,4 +1,5 @@
 <script>
+  import { fade } from "svelte/transition";
   import { createPopperActions } from "svelte-popperjs";
 
   const [popperRef, popperContent] = createPopperActions();
@@ -32,7 +33,9 @@
   {/if}
 </div>
 {#if showToolTip}
-  <div use:popperContent={popperOptions} class="display" style:--font-size={145 / text.length / 8 + 'rem'}>{text}</div>
+  <div use:popperContent={popperOptions} class="display" style:--font-size={145 / text.length / 8 + 'rem'}
+       in:fade={{ duration: 100 }}
+       out:fade={{ duration: 100 }}>{text}</div>
 {/if}
 
 <style>
