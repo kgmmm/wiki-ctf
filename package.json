@@ -16,7 +16,8 @@
     "@sveltejs/kit": "^1.0.0-next.301",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
-    "svelte": "^3.44.0"
+    "svelte": "^3.44.0",
+    "svelte-popperjs": "^1.2.8"
   },
   "type": "module",
   "dependencies": {
