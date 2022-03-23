@@ -89,7 +89,9 @@
       </div>
     {/if}
   </div>
-  <Map />
+  <div class="mapContainer">
+    <Map />
+  </div>
 </div>
 <div class="shadow" in:fade={{duration: 300}}></div>
 
@@ -101,12 +103,19 @@
     z-index: 799;
   }
 
+  div.mapContainer {
+    width: 100%;
+    height: 100%;
+    background: var(--wiki-chrome-bg-color);
+    border-radius: 5px;
+  }
+
   div.container {
     padding: 7px;
-    height: 400px;
+    height: auto;
+    width: auto;
     color: #000;
     background: #fff;
-    /* background: linear-gradient(-120deg, rgba(0, 0, 0, 5%) 0% 10%, transparent 10% 90%, rgba(0, 0, 0, 5%) 90% 100%), #fff; */
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 20%);
     position: absolute;
@@ -116,11 +125,13 @@
     text-align: center;
     display: grid;
     place-items: center;
-    grid-template-columns: 500px 320px;
+    grid-template-columns: 330px 330px;
     gap: 7px;
   }
 
   div.endscreen {
+    width: 100%;
+    height: 100%;
     display: grid;
     place-items: center;
   }
@@ -178,7 +189,7 @@
   }
   div.buttons button {
     height: 50px;
-    width: 160px;
+    width: 100%;
     display: grid;
     place-items: center;
     cursor: pointer;
