@@ -1,109 +1,116 @@
 <script>
+  import { Svroller } from "svrollbar";
   import { mapData } from "$lib/stores/mapData";
   import MapIcon from "$lib/components/MapIcon.svelte";
-
-  let mapNode;
 </script>
 
-<ul class="map" bind:this={mapNode} tabindex="-1">
-  {#if $mapData?.length > 0}
-    {#each $mapData as stop, i}
-      {@const lastData = $mapData[i - 1]}
-      {#if i === 0}
-        <li class="me stop">
-          <MapIcon type="flag" text={stop[0]} />
-        </li>
-        <li class="opponent stop">
-          <MapIcon type="flag" text={stop[1]} />
-        </li>
-      {:else}
-        {#if stop[0] !== lastData[0] || stop[1] !== lastData[1]}
-          {#if stop[0] === stop[1]}
-            <li class="joint">
-              <MapIcon joint text={stop[0]} />
-            </li>
-          {:else}
-            {#if stop[0] === lastData[0]}
-              {#if stop[2] === 1}
-                <li class="blank carrying"> </li>
-                <li class="opponent stop">
-                  <MapIcon text={stop[1]} />
-                </li>
-              {:else if stop[2] === 2}
-                <li class="blank me"> </li>
-                <li class="opponent carrying stop">
-                  <MapIcon text={stop[1]} />
-                </li>
-              {:else if stop[2] === 3}
-                <li class="blank carrying"> </li>
-                <li class="carrying stop">
-                  <MapIcon text={stop[1]} />
-                </li>
-              {:else}
-                <li class="blank me"> </li>
-                <li class="opponent stop">
-                  <MapIcon text={stop[1]} />
-                </li>
-              {/if}
-            {:else if stop[1] === lastData[1]}
-              {#if stop[2] === 1}
-                <li class="me carrying stop">
-                  <MapIcon text={stop[0]} />
-                </li>
-                <li class="blank opponent"> </li>
-              {:else if stop[2] === 2}
-                <li class="me stop">
-                  <MapIcon text={stop[0]} />
-                </li>
-                <li class="blank carrying"> </li>
-              {:else if stop[2] === 3}
-                <li class="carrying stop">
-                  <MapIcon text={stop[0]} />
-                </li>
-                <li class="blank carrying"> </li>
-              {:else}
-                <li class="me stop">
-                  <MapIcon text={stop[0]} />
-                </li>
-                <li class="blank opponent"> </li>
+<Svroller width="330px" height="330px">
+  <ul class="map" tabindex="-1">
+    {#if $mapData?.length > 0}
+      {#each $mapData as stop, i}
+        {@const lastData = $mapData[i - 1]}
+        {#if i === 0}
+          <li class="me stop">
+            <MapIcon type="flag" text={stop[0]} />
+          </li>
+          <li class="opponent stop">
+            <MapIcon type="flag" text={stop[1]} />
+          </li>
+        {:else}
+          {#if stop[0] !== lastData[0] || stop[1] !== lastData[1]}
+            {#if stop[0] === stop[1]}
+              <li class="joint">
+                <MapIcon joint text={stop[0]} />
+              </li>
+            {:else}
+              {#if stop[0] === lastData[0]}
+                {#if stop[2] === 1}
+                  <li class="blank carrying"> </li>
+                  <li class="opponent stop">
+                    <MapIcon text={stop[1]} />
+                  </li>
+                {:else if stop[2] === 2}
+                  <li class="blank me"> </li>
+                  <li class="opponent carrying stop">
+                    <MapIcon text={stop[1]} />
+                  </li>
+                {:else if stop[2] === 3}
+                  <li class="blank carrying"> </li>
+                  <li class="carrying stop">
+                    <MapIcon text={stop[1]} />
+                  </li>
+                {:else}
+                  <li class="blank me"> </li>
+                  <li class="opponent stop">
+                    <MapIcon text={stop[1]} />
+                  </li>
+                {/if}
+              {:else if stop[1] === lastData[1]}
+                {#if stop[2] === 1}
+                  <li class="me carrying stop">
+                    <MapIcon text={stop[0]} />
+                  </li>
+                  <li class="blank opponent"> </li>
+                {:else if stop[2] === 2}
+                  <li class="me stop">
+                    <MapIcon text={stop[0]} />
+                  </li>
+                  <li class="blank carrying"> </li>
+                {:else if stop[2] === 3}
+                  <li class="carrying stop">
+                    <MapIcon text={stop[0]} />
+                  </li>
+                  <li class="blank carrying"> </li>
+                {:else}
+                  <li class="me stop">
+                    <MapIcon text={stop[0]} />
+                  </li>
+                  <li class="blank opponent"> </li>
+                {/if}
               {/if}
             {/if}
-          {/if}
-        {:else}
-          {#if stop[2] === 1}
-            <li class="blank carrying"> </li>
-            <li class="blank opponent"> </li>
-          {:else if stop[2] === 2}
-            <li class="blank me"> </li>
-            <li class="blank carrying"> </li>
-          {:else if stop[2] === 3}
-            <li class="blank carrying"> </li>
-            <li class="blank carrying"> </li>
           {:else}
-            <li class="blank me"> </li>
-            <li class="blank opponent"> </li>
+            {#if stop[2] === 1}
+              <li class="blank carrying"> </li>
+              <li class="blank opponent"> </li>
+            {:else if stop[2] === 2}
+              <li class="blank me"> </li>
+              <li class="blank carrying"> </li>
+            {:else if stop[2] === 3}
+              <li class="blank carrying"> </li>
+              <li class="blank carrying"> </li>
+            {:else}
+              <li class="blank me"> </li>
+              <li class="blank opponent"> </li>
+            {/if}
           {/if}
         {/if}
-      {/if}
-    {/each}
-  {/if}
-</ul>
+      {/each}
+    {/if}
+  </ul>
+</Svroller>
 
 <style>
+  :global(.svlr-contents) {
+    min-height: 100%;
+    display: grid;
+    place-items: center;
+  }
+  :global(.svlr-wrapper) {
+    background: var(--wiki-chrome-bg-color);
+    border-radius: 5px;
+  }
+
   ul.map {
     padding: 2rem 1rem;
     width: 100%;
     height: 100%;
     color: #000;
-    background: var(--wiki-chrome-bg-color);
-    border-radius: 5px;
     display: flex;
     flex-flow: wrap;
     list-style-type: none;
     text-align: center;
     isolation: isolate;
-    scroll-behavior: smooth;
-    overflow-y: auto;
   }
 
   li {
