@@ -25,6 +25,7 @@
     "firebase": "^9.6.5",
     "short-unique-id": "^4.4.4",
     "socket.io": "^4.4.1",
-    "socket.io-client": "^4.4.1"
+    "socket.io-client": "^4.4.1",
+    "svrollbar": "^0.10.5"
   }
 }
