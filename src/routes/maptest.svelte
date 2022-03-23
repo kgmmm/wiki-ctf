@@ -27,8 +27,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 200px #000;
-
-    overflow-y: scroll;
   }
   div.buttons {
     position: fixed;
