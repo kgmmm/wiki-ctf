@@ -33,7 +33,7 @@
   {/if}
 </div>
 {#if showToolTip}
-  <div use:popperContent={popperOptions} class="display" style:--font-size={145 / text.length / 8 + 'rem'}
+  <div use:popperContent={popperOptions} class="display" style:--font-size={135 / text.length / 8 + 'rem'}
        in:fade={{ duration: 100 }}
        out:fade={{ duration: 100 }}>{text}</div>
 {/if}
