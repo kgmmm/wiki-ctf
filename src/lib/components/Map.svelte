@@ -103,6 +103,7 @@
     list-style-type: none;
     text-align: center;
     isolation: isolate;
+    scroll-behavior: smooth;
     overflow-y: auto;
   }
 
