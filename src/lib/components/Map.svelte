@@ -23,29 +23,37 @@
                 <MapIcon joint text={stop[0]} />
               </li>
             {:else}
-              {#if stop[0] === lastData[0]}
+              {#if stop[0] !== lastData[0] && stop[1] !== lastData[1]}
                 {#if stop[2] === 1}
-                  <li class="blank carrying"> </li>
+                  <li class="me carrying stop">
+                    <MapIcon text={stop[0]} />
+                  </li>
                   <li class="opponent stop">
                     <MapIcon text={stop[1]} />
                   </li>
                 {:else if stop[2] === 2}
-                  <li class="blank me"> </li>
+                  <li class="me stop">
+                    <MapIcon text={stop[0]} />
+                  </li>
                   <li class="opponent carrying stop">
                     <MapIcon text={stop[1]} />
                   </li>
                 {:else if stop[2] === 3}
-                  <li class="blank carrying"> </li>
-                  <li class="carrying stop">
+                  <li class="me carrying stop">
+                    <MapIcon text={stop[0]} />
+                  </li>
+                  <li class="opponent carrying stop">
                     <MapIcon text={stop[1]} />
                   </li>
                 {:else}
-                  <li class="blank me"> </li>
+                  <li class="me stop">
+                    <MapIcon text={stop[0]} />
+                  </li>
                   <li class="opponent stop">
                     <MapIcon text={stop[1]} />
                   </li>
                 {/if}
-              {:else if stop[1] === lastData[1]}
+              {:else if stop[0] !== lastData[0]}
                 {#if stop[2] === 1}
                   <li class="me carrying stop">
                     <MapIcon text={stop[0]} />
@@ -66,6 +74,28 @@
                     <MapIcon text={stop[0]} />
                   </li>
                   <li class="blank opponent"> </li>
+                {/if}
+              {:else if stop[1] !== lastData[1]}
+                {#if stop[2] === 1}
+                  <li class="blank carrying"> </li>
+                  <li class="opponent stop">
+                    <MapIcon text={stop[1]} />
+                  </li>
+                {:else if stop[2] === 2}
+                  <li class="blank me"> </li>
+                  <li class="opponent carrying stop">
+                    <MapIcon text={stop[1]} />
+                  </li>
+                {:else if stop[2] === 3}
+                  <li class="blank carrying"> </li>
+                  <li class="carrying stop">
+                    <MapIcon text={stop[1]} />
+                  </li>
+                {:else}
+                  <li class="blank me"> </li>
+                  <li class="opponent stop">
+                    <MapIcon text={stop[1]} />
+                  </li>
                 {/if}
               {/if}
             {/if}
@@ -91,18 +121,8 @@
 </Svroller>
 
 <style>
-  :global(.svlr-contents) {
-    min-height: 100%;
-    display: grid;
-    place-items: center;
-  }
-  :global(.svlr-wrapper) {
-    background: var(--wiki-chrome-bg-color);
-    border-radius: 5px;
-  }
-
   ul.map {
-    padding: 2rem 1rem;
+    padding: 2rem 15px;
     width: 100%;
     height: 100%;
     color: #000;
@@ -171,6 +191,7 @@
 
   li.joint {
     width: 100%;
+    min-height: 2.5rem;
     --accent: #d5d7da;
     --accent-2: #b9bbbe;
   }
