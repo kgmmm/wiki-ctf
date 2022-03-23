@@ -20,14 +20,18 @@
 
 <style>
   div.container {
-    width: 330px;
-    height: 330px;
+    width: 500px;
+    height: 500px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: grid;
+    place-items: center;
+    background: lightcoral;
     box-shadow: 0 0 200px #000;
   }
+
   div.buttons {
     position: fixed;
     bottom: 200px;
