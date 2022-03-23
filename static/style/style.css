@@ -108,6 +108,7 @@ body {
 	display: grid;
 	place-items: center;
 	background: var(--wiki-chrome-bg-color);
+	overflow: hidden;
 }
 
 button:focus {
