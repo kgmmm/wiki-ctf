@@ -93,8 +93,7 @@
   ul.map {
     padding: 2rem 1rem;
     width: 100%;
-    height: auto;
-    max-height: 100%;
+    height: 100%;
     color: #000;
     background: var(--wiki-chrome-bg-color);
     border-radius: 5px;
@@ -151,7 +150,7 @@
   }
 
   li.stop {
-    height: 2.5rem;
+    min-height: 2.5rem;
   }
   li.stop ~ li.blank.carrying::before {
     height: calc(100% + calc(2.5rem / 2));
