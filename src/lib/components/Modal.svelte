@@ -26,6 +26,18 @@
     roundWinner = state["players"].find(player => player.id === gameState.lastRoundResult);
   }
 
+  $: result = findResult(gameState); // returns an array with two numbers, 0 round 1 game, 0 loss 1 win 2 draw
+
+  function findResult(state) {
+    if(state.stage === "gameend") {
+      let gameWinner = state["players"].find(player => player.score >= state.gameVARS[1]);
+      return (gameWinner.id === myData.id ? [1, 1] : [1, 0]);
+    } else if(state.stage === "roundend") {
+      if(state.lastRoundResult === "time") return [0, 2];
+      return (state.lastRoundResult === myData.id ? [0, 1] : [0, 0]);
+    }
+  }
+
   const dispatch = createEventDispatcher();
 
   function handleDisconect() {
