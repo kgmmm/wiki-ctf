@@ -33,8 +33,10 @@
   }
 
   function handleReady() {
-    readyLoader = true;
-    dispatch("roundReady");
+    if(!readyLoader) {
+      readyLoader = true;
+      dispatch("roundReady");
+    }
   }
 </script>
 
