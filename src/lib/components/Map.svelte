@@ -122,7 +122,7 @@
 
 <style>
   ul.map {
-    padding: 2rem 15px;
+    padding: 2rem 0;
     width: 100%;
     height: 100%;
     color: #000;
