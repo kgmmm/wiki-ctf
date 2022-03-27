@@ -59,6 +59,7 @@
     display: grid;
     align-content: center;
     text-align: right;
+    justify-items: right;
   }
   div.opponentIs h4 {
     font-size: 0.875rem;

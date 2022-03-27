@@ -104,6 +104,7 @@
     width: 100%;
     display: grid;
     align-content: center;
+    justify-items: left;
   }
   div.loggedInAs h4 {
     font-size: 0.875rem;
