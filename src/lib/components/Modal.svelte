@@ -63,7 +63,7 @@
           </div>
         {/if}
       </div>
-      <p>{myData.displayName}</p>
+      <p class="char-limit">{myData.displayName}</p>
     </div>
     <div class="player opponent" class:winner={result[1] === 0}>
       <div class="profilepic">
@@ -76,7 +76,7 @@
         </div>
       {/if}
       </div>
-      <p>{opponentData.displayName}</p>
+      <p class="char-limit">{opponentData.displayName}</p>
     </div>
   </div>
   <div class="mapContainer">
@@ -175,7 +175,7 @@
     width: 100%;
     height: max-content;
     display: grid;
-    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr;
   }
 
   div.player {
@@ -201,6 +201,7 @@
     font-size: 0.9rem;
     font-weight: 400;
     color: #585858;
+    max-width: 125px;
   }
 
   div.trophy {
