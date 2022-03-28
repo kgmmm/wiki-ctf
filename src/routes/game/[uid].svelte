@@ -235,12 +235,12 @@
   <Modal {gameState} {myData} {opponentData} on:disconnect={disconnectFromGame} on:roundReady={roundReady} />
 {/if}
 {#if gameState.stage == "planting" || gameState.stage == "playing"}
-  <a href="#controls" class="skipWiki" tabindex="0" rel=external>SKIP ARTICLE</a>
+  <a href="#ControlsPanel" class="skipWiki" tabindex="0" rel=external>SKIP ARTICLE</a>
 {/if}
 <article id="wikiContent" bind:this={wikiContent} tabindex="-1">
 
 </article>
-<aside class:backgroundGradient id="controls">
+<aside class:backgroundGradient id="ControlsPanel">
   {#if gameType === "custom" && !gameState.stage}
     <CustomGameView on:initCustomGame={initCustomGame} />
   {/if}
@@ -272,6 +272,7 @@
   a.skipWiki {
     position: absolute;
     top: 0; left: 50%;
+    z-index: 150;
     transform: translate(-50%, -500px);
     padding: 0.25rem 1rem;
     border-radius: 3px;
