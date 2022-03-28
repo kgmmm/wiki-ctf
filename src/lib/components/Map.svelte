@@ -2,6 +2,8 @@
   import { Svroller } from "svrollbar";
   import { mapData } from "$lib/stores/mapData";
   import MapIcon from "$lib/components/MapIcon.svelte";
+
+  export let result;
 </script>
 
 <Svroller width="330px" height="330px">
@@ -16,6 +18,36 @@
           <li class="opponent stop">
             <MapIcon type="flag" text={stop[1]} />
           </li>
+        {:else if i == $mapData.length - 1}
+          {#if stop[2] === 1}
+            <li class="me carrying stop">
+              <MapIcon text={stop[0]} type={result[1] === 1 ? "trophy" : "flag"} />
+            </li>
+            <li class="opponent stop">
+              <MapIcon text={stop[1]} type={result[1] === 0 ? "trophy" : "flag"} />
+            </li>
+          {:else if stop[2] === 2}
+            <li class="me stop">
+              <MapIcon text={stop[0]} type={result[1] === 1 ? "trophy" : "flag"} />
+            </li>
+            <li class="opponent carrying stop">
+              <MapIcon text={stop[1]} type={result[1] === 0 ? "trophy" : "flag"} />
+            </li>
+          {:else if stop[2] === 3}
+            <li class="me carrying stop">
+              <MapIcon text={stop[0]} type={result[1] === 1 ? "trophy" : "flag"} />
+            </li>
+            <li class="opponent carrying stop">
+              <MapIcon text={stop[1]} type={result[1] === 0 ? "trophy" : "flag"} />
+            </li>
+          {:else}
+            <li class="me stop">
+              <MapIcon text={stop[0]} type={result[1] === 1 ? "trophy" : "flag"} />
+            </li>
+            <li class="opponent stop">
+              <MapIcon text={stop[1]} type={result[1] === 0 ? "trophy" : "flag"} />
+            </li>
+          {/if}
         {:else}
           {#if stop[0] !== lastData[0] || stop[1] !== lastData[1]}
             {#if stop[0] === stop[1]}
