@@ -80,7 +80,7 @@
     </div>
   </div>
   <div class="mapContainer">
-    <Map />
+    <Map {result} />
   </div>
   <div class="message">
     {#if result[0] === 0}
