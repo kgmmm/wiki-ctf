@@ -234,10 +234,13 @@
 {#if gameState.stage == "roundend" || gameState.stage == "gameend"}
   <Modal {gameState} {myData} {opponentData} on:disconnect={disconnectFromGame} on:roundReady={roundReady} />
 {/if}
+{#if gameState.stage == "planting" || gameState.stage == "playing"}
+  <a href="#controls" class="skipWiki" tabindex="0" rel=external>SKIP ARTICLE</a>
+{/if}
 <article id="wikiContent" bind:this={wikiContent} tabindex="-1">
 
 </article>
-<aside class:backgroundGradient>
+<aside class:backgroundGradient id="controls">
   {#if gameType === "custom" && !gameState.stage}
     <CustomGameView on:initCustomGame={initCustomGame} />
   {/if}
@@ -264,6 +267,27 @@
     scroll-behavior: smooth;
     font-size: 0.95rem;
     line-height: 1.4;
+  }
+
+  a.skipWiki {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translate(-50%, -500px);
+    padding: 0.25rem 1rem;
+    border-radius: 3px;
+    color: #fff;
+    background: rgba(45, 46, 50, 90%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 25%);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    font-weight: 600;
+    font-size: Clamp(0.75rem, var(--font-size), 0.9rem);
+    text-decoration: none;
+  }
+  a.skipWiki:focus {
+    outline: solid 2px yellow;
+    transform: translate(-50%, 0);
   }
 
   aside {
