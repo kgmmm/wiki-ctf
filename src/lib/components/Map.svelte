@@ -111,10 +111,12 @@
   li.me {
     --accent: var(--red-hsl);
     --accent-2: var(--red-dark-15);
+    --trophy-accent: var(--red-hsl);
   }
   li.opponent {
     --accent: var(--blue-hsl);
     --accent-2: var(--blue-dark-15);
+    --trophy-accent: var(--blue-hsl);
   }
 
   li.stop {

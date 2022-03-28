@@ -67,7 +67,9 @@
   }
 
   div.icon.trophy {
-    box-shadow: 0 0 3px var(--accent);
+    color: var(--trophy-accent);
+    border: solid 1px var(--trophy-accent);
+    box-shadow: 0 0 3px var(--trophy-accent);
   }
 
   div.icon:focus + div.display {
