@@ -19,35 +19,12 @@
             <MapIcon type="flag" text={stop[1]} />
           </li>
         {:else if i == $mapData.length - 1}
-          {#if stop[2] === 1}
-            <li class="me carrying stop">
-              <MapIcon text={stop[0]} type={result[1] === 1 ? "trophy" : "flag"} />
-            </li>
-            <li class="opponent stop">
-              <MapIcon text={stop[1]} type={result[1] === 0 ? "trophy" : "flag"} />
-            </li>
-          {:else if stop[2] === 2}
-            <li class="me stop">
-              <MapIcon text={stop[0]} type={result[1] === 1 ? "trophy" : "flag"} />
-            </li>
-            <li class="opponent carrying stop">
-              <MapIcon text={stop[1]} type={result[1] === 0 ? "trophy" : "flag"} />
-            </li>
-          {:else if stop[2] === 3}
-            <li class="me carrying stop">
-              <MapIcon text={stop[0]} type={result[1] === 1 ? "trophy" : "flag"} />
-            </li>
-            <li class="opponent carrying stop">
-              <MapIcon text={stop[1]} type={result[1] === 0 ? "trophy" : "flag"} />
-            </li>
-          {:else}
-            <li class="me stop">
-              <MapIcon text={stop[0]} type={result[1] === 1 ? "trophy" : "flag"} />
-            </li>
-            <li class="opponent stop">
-              <MapIcon text={stop[1]} type={result[1] === 0 ? "trophy" : "flag"} />
-            </li>
-          {/if}
+          <li class="me stop" class:carrying={stop[2] === 1 || stop[2] === 3}>
+            <MapIcon text={stop[0]} type={result[1] === 1 ? "trophy" : "flag"} />
+          </li>
+          <li class="opponent stop" class:carrying={stop[2] === 2 || stop[2] === 3}>
+            <MapIcon text={stop[1]} type={result[1] === 0 ? "trophy" : "flag"} />
+          </li>
         {:else}
           {#if stop[0] !== lastData[0] || stop[1] !== lastData[1]}
             {#if stop[0] === stop[1]}
@@ -56,95 +33,27 @@
               </li>
             {:else}
               {#if stop[0] !== lastData[0] && stop[1] !== lastData[1]}
-                {#if stop[2] === 1}
-                  <li class="me carrying stop">
-                    <MapIcon text={stop[0]} />
-                  </li>
-                  <li class="opponent stop">
-                    <MapIcon text={stop[1]} />
-                  </li>
-                {:else if stop[2] === 2}
-                  <li class="me stop">
-                    <MapIcon text={stop[0]} />
-                  </li>
-                  <li class="opponent carrying stop">
-                    <MapIcon text={stop[1]} />
-                  </li>
-                {:else if stop[2] === 3}
-                  <li class="me carrying stop">
-                    <MapIcon text={stop[0]} />
-                  </li>
-                  <li class="opponent carrying stop">
-                    <MapIcon text={stop[1]} />
-                  </li>
-                {:else}
-                  <li class="me stop">
-                    <MapIcon text={stop[0]} />
-                  </li>
-                  <li class="opponent stop">
-                    <MapIcon text={stop[1]} />
-                  </li>
-                {/if}
+                <li class="me stop" class:carrying={stop[2] === 1 || stop[2] === 3}>
+                  <MapIcon text={stop[0]} />
+                </li>
+                <li class="opponent stop" class:carrying={stop[2] === 2 || stop[2] === 3}>
+                  <MapIcon text={stop[1]} />
+                </li>
               {:else if stop[0] !== lastData[0]}
-                {#if stop[2] === 1}
-                  <li class="me carrying stop">
-                    <MapIcon text={stop[0]} />
-                  </li>
-                  <li class="blank opponent"> </li>
-                {:else if stop[2] === 2}
-                  <li class="me stop">
-                    <MapIcon text={stop[0]} />
-                  </li>
-                  <li class="blank carrying"> </li>
-                {:else if stop[2] === 3}
-                  <li class="carrying stop">
-                    <MapIcon text={stop[0]} />
-                  </li>
-                  <li class="blank carrying"> </li>
-                {:else}
-                  <li class="me stop">
-                    <MapIcon text={stop[0]} />
-                  </li>
-                  <li class="blank opponent"> </li>
-                {/if}
+                <li class="me stop" class:carrying={stop[2] === 1 || stop[2] === 3}>
+                  <MapIcon text={stop[0]} />
+                </li>
+                <li class="blank opponent" class:carrying={stop[2] === 2 || stop[2] === 3}> </li>
               {:else if stop[1] !== lastData[1]}
-                {#if stop[2] === 1}
-                  <li class="blank carrying"> </li>
-                  <li class="opponent stop">
-                    <MapIcon text={stop[1]} />
-                  </li>
-                {:else if stop[2] === 2}
-                  <li class="blank me"> </li>
-                  <li class="opponent carrying stop">
-                    <MapIcon text={stop[1]} />
-                  </li>
-                {:else if stop[2] === 3}
-                  <li class="blank carrying"> </li>
-                  <li class="carrying stop">
-                    <MapIcon text={stop[1]} />
-                  </li>
-                {:else}
-                  <li class="blank me"> </li>
-                  <li class="opponent stop">
-                    <MapIcon text={stop[1]} />
-                  </li>
-                {/if}
+                <li class="blank me" class:carrying={stop[2] === 1 || stop[2] === 3}> </li>
+                <li class="opponent stop" class:carrying={stop[2] === 2 || stop[2] === 3}>
+                  <MapIcon text={stop[1]} />
+                </li>
               {/if}
             {/if}
           {:else}
-            {#if stop[2] === 1}
-              <li class="blank carrying"> </li>
-              <li class="blank opponent"> </li>
-            {:else if stop[2] === 2}
-              <li class="blank me"> </li>
-              <li class="blank carrying"> </li>
-            {:else if stop[2] === 3}
-              <li class="blank carrying"> </li>
-              <li class="blank carrying"> </li>
-            {:else}
-              <li class="blank me"> </li>
-              <li class="blank opponent"> </li>
-            {/if}
+            <li class="blank me" class:carrying={stop[2] === 1 || stop[2] === 3}> </li>
+            <li class="blank opponent" class:carrying={stop[2] === 2 || stop[2] === 3}> </li>
           {/if}
         {/if}
       {/each}
