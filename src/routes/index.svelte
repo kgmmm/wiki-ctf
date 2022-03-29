@@ -1,7 +1,7 @@
 <script>
   import SignInOut from "$lib/components/SignInOut.svelte";
   import LandingView from "$lib/components/LandingView.svelte";
-  import { authStore } from "$lib/stores/authStore";
+  import { authStore } from "$lib/stores/stores";
 
   import { goto } from "$app/navigation";
 

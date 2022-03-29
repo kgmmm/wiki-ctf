@@ -1,6 +1,6 @@
 <script>
   import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-  import { authStore } from "$lib/stores/authStore";
+  import { authStore } from "$lib/stores/stores";
 
   async function signInWithGoogle() {
     const provider = new GoogleAuthProvider();

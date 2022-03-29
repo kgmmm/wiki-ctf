@@ -2,7 +2,7 @@
   import { initializeApp } from 'firebase/app';
   import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-  import { authStore } from "$lib/stores/authStore";
+  import { authStore } from "$lib/stores/stores";
   import { toast } from "$lib/stores/toast";
 
   import Toast from "$lib/components/Toast.svelte";

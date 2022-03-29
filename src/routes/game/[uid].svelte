@@ -18,7 +18,7 @@
   import PlantingView from "$lib/components/PlantingView.svelte";
   import PlayingView from "$lib/components/PlayingView.svelte";
   import CustomGameView from "$lib/components/CustomGameView.svelte";
-  import { authStore } from "$lib/stores/authStore";
+  import { authStore } from "$lib/stores/stores";
   import { toast } from "$lib/stores/toast";
   import { splash } from "$lib/stores/splash";
   import { mapData } from "$lib/stores/mapData";
