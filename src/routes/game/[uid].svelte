@@ -89,6 +89,7 @@
 
   beforeNavigate(() => {
     if(!socket.connected) return;
+    gameState.set({});
     socket.disconnect();
   });
 
