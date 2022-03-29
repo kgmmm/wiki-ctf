@@ -38,12 +38,8 @@
 
   $: $mapData = makeMapData(gameState, $authStore.userID);
 
-  let backgroundGradient;
-
   $: {
     if (gameState.players && gameState["players"].length > 1) {
-      backgroundGradient = gameState["players"].length == 2;
-
       opponentData = gameState.players.find(player => player.id !== $authStore.userID);
       opponentProps = {
         userID: opponentData.id,
@@ -240,7 +236,7 @@
 <article id="wikiContent" bind:this={wikiContent} tabindex="-1">
 
 </article>
-<aside class:backgroundGradient id="ControlsPanel">
+<aside class:backgroundGradient={gameState["players"]?.length == 2} id="ControlsPanel">
   {#if gameType === "custom" && !gameState.stage}
     <CustomGameView on:initCustomGame={initCustomGame} />
   {/if}
