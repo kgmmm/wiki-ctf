@@ -1,6 +1,6 @@
 <script>
   import { fly } from "svelte/transition";
-  import { toast } from "$lib/stores/toast";
+  import { toast } from "$lib/stores";
   import { onDestroy } from "svelte";
 
   export let title;

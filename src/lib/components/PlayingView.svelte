@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { splash } from "$lib/stores/splash";
+  import { splash } from "$lib/stores";
   import ScoreboardIcon from "./ScoreboardIcon.svelte";
 
 

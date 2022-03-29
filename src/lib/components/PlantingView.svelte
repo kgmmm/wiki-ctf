@@ -1,5 +1,5 @@
 <script>
-  import { splash } from '$lib/stores/splash';
+  import { splash } from "$lib/stores";
   import Loader from "$lib/components/Loader.svelte";
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { scale } from "svelte/transition";

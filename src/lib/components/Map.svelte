@@ -1,6 +1,6 @@
 <script>
   import { Svroller } from "svrollbar";
-  import { mapData } from "$lib/stores/mapData";
+  import { mapData } from "$lib/stores";
   import MapIcon from "$lib/components/MapIcon.svelte";
 
   export let result;

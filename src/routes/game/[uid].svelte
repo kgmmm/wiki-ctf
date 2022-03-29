@@ -18,10 +18,10 @@
   import PlantingView from "$lib/components/PlantingView.svelte";
   import PlayingView from "$lib/components/PlayingView.svelte";
   import CustomGameView from "$lib/components/CustomGameView.svelte";
-  import { authStore } from "$lib/stores/stores";
-  import { toast } from "$lib/stores/toast";
-  import { splash } from "$lib/stores/splash";
-  import { mapData } from "$lib/stores/mapData";
+  import { authStore } from "$lib/stores";
+  import { toast } from "$lib/stores";
+  import { splash } from "$lib/stores";
+  import { mapData } from "$lib/stores";
   import Splash from "$lib/components/Splash.svelte";
   import Modal from "$lib/components/Modal.svelte";
   import { makeMapData } from "$lib/map";

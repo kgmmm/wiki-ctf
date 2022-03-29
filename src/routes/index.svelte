@@ -1,12 +1,12 @@
 <script>
   import SignInOut from "$lib/components/SignInOut.svelte";
   import LandingView from "$lib/components/LandingView.svelte";
-  import { authStore } from "$lib/stores/stores";
+  import { authStore } from "$lib/stores";
 
   import { goto } from "$app/navigation";
 
   import ShortUniqueId from 'short-unique-id';
-  import { toast } from "$lib/stores/toast";
+  import { toast } from "$lib/stores";
   import Loader from "$lib/components/Loader.svelte";
   import { fade } from "svelte/transition";
 
