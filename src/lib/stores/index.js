@@ -9,11 +9,13 @@ export const authStore = writable({
 
 export const gameState = writable({});
 
-export const myData = derived(gameState, authStore, ($gameState, $authStore) => {
-  $gameState["players"].find(player => player.id === $authStore.userID);
+export const myData = derived([gameState, authStore], ([$gameState, $authStore]) => {
+  if(!$gameState.players) return {};
+  return $gameState["players"].find(player => player.id === $authStore.userID)
 });
-export const opponentData = derived(gameState, authStore, ($gameState, $authStore) => {
-  $gameState["players"].find(player => player.id !== $authStore.userID);
+export const opponentData = derived([gameState, authStore], ([$gameState, $authStore]) => {
+  if(!$gameState.players) return {};
+  return $gameState["players"].find(player => player.id!== $authStore.userID)
 });
 
 export const mapData = writable();

@@ -2,11 +2,8 @@
   import { onMount } from "svelte";
   import { splash } from "$lib/stores";
   import ScoreboardIcon from "./ScoreboardIcon.svelte";
+  import { gameState, myData, opponentData } from "$lib/stores";
 
-
-  export let gameState;
-  export let opponentData;
-  export let myData;
 
   function calcTime(time) {
     var minutes = Math.floor(time / 60000);
@@ -18,7 +15,7 @@
     );
   }
 
-  $: roundTime = calcTime(gameState.currentTime);
+  $: roundTime = calcTime($gameState.currentTime);
 
   onMount(() => {
     splash.set({
@@ -49,7 +46,7 @@
             <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
           </svg>
         </div>
-        <h1 style="font-size: Clamp(0.75rem, {310 / opponentData['base'].length / 8 + 'rem'}, 1.2rem);">{opponentData.base}</h1>
+        <h1 style="font-size: Clamp(0.75rem, {310 / $opponentData['base'].length / 8 + 'rem'}, 1.2rem);">{$opponentData.base}</h1>
       </div>
     </div>
     <div class="oLoc">
@@ -62,24 +59,24 @@
             <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
           </svg>
         </div>
-        <h1 style="font-size: Clamp(0.75rem, {310 / opponentData['location'].length / 8 + 'rem'}, 1.2rem);">{opponentData.location}</h1>
+        <h1 style="font-size: Clamp(0.75rem, {310 / $opponentData['location'].length / 8 + 'rem'}, 1.2rem);">{$opponentData.location}</h1>
       </div>
     </div>
   </div>
 
   <div class="scoreboard">
     <div class="myScore">
-      {myData.score}
+      {$myData.score}
     </div>
-    <ScoreboardIcon area="mBase" type="flag" active={opponentData.carrying} />
+    <ScoreboardIcon area="mBase" type="flag" active={$opponentData.carrying} />
     <ScoreboardIcon area="mLoc" type="location" active={false} />
     <div class="timer">
       {roundTime}
     </div>
     <ScoreboardIcon area="oLoc" type="location" active={false} />
-    <ScoreboardIcon area="oBase" type="flag" active={myData.carrying} />
+    <ScoreboardIcon area="oBase" type="flag" active={$myData.carrying} />
     <div class="opponentScore">
-      {opponentData.score}
+      {$opponentData.score}
     </div>
   </div>
 
@@ -94,7 +91,7 @@
             <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
           </svg>
         </div>
-        <h1 style="font-size: Clamp(0.75rem, {310 / myData['location'].length / 8 + 'rem'}, 1.2rem);">{myData.location}</h1>
+        <h1 style="font-size: Clamp(0.75rem, {310 / $myData['location'].length / 8 + 'rem'}, 1.2rem);">{$myData.location}</h1>
       </div>
     </div>
     <div class="mBase">
@@ -107,7 +104,7 @@
             <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
           </svg>
         </div>
-        <h1 style="font-size: Clamp(0.75rem, {310 / myData['base'].length / 8 + 'rem'}, 1.2rem);">{myData.base}</h1>
+        <h1 style="font-size: Clamp(0.75rem, {310 / $myData['base'].length / 8 + 'rem'}, 1.2rem);">{$myData.base}</h1>
       </div>
     </div>
   </div>

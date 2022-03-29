@@ -1,7 +1,5 @@
 <script>
-  export let userID;
-  export let displayName;
-  export let profilePic;
+  import { opponentData } from "$lib/stores";
 </script>
 
 <div class="user">
@@ -21,10 +19,10 @@
   </button>
   <div class="opponentIs">
     <h4>Opponent:</h4>
-    <span class="char-limit">{displayName}</span>
+    <span class="char-limit">{$opponentData.displayName}</span>
   </div>
   <div class="profilepic">
-    <img src={profilePic} alt={`${userID}'s profile picture`} class="profilepic" referrerpolicy="no-referrer">
+    <img src={$opponentData.profilePic} alt={`${$opponentData.userID}'s profile picture`} class="profilepic" referrerpolicy="no-referrer">
   </div>
 </div>
 

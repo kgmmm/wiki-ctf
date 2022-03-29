@@ -3,22 +3,19 @@
   import { fly, fade } from "svelte/transition";
   import Loader from "./Loader.svelte";
   import Map from "./Map.svelte";
-
-  export let gameState;
-  export let myData;
-  export let opponentData;
+  import { gameState, myData, opponentData } from "$lib/stores";
 
   let readyLoader = false;
 
-  $: result = findResult(gameState); // returns an array with two numbers, 0 round 1 game, 0 loss 1 win 2 draw
+  $: result = findResult($gameState); // returns an array with two numbers, 0 round 1 game, 0 loss 1 win 2 draw
 
   function findResult(state) {
     if(state.stage === "gameend") {
       let gameWinner = state["players"].find(player => player.score >= state.gameVARS[1]);
-      return (gameWinner.id === myData.id ? [1, 1] : [1, 0]);
+      return (gameWinner.id === $myData.id ? [1, 1] : [1, 0]);
     } else if(state.stage === "roundend") {
       if(state.lastRoundResult === "time") return [0, 2];
-      return (state.lastRoundResult === myData.id ? [0, 1] : [0, 0]);
+      return (state.lastRoundResult === $myData.id ? [0, 1] : [0, 0]);
     }
   }
 
@@ -77,7 +74,7 @@
   <div class="players">
     <div class="player me" class:winner={result[1] === 1}>
       <div class="profilepic">
-        <img src={myData.profilePic} alt="Your pretty face" referrerpolicy="no-referrer">
+        <img src={$myData.profilePic} alt="Your pretty face" referrerpolicy="no-referrer">
         {#if result[1] === 1}
           <div class="trophy">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
@@ -86,11 +83,11 @@
           </div>
         {/if}
       </div>
-      <p class="char-limit">{myData.displayName}</p>
+      <p class="char-limit">{$myData.displayName}</p>
     </div>
     <div class="player opponent" class:winner={result[1] === 0}>
       <div class="profilepic">
-        <img src={opponentData.profilePic} alt={`${opponentData.userID}'s profile picture`} referrerpolicy="no-referrer">
+        <img src={$opponentData.profilePic} alt={`${$opponentData.userID}'s profile picture`} referrerpolicy="no-referrer">
         {#if result[1] === 0}
         <div class="trophy">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
@@ -99,7 +96,7 @@
         </div>
       {/if}
       </div>
-      <p class="char-limit">{opponentData.displayName}</p>
+      <p class="char-limit">{$opponentData.displayName}</p>
     </div>
   </div>
   <div class="mapContainer">

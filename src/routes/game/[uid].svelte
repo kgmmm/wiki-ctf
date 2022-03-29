@@ -25,31 +25,16 @@
   import Splash from "$lib/components/Splash.svelte";
   import Modal from "$lib/components/Modal.svelte";
   import { makeMapData } from "$lib/map";
+  import { gameState, myData, opponentData } from "$lib/stores";
 
   export let lobbyCode;
   export let gameType;
 
   let socket;
-  let gameState = {};
-  let opponentData;
-  let opponentProps;
-  let myData;
-  let planted;
 
-  $: $mapData = makeMapData(gameState, $authStore.userID);
+  $: $mapData = makeMapData($gameState, $authStore.userID);
 
-  $: {
-    if (gameState.players && gameState["players"].length > 1) {
-      opponentData = gameState.players.find(player => player.id !== $authStore.userID);
-      opponentProps = {
-        userID: opponentData.id,
-        displayName: opponentData.displayName,
-        profilePic: opponentData.profilePic,
-      }
-      myData = gameState.players.find(player => player.id === $authStore.userID);
-      planted = myData.planted;
-    }
-  }
+  $: planted = $myData?.planted;
 
   onMount(async () => {
     await tick();
@@ -74,7 +59,7 @@
     }
 
     socket.on("gameStateUpdate", (newState) => {
-      gameState = newState;
+      gameState.set(newState);
     });
 
     socket.on("planted", () => {
@@ -213,42 +198,42 @@
 <svelte:head>
   <link rel="stylesheet" href="/style/wiki.min.css">
 
-  {#if !opponentProps}
+  {#if !$opponentData}
     {#if gameType === "public"}
       <title>Finding matchup - Wiki CTF</title>
     {:else}
       <title>Waiting for opponent - Wiki CTF</title>
     {/if}
   {:else}
-    <title>VS {opponentProps.displayName} - Wiki CTF</title>
+    <title>VS {$opponentData.displayName} - Wiki CTF</title>
   {/if}
 </svelte:head>
 
 {#if $splash.text != undefined || $splash === "loader"}
   <Splash />
 {/if}
-{#if gameState.stage == "roundend" || gameState.stage == "gameend"}
-  <Modal {gameState} {myData} {opponentData} on:disconnect={disconnectFromGame} on:roundReady={roundReady} />
+{#if $gameState.stage == "roundend" || $gameState.stage == "gameend"}
+  <Modal on:disconnect={disconnectFromGame} on:roundReady={roundReady} />
 {/if}
-{#if gameState.stage == "planting" || gameState.stage == "playing"}
+{#if $gameState.stage == "planting" || $gameState.stage == "playing"}
   <a href="#ControlsPanel" class="skipWiki" tabindex="0" rel=external>SKIP ARTICLE</a>
 {/if}
 <article id="wikiContent" bind:this={wikiContent} tabindex="-1">
 
 </article>
-<aside class:backgroundGradient={gameState["players"]?.length == 2} id="ControlsPanel">
-  {#if gameType === "custom" && !gameState.stage}
+<aside class:backgroundGradient={$gameState["players"]?.length == 2} id="ControlsPanel">
+  {#if gameType === "custom" && !$gameState.stage}
     <CustomGameView on:initCustomGame={initCustomGame} />
   {/if}
-  {#if opponentProps}
-    <Opponent on:click={disconnectFromGame} {...opponentProps} />
-  {:else if gameState.stage == "waiting"}
+  {#if $opponentData}
+    <Opponent on:click={disconnectFromGame} />
+  {:else if $gameState.stage == "waiting"}
     <WaitingView {lobbyCode} {gameType} on:toaster={(event) => toast.set(event.detail)} on:cancelGame={disconnectFromGame} />
   {/if}
-  {#if gameState.stage == "planting"}
-    <PlantingView {freeze} {lastSuccess} {searchError} {planted} {myData} on:search={wikiFetch} on:plant={plantFlag} />
-  {:else if gameState.stage == "playing" || gameState.stage == "roundend" || gameState.stage == "gameend"}
-    <PlayingView {gameState} {opponentData} {myData} />
+  {#if $gameState.stage == "planting"}
+    <PlantingView {freeze} {lastSuccess} {searchError} {planted} on:search={wikiFetch} on:plant={plantFlag} />
+  {:else if $gameState.stage == "playing" || $gameState.stage == "roundend" || $gameState.stage == "gameend"}
+    <PlayingView />
   {/if}
   <SignInOut />
 </aside>

@@ -3,10 +3,9 @@
   import Loader from "$lib/components/Loader.svelte";
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { scale } from "svelte/transition";
+  import { myData } from "$lib/stores";
 
 	const dispatch = createEventDispatcher();
-
-  export let myData;
 
   export let freeze = true;
   export let searchError = false;
@@ -110,9 +109,9 @@
     {/if}
   </form>
   <button class="plant" disabled={!lastSuccess || freeze} on:click={plantFlag}>Plant flag</button>
-  {#if myData.location && lastSuccess}
-    <output style="font-size: Clamp(0.75rem, {310 / myData['location'].length / 8 + 'rem'}, 1.2rem);" class:freeze>
-      {myData.location}
+  {#if $myData.location && lastSuccess}
+    <output style="font-size: Clamp(0.75rem, {310 / $myData['location'].length / 8 + 'rem'}, 1.2rem);" class:freeze>
+      {$myData.location}
     </output>
   {/if}
 </div>
