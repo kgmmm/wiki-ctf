@@ -139,7 +139,13 @@ io.on("connection", (socket) => {
       let whichGame = socketMap.get(socket.id); // save the lobby code of that game
       let gameEndSwitch = false; // assume you didnt DC from the gameend screen
 
-      socketMap.delete(socket.id); // remove you from the map of live games
+      let delSockets = [];
+
+      for(let [key, value] of socketMap.entries()) { // for all the entries in the socket map
+        if (value === whichGame) delSockets.push(key); // find all the ones mapped to the lobby you just left
+      }
+
+      for(let i of delSockets) socketMap.delete(i); // delete them all
 
       if(liveGames[whichGame]) { // if the gamestate is still in the array
         gameEndSwitch = liveGames[whichGame].stage === "gameend"; // check if you dc'd on the gameend screen
