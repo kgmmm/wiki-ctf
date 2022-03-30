@@ -37,13 +37,10 @@
       <h4>Logged in as:</h4>
       <span class="char-limit">{$authStore.displayName}</span>
     </div>
-    <button class="settings" title="Settings" on:click={signOut}>
-      <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <button class="signOut" title="Sign out" on:click={signOut}>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8.51428 20H4.51428C3.40971 20 2.51428 19.1046 2.51428 18V6C2.51428 4.89543 3.40971 4 4.51428 4H8.51428V6H4.51428V18H8.51428V20Z" fill="currentColor" />
         <path d="M13.8418 17.385L15.262 15.9768L11.3428 12.0242L20.4857 12.0242C21.038 12.0242 21.4857 11.5765 21.4857 11.0242C21.4857 10.4719 21.038 10.0242 20.4857 10.0242L11.3236 10.0242L15.304 6.0774L13.8958 4.6572L7.5049 10.9941L13.8418 17.385Z" fill="currentColor" />
-      </svg> -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
-        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
       </svg>
     </button>
   {:else if !$authStore.isLoggedIn}
@@ -108,11 +105,10 @@
     max-width: 200px;
   }
 
-  button.settings {
+  button.signOut {
     grid-area: signout;
-    padding: 0.625rem;
-    width: auto;
-    height: auto;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
     color: #fff;
     background: transparent;
@@ -121,14 +117,14 @@
     display: grid;
     place-items: center;
   }
-  button.settings:hover {
+  button.signOut:hover {
     background: var(--red-light-10);
   }
 
-  button.settings svg {
+  button.signOut svg {
     fill: currentColor;
     width: 1em;
     height: 1em;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
   }
 </style>

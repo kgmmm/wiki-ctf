@@ -63,9 +63,8 @@
 
   button.disconnect {
     grid-area: disconnect;
-    padding: 0.625rem;
-    width: auto;
-    height: auto;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
     color: #fff;
     background: transparent;
@@ -82,6 +81,6 @@
     fill: currentColor;
     width: 1em;
     height: 1em;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
   }
 </style>
