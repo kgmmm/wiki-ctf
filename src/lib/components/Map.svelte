@@ -97,12 +97,10 @@
   li:nth-child(1)::before, li:nth-child(2)::before {
     height: 50% !important;
     top: 50% !important;
-    bottom: unset !important;
   }
   li:last-child::before, li:nth-last-child(2)::before {
     height: 50% !important;
     top: 0 !important;
-    bottom: unset !important;
   }
 
   li.blank {
@@ -122,14 +120,9 @@
   li.stop {
     min-height: 2.5rem;
   }
-  li.stop ~ li.blank.carrying::before {
+  li.blank::before {
     height: calc(100% + calc(2.5rem / 2));
     top: unset;
-    bottom: 0;
-  }
-  li.stop + li.blank.carrying::before {
-    height: auto;
-    top: 0;
   }
 
   li.joint {
