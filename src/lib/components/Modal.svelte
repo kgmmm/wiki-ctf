@@ -73,6 +73,7 @@
   </div>
   <div class="players">
     <div class="player me" class:winner={result[1] === 1}>
+      <div class="score">{$myData.score}</div>
       <div class="profilepic">
         <img src={$myData.profilePic} alt="Your pretty face" referrerpolicy="no-referrer">
         {#if result[1] === 1}
@@ -86,15 +87,16 @@
       <p class="char-limit">{$myData.displayName}</p>
     </div>
     <div class="player opponent" class:winner={result[1] === 0}>
+      <div class="score">{$opponentData.score}</div>
       <div class="profilepic">
         <img src={$opponentData.profilePic} alt={`${$opponentData.userID}'s profile picture`} referrerpolicy="no-referrer">
         {#if result[1] === 0}
-        <div class="trophy">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
-            <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
-          </svg>
-        </div>
-      {/if}
+          <div class="trophy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
+              <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
+            </svg>
+          </div>
+        {/if}
       </div>
       <p class="char-limit">{$opponentData.displayName}</p>
     </div>
@@ -203,6 +205,7 @@
     display: grid;
     place-items: center;
     grid-template-rows: 100px 1fr;
+    position: relative;
   }
   div.profilepic {
     width: 80px;
@@ -214,7 +217,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 15%);
+    box-shadow: 0 0 0 2px #fff, 0 0 0 6px var(--background);
     position: relative;
     z-index: -1;
   }
@@ -223,6 +226,32 @@
     font-weight: 400;
     color: #585858;
     max-width: 125px;
+  }
+
+  div.score {
+    padding: 0 0.5rem;
+    width: auto;
+    height: 32px;
+    color: #fff;
+    background: var(--background);
+    border-radius: 10px;
+    display: grid;
+    align-items: center;
+    justify-content: right;
+    text-align: right;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Courier New', Courier, monospace;
+    position: absolute;
+    right: 5px;
+    left: 50%;
+  }
+
+  div.opponent div.score {
+    left: 5px;
+    right: 50%;
+    justify-content: left;
+    text-align: left;
   }
 
   div.trophy {
@@ -258,10 +287,6 @@
   }
   div.player.opponent {
     --background: var(--blue-hsl);
-  }
-
-  div.player.winner img {
-    box-shadow: 0 0 0 2px #fff, 0 0 0 6px var(--background);
   }
 
   div.mapContainer {
