@@ -93,10 +93,11 @@
 <div>
   {#if !loader}
     <h1>{time}</h1>
+    <p>Search for an article and plant your flag!</p>
   {:else if loader}
-    <Loader size="70" color="#fff" />
+    <Loader size="85" color="#fff" />
+    <p>Waiting for opponent to plant their flag.</p>
   {/if}
-  <p>Search for an article and plant your flag!</p>
   <form on:submit|preventDefault={search}>
     <input type="text" disabled={freeze} bind:value={searchQuery} required placeholder="Search">
     <button title="Search" type="submit" class="search" disabled={freeze}>
