@@ -96,6 +96,8 @@ io.on("connection", (socket) => {
       liveGames[lobbyCode].players[1].roundReady = false;
       liveGames[lobbyCode].currentTime = liveGames[lobbyCode].gameVARS[0]; // reset the round time
       io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
+    } else {
+      io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]); // send updates of roundReady
     }
   });
 
