@@ -35,7 +35,7 @@
     background: var(--red-hsl);
     display: grid;
     align-items: center;
-    justify-content: right;
+    justify-items: right;
     text-align: right;
     box-shadow: 0 0 5px rgba(0, 0, 0, 50%);
   }
