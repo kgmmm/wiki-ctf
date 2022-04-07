@@ -98,9 +98,9 @@
       </button>
       <button class="playButton" on:click={createLobby}>Play a friend</button>
       <span>OR</span>
-      <h3>Join a lobby:</h3>
       <form on:submit|preventDefault={lobbyCodeSubmit}>
-        <input type="text" placeholder="Paste code and hit ENTER" bind:value={lobbyCode} class="lobbyCode" required minlength="28" maxlength="28"  autocomplete="off" spellcheck="false">
+        <label for="lobbyCode">Join a lobby:</label>
+        <input type="text" id="lobbyCode" placeholder="Paste code and hit ENTER" bind:value={lobbyCode} class="lobbyCode" required minlength="28" maxlength="28" autocomplete="off" spellcheck="false">
       </form>
     </div>
   {/if}
@@ -181,7 +181,12 @@
     background-repeat: no-repeat, no-repeat;
   }
 
-  div.gameMenu h3 {
+  form {
+    display: grid;
+    place-items: center;
+  }
+
+  form label {
     font-size: 1rem;
     font-weight: 500;
     line-height: 80%;
