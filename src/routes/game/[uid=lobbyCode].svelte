@@ -194,7 +194,25 @@
   function disconnectFromGame() {
     goto("/"); // socket disconnection is handled by beforeNavigate
   }
+
+  let skipWiki;
+
+  function handleKeydown(event) {
+    if(event.key !== 'Escape') return;
+
+    if($gameState.stage === "playing") {
+      document.activeElement.blur();
+      event.preventDefault();
+      skipWiki.focus();
+    } else if($gameState.stage === "planting" && lastSuccess) {
+      document.activeElement.blur();
+      event.preventDefault();
+      skipWiki.focus();
+    }
+  }
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
 
 <svelte:head>
   <link rel="stylesheet" href="/style/wiki.min.css">
@@ -216,8 +234,10 @@
 {#if $gameState.stage == "roundend" || $gameState.stage == "gameend"}
   <Modal on:disconnect={disconnectFromGame} on:roundReady={roundReady} />
 {/if}
-{#if $gameState.stage == "planting" || $gameState.stage == "playing"}
-  <a href="#ControlsPanel" class="skipWiki" tabindex="0" rel=external>SKIP ARTICLE</a>
+{#if $gameState.stage == "playing"}
+  <a href="#ControlsPanel" class="skipWiki" tabindex="0" rel=external bind:this={skipWiki}>SKIP ARTICLE</a>
+{:else if $gameState.stage == "planting" && lastSuccess}
+  <a href="#ControlsPanel" class="skipWiki" tabindex="0" rel=external bind:this={skipWiki}>SKIP ARTICLE</a>
 {/if}
 <article id="wikiContent" bind:this={wikiContent} tabindex="-1">
 
