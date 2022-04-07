@@ -132,3 +132,9 @@ div.mw-parser-output {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+
+div.svlr-contents {
+	display: grid;
+	place-items: center;
+	min-height: 100%;
+}
