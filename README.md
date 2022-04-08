@@ -9,4 +9,6 @@
 
 ## How To Play
 
+<https://wiki-ctf.herokuapp.com/>
+
 Sign in and invite a friend to play a head-to-head game of Wikipedia Capture the Flag! Plant a flag on a Wikipedia page of your choosing. Race through Wikipedia links to capture your opponents flag (A lot of links have been disabled to keep you on track). Hurry back to base with their flag to score a point, and let the next round begin (The back button isn't going to help you get back to base). Watch out for interceptions! If a flag carrier is intercepted, any flags will sent back to base.
