@@ -17,7 +17,7 @@
         <li id="tip-2">The back button isn't going to help you get back to base.</li>
       </ol>
       <div class="disclaimer">
-        <p>Wikipedia is a registered trademark of Wikimedia Foundation inc. This site is not associated with or provided by Wikimedia Foundation inc.</p>
+        <p>Wikipedia is a registered trademark of Wikimedia Foundation inc. This project is not associated with or provided by Wikimedia Foundation inc.</p>
       </div>
     </div>
   </div>
