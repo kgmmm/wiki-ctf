@@ -128,7 +128,7 @@
   }
 
   div.disclaimer p {
-    padding: 0.75rem 1rem;
+    padding: .75rem 0.5rem;
     font-size: 0.7rem;
     font-style: italic;
   }
