@@ -43,14 +43,15 @@ function Game(gameType = "private", roundTime = _ROUNDTIME, scoreLimit = _SCOREL
 let socketMap = new Map();
 
 io.on("connection", (socket) => {
-  console.log(`${socket.id} connected.`);
+  console.log(`${socket.id} connected.`); // LOG
 
   socket.on("fetchedPage", (userID, data) => {
-    console.log(`${userID} fetched page: '${data.pageid}' on socket ${socket.id}`); // LOG
     let lobbyCode = socketMap.get(socket.id);
     let targetPlayer = liveGames[lobbyCode]["players"].find(player => player.id === userID);
     targetPlayer.location = data.title;
     io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
+
+    console.log(`${lobbyCode}: ${userID} fetched page: '${data.pageid}' on socket ${socket.id}`); // LOG
   });
 
   socket.on("plantFlag", (userID, fromTimeout) => {
@@ -113,6 +114,8 @@ io.on("connection", (socket) => {
       liveGames[lobbyCode].players[0].displayName = userData.displayName;
       liveGames[lobbyCode].players[0].profilePic = userData.profilePic;
       io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
+
+      console.log(`created game: ${lobbyCode}`); // LOG
     } else if (liveGames[lobbyCode]) {
       console.log("is game"); // log
       let playerCount = liveGames[lobbyCode]["players"].length;
@@ -131,6 +134,8 @@ io.on("connection", (socket) => {
         liveGames[lobbyCode].players[1].profilePic = userData.profilePic;
         liveGames[lobbyCode].stage = "planting";
         io.sockets.in(lobbyCode).emit("gameStateUpdate", liveGames[lobbyCode]);
+
+        console.log(`joined game: ${lobbyCode}`); // LOG
       }
     }
   })
@@ -178,14 +183,23 @@ function startGameLoop(lobbyCode, gameState) {
       newGameState.stage = "roundend"; // set the stage to roundend
       newGameState.lastRoundResult = "time"; // time was the winner here
       clearInterval(loopInterval); // clear the gameloop
+
+      console.log(`game: ${lobbyCode}: roundend`); // LOG
+
     } else if(newGameState.players[0].score !== oldScores[0] || newGameState.players[1].score !== oldScores[1]) { // if either players score changed from the last loop
       if(newGameState.players[0].score === newGameState.gameVARS[1] || newGameState.players[1].score === newGameState.gameVARS[1]) { // if either players score hits scorelimit
         newGameState.stage = "gameend"; // set the stage to gameend
         clearInterval(loopInterval); // clear the gameloop
+
+      console.log(`game: ${lobbyCode}: gameend`); // LOG
+      
       } else { // if no one hit the scorelimit
         newGameState.stage = "roundend"; // set the stage to roundend
         newGameState.lastRoundResult = newGameState.players[0].score === oldScores[0] ? newGameState.players[1].id : newGameState.players[0].id; // if one players score didnt change from the last round then we know the other player won
         clearInterval(loopInterval); // clear the gameloop
+
+        console.log(`game: ${lobbyCode}: roundend`); // LOG
+        
       }
     }
 
