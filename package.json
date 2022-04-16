@@ -16,8 +16,7 @@
     "@sveltejs/kit": "^1.0.0-next.301",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
-    "svelte": "^3.44.0",
-    "svelte-popperjs": "^1.2.8"
+    "svelte": "^3.44.0"
   },
   "type": "module",
   "dependencies": {
@@ -26,6 +25,7 @@
     "short-unique-id": "^4.4.4",
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.4.1",
+    "svelte-popperjs": "^1.2.9",
     "svrollbar": "^0.10.5"
   }
 }
